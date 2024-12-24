@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+
+  "rules": {
+    "quotes": [ "error" , "single"]
+  },
+
+  "env": {
+    "browser": true
+  }
+}

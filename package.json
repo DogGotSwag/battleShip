@@ -1,0 +1,35 @@
+{
+  "name": "projecttemplate",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "private": false,
+  "main": "./dist/bundle.js",
+  "scripts": {
+    "test": "jest",
+    "watchJest": "jest --watch",
+    "build": "webpack --config webpack.prod.js",
+    "bundle": "webpack --config webpack.moduleBundler.js",
+    "watch": "webpack --watch --config webpack.dev.js",
+
+    "updateLive": "git subtree push --prefix dist origin gh-pages"
+  },
+  "author": "Didier A.L didierlongoria6@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@eslint/js": "^9.6.0",
+    "babel-jest": "^29.7.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "globals": "^15.8.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
