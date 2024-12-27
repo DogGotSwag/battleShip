@@ -11,5 +11,10 @@
   "env": {
     "browser": true,
     "jest": true
-  }
+  },
+
+  "parserOptions": {
+        "ecmaVersion": 13
+    }
+
 }
