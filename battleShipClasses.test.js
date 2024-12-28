@@ -81,3 +81,27 @@ describe('test for Ship isSunk() size 10', () => {
     expect(currShip.isSunk()).toBe(true);
   });
 });
+
+describe.only('test for GameBoard class', () => {
+  let currGameBoard;
+
+  beforeEach(() => {
+    currGameBoard = new GameBoard();
+  });
+
+  test('test for receiveAttack() with ship at [0,5]', () => {
+    currGameBoard.setShipAt([0, 5]);
+    expect(currGameBoard.receiveAttack([0, 5])).toBe('Hit');
+  });
+
+  test('test for receiveAttack() no ship at [2,7]', () => {
+    expect(currGameBoard.receiveAttack([2, 7])).toBe('Miss');
+  });
+
+  test('test for receiveAttack() with ship at [2,7]', () => {
+    currGameBoard.setShipAt([2, 7]);
+    expect(currGameBoard.receiveAttack([2, 7])).toBe('Hit');
+  });
+
+  
+});
