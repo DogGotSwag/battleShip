@@ -82,7 +82,7 @@ describe('test for Ship isSunk() size 10', () => {
   });
 });
 
-describe.only('test for GameBoard class', () => {
+describe.only('test for GameBoard receiveAttack()', () => {
   let currGameBoard;
 
   beforeEach(() => {
@@ -103,5 +103,20 @@ describe.only('test for GameBoard class', () => {
     expect(currGameBoard.receiveAttack([2, 7])).toBe('Hit');
   });
 
-  
+  test('test for receiveAttack() with ship at [0,0] horizontal through [0,3]', () => {
+    currGameBoard.setShipAt([0,0], [0,1], [0,2]);
+    expect(currGameBoard.receiveAttack([0, 0])).toBe('Hit');
+    expect(currGameBoard.receiveAttack([0, 2])).toBe('Hit');
+    expect(currGameBoard.receiveAttack([0, 3])).toBe('Miss');
+  });
+
+
+  test('test for receiveAttack() with ship at [4,6] vertical through [7,6]', () => {
+    currGameBoard.setShipAt([4,6], [5,6], [6,6], [7,6]);
+    expect(currGameBoard.receiveAttack([5, 6])).toBe('Hit');
+    expect(currGameBoard.receiveAttack([5, 5])).toBe('Miss');
+    expect(currGameBoard.receiveAttack([7, 6])).toBe('Hit');
+  });
+
+
 });
