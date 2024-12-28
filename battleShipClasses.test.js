@@ -82,6 +82,7 @@ describe('test for Ship isSunk() size 10', () => {
   });
 });
 
+
 describe.only('test for GameBoard receiveAttack()', () => {
   let currGameBoard;
 

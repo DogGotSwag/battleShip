@@ -16,9 +16,12 @@ class GameBoard {
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
   ];
 
-  setShipAt(arr) {
-  const currShip = new Ship(4);
-    this.#grid[arr[0]][arr[1]] = currShip;
+  setShipAt(...arr) {
+    const currShip = new Ship(4);
+    for(let i = 0; i < arr.length ; i += 1){
+      const currCoordinate = arr[i];
+      this.#grid[currCoordinate[0]][currCoordinate[1]] = currShip;
+    }
   }
 
   receiveAttack(arr) {
