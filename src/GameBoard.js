@@ -2,6 +2,8 @@ import Ship from './Ship';
 
 class GameBoard {
 
+  #missedShots = [];
+
   #grid = [
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
@@ -20,6 +22,10 @@ class GameBoard {
     return this.#grid;
   }
 
+  getMissedShots(){
+    return this.#missedShots;
+  }
+
   setShipAt(...arr) {
     const currShip = new Ship(arr.length);
     for(let i = 0; i < arr.length ; i += 1){
@@ -34,6 +40,7 @@ class GameBoard {
       coordinate.hit();      
       return 'Hit';
     }
+    this.#missedShots.push([arr[0], arr[1]]);    
     return 'Miss';
   }
 }
