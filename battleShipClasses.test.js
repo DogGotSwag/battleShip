@@ -81,9 +81,37 @@ describe('test for Ship isSunk() size 10', () => {
     expect(currShip.isSunk()).toBe(true);
   });
 });
+describe.only('test for GameBoard setShipAt()', () =>{
+  let currGameBoard;
 
+  beforeEach(() => {
+    currGameBoard = new GameBoard(2);
+  });
 
-describe.only('test for GameBoard receiveAttack()', () => {
+  test('check empty spot', () =>{
+    const grid = currGameBoard.getGrid()
+    expect(grid[7][2]).toBe('E');
+  });
+
+  test('put ship at [7,2]', () =>{
+    currGameBoard.setShipAt([7,2]);
+    const grid = currGameBoard.getGrid()
+    expect(grid[7][2]).toEqual({'shipLength':1});
+  });
+
+  test('put ship at [2,0] horizontal through [2,5]', () =>{
+    currGameBoard.setShipAt( [2,0],[2,1],[2,2],[2,3],[2,4],[2,5] );
+    const grid = currGameBoard.getGrid()
+    expect(grid[2][0]).toEqual({'shipLength':6});
+    expect(grid[2][1]).toEqual({'shipLength':6});
+    expect(grid[2][2]).toEqual({'shipLength':6});
+    expect(grid[2][3]).toEqual({'shipLength':6});
+    expect(grid[2][4]).toEqual({'shipLength':6});
+    expect(grid[2][5]).toEqual({'shipLength':6});
+  });
+})
+
+describe('test for GameBoard receiveAttack()', () => {
   let currGameBoard;
 
   beforeEach(() => {
