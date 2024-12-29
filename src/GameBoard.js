@@ -16,8 +16,12 @@ class GameBoard {
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
   ];
 
+  getGrid(){
+    return this.#grid;
+  }
+
   setShipAt(...arr) {
-    const currShip = new Ship(4);
+    const currShip = new Ship(arr.length);
     for(let i = 0; i < arr.length ; i += 1){
       const currCoordinate = arr[i];
       this.#grid[currCoordinate[0]][currCoordinate[1]] = currShip;
