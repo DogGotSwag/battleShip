@@ -148,7 +148,7 @@ describe('test for GameBoard receiveAttack()', () => {
   });
 });
 
-describe.only('test for GameBoard getMissedShots()', () => {
+describe('test for GameBoard getMissedShots()', () => {
   let currGameBoard;
   beforeEach(() => {
     currGameBoard = new GameBoard();
@@ -235,5 +235,54 @@ describe.only('test for GameBoard getMissedShots()', () => {
     expect(currGameBoard.getMissedShots()).toStrictEqual([
       [6, 8],
     ]);
+  });
+});
+
+
+describe.only('test for GameBoards allSunk()', () => {
+  let currGameBoard;
+  beforeEach(() => {
+    currGameBoard = new GameBoard();
+  });
+
+  test('size 1 ship no shots', () => {
+    currGameBoard.setShipAt([0,0]);
+    expect(currGameBoard.allSunk()).toBe(false);
+  });
+
+  test('size 1 ship one shot', () => {
+    currGameBoard.setShipAt([0,1]);
+    currGameBoard.receiveAttack([0,1]);
+    expect(currGameBoard.allSunk()).toBe(true);
+  });
+
+  test('size 4 ship only one shot hit', () => {
+    currGameBoard.setShipAt([5,1],[6,1],[7,1],[8,1] );
+    currGameBoard.receiveAttack([5,1]);
+    currGameBoard.receiveAttack([6,2]);
+    currGameBoard.receiveAttack([7,5]);
+    currGameBoard.receiveAttack([1,1]);
+    expect(currGameBoard.allSunk()).toBe(false);
+  });
+
+  test('size 4 ship only 4 shots hit', () => {
+    currGameBoard.setShipAt([5,1],[6,1],[7,1],[8,1] );
+    currGameBoard.receiveAttack([5,1]);
+    currGameBoard.receiveAttack([6,1]);
+    currGameBoard.receiveAttack([7,1]);
+    currGameBoard.receiveAttack([8,1]);
+    expect(currGameBoard.allSunk()).toBe(true);
+  });
+
+  test('two ships one destroyed', () => {
+    currGameBoard.setShipAt([3,6],[3,7],[3,8],[3,19] );
+    currGameBoard.setShipAt([6,1],[6,2] );
+    currGameBoard.receiveAttack([3,6]);
+    currGameBoard.receiveAttack([3,7]);
+    currGameBoard.receiveAttack([3,8]);
+    currGameBoard.receiveAttack([3,19]);
+
+    currGameBoard.receiveAttack([6,2]);
+    expect(currGameBoard.allSunk()).toBe(false);
   });
 });
