@@ -262,12 +262,12 @@ describe('test for GameBoards allSunk()', () => {
   });
 
   test('two ships one destroyed', () => {
-    currGameBoard.setShipAt([3,6],[3,7],[3,8],[3,19] );
+    currGameBoard.setShipAt([3,6],[3,7],[3,8],[3,9] );
     currGameBoard.setShipAt([6,1],[6,2] );
     currGameBoard.receiveAttack([3,6]);
     currGameBoard.receiveAttack([3,7]);
     currGameBoard.receiveAttack([3,8]);
-    currGameBoard.receiveAttack([3,19]);
+    currGameBoard.receiveAttack([3,9]);
 
     currGameBoard.receiveAttack([6,2]);
     expect(currGameBoard.allSunk()).toBe(false);
