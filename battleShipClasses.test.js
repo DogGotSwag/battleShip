@@ -67,7 +67,7 @@ describe('test for Ship isSunk() size 10', () => {
     expect(currShip.isSunk()).toBe(false);
   });
 
-  test('check isSunk() 2 with hits', () => {
+  test('check isSunk() 10 with hits', () => {
     currShip.hit();
     currShip.hit();
     currShip.hit();
@@ -82,13 +82,13 @@ describe('test for Ship isSunk() size 10', () => {
   });
 });
 
+let currGameBoard;
+
+beforeEach(() => {
+  currGameBoard = new GameBoard(2);
+});
+
 describe('test for GameBoard setShipAt()', () => {
-  let currGameBoard;
-
-  beforeEach(() => {
-    currGameBoard = new GameBoard(2);
-  });
-
   test('check empty spot', () => {
     const grid = currGameBoard.getGrid();
     expect(grid[7][2]).toBe('E');
@@ -113,11 +113,6 @@ describe('test for GameBoard setShipAt()', () => {
 });
 
 describe('test for GameBoard receiveAttack()', () => {
-  let currGameBoard;
-
-  beforeEach(() => {
-    currGameBoard = new GameBoard();
-  });
 
   test('test for receiveAttack() with ship at [0,5]', () => {
     currGameBoard.setShipAt([0, 5]);
@@ -149,10 +144,6 @@ describe('test for GameBoard receiveAttack()', () => {
 });
 
 describe('test for GameBoard getMissedShots()', () => {
-  let currGameBoard;
-  beforeEach(() => {
-    currGameBoard = new GameBoard();
-  });
 
   test('test for no missed shots', () => {
     expect(currGameBoard.getMissedShots()).toStrictEqual([]);
@@ -239,11 +230,7 @@ describe('test for GameBoard getMissedShots()', () => {
 });
 
 
-describe.only('test for GameBoards allSunk()', () => {
-  let currGameBoard;
-  beforeEach(() => {
-    currGameBoard = new GameBoard();
-  });
+describe('test for GameBoards allSunk()', () => {
 
   test('size 1 ship no shots', () => {
     currGameBoard.setShipAt([0,0]);
