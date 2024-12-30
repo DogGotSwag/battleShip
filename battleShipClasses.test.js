@@ -273,3 +273,28 @@ describe('test for GameBoards allSunk()', () => {
     expect(currGameBoard.allSunk()).toBe(false);
   });
 });
+
+describe('tests for Player class', () =>{
+  const currPlayers = new Player();
+  test('real player exists', () => {
+    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers, 'realPlayer');
+    expect(hasProperty).toBe(true);
+  });
+
+  test('computer player exists', () => {
+    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers, 'computerPlayer');
+    expect(hasProperty).toBe(true);
+  });
+
+  test('real player has its own gameboard', () => {
+    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers.realPlayer, 'gameBoard');
+    expect(hasProperty).toBe(true);
+  });
+
+  test('real player has its own gameboard', () => {
+    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers.computerPlayer, 'gameBoard');
+    expect(hasProperty).toBe(true);
+  });
+
+  
+});
