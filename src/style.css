@@ -7,4 +7,15 @@
 body, html{
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+}
+
+.player{
+    --box-size: 400px;
+    height: var(--box-size);
+    width: var(--box-size);
+    border: solid max(1px, 0.0625rem) #b7bdc8;
 }
