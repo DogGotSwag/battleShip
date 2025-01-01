@@ -9,6 +9,11 @@ function renderPlayersBoards() {
             const row = document.createElement('div');
             row.className = 'boardRow';
             current.appendChild(row);
+
+            for(let k = 0; k < 10; k += 1){
+                const coordinateBox = document.createElement('div');
+                row.appendChild(coordinateBox);
+            }
         }
     }
 }
