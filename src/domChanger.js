@@ -1,0 +1,3 @@
+function renderPlayersBoards() {}
+
+export { renderPlayersBoards };
