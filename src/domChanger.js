@@ -7,6 +7,7 @@ function renderPlayersBoards() {
         const current = boards[i];
         for(let j = 0; j < 10; j += 1){
             const row = document.createElement('div');
+            row.className = 'boardRow';
             current.appendChild(row);
         }
     }
