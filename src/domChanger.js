@@ -1,3 +1,5 @@
+import './domChangerStyles.css';
+
 function renderPlayersBoards() {
     const boards = document.querySelectorAll('.player');
     
