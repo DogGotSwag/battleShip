@@ -11,3 +11,8 @@ realPlayerBoard.setShipAt([0, 1], [0, 2], [0, 3]);
 computerPlayerBoard.setShipAt([6, 3], [7, 3], [8, 3], [9, 3]);
 
 renderPlayersBoards();
+
+const coordinates = document.querySelectorAll('.coordinate');
+coordinates.forEach((box) => {
+  box.addEventListener('click', () => {});
+});
