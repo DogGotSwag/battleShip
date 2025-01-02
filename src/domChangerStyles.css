@@ -2,9 +2,11 @@
 .player{
     display: grid;
     grid-template-rows: repeat(10,1fr);
+
+    --grid-color: #b7bdc8;
 }
 .boardRow:not(:last-child){
-    border-bottom: solid max(1px, 0.0625rem) #b7bdc8;
+    border-bottom: solid max(1px, 0.0625rem) var(--grid-color);
 }
 
 .boardRow{
@@ -13,5 +15,5 @@
 }
 
 .coordinate:not(:last-child){
-    border-right: solid max(1px, 0.0625rem) #b7bdc8;
+    border-right: solid max(1px, 0.0625rem) var(--grid-color);
 }
