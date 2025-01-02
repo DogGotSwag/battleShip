@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: repeat(10,1fr);
 }
-.boardRow:nth-child(n):not(:last-child){
+.boardRow:not(:last-child){
     border-bottom: solid max(1px, 0.0625rem) #b7bdc8;
 }
 
