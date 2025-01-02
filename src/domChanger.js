@@ -12,7 +12,7 @@ function renderPlayersBoards() {
 
       for (let k = 0; k < 10; k += 1) {
         const coordinateBox = document.createElement('div');
-        coordinateBox.className = 'coordinate';
+        coordinateBox.classList = `coordinate ${j},${k}`;
         row.appendChild(coordinateBox);
       }
     }
