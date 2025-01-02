@@ -6,3 +6,8 @@
 .boardRow:nth-child(n):not(:last-child){
     border-bottom: solid max(1px, 0.0625rem) #b7bdc8;
 }
+
+.boardRow{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
