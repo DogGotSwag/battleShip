@@ -17,3 +17,11 @@
 .coordinate:not(:last-child){
     border-right: solid max(1px, 0.0625rem) var(--grid-color);
 }
+
+.coordinate:hover{
+    background-color: #030b19;
+}
+
+.coordinate:active{
+    background-color: #06142c;
+}
