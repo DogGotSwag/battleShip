@@ -11,3 +11,7 @@
     display: grid;
     grid-template-columns: repeat(10, 1fr);
 }
+
+.coordinate:not(:last-child){
+    border-right: solid max(1px, 0.0625rem) #b7bdc8;
+}
