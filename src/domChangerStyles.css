@@ -1,4 +1,7 @@
 
+*{
+    box-sizing:border-box;
+}
 .player{
     display: grid;
     grid-template-rows: repeat(10,1fr);
