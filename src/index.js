@@ -14,7 +14,8 @@ renderPlayersBoards();
 
 const coordinates = document.querySelectorAll('.coordinate');
 coordinates.forEach((box) => {
-  box.addEventListener('click', () => {
-    const clickedPosition = box.classList[1].split(',');    
+  box.addEventListener('click', (e) => {
+    const parent = e.target.parentNode.parentNode.classList[0];
+    const clickedPosition = box.classList[1].split(',');
   });
 });
