@@ -1,6 +1,6 @@
-import './style.css';
-import Player from './Player';
-import { renderPlayersBoards } from './domChanger';
+import "./style.css";
+import Player from "./Player";
+import { renderPlayersBoards } from "./domChanger";
 
 const indexPlayer = new Player();
 
@@ -12,10 +12,15 @@ computerPlayerBoard.setShipAt([6, 3], [7, 3], [8, 3], [9, 3]);
 
 renderPlayersBoards();
 
-const coordinates = document.querySelectorAll('.coordinate');
+const coordinates = document.querySelectorAll(".coordinate");
 coordinates.forEach((box) => {
-  box.addEventListener('click', (e) => {
+  box.addEventListener("click", (e) => {
     const parent = e.target.parentNode.parentNode.classList[0];
-    const clickedPosition = box.classList[1].split(',');
+    const clickedPosition = box.classList[1].split(",");
+
+    if (parent === "realPlayer") {
+    }
+    if (parent === "computerPlayer") {
+    }
   });
 });
