@@ -1,6 +1,6 @@
 import './style.css';
 import Player from './Player';
-import { renderPlayersBoards, renderRealPlayer } from './domChanger';
+import { renderPlayersBoards } from './domChanger';
 
 const indexPlayer = new Player();
 
@@ -16,10 +16,10 @@ const coordinates = document.querySelectorAll('.coordinate');
 coordinates.forEach((box) => {
   box.addEventListener('click', (e) => {
     const parent = e.target.parentNode.parentNode.classList[0];
-    const clickedPosition = box.classList[1].split(',');
+    const clickedPosition = box.classList[1].slice(1,3).split('');    
 
     if (parent === 'realPlayer') {
-        realPlayerBoard.receiveAttack(clickedPosition);
+      realPlayerBoard.receiveAttack(clickedPosition);
     }
     if (parent === 'computerPlayer') {
       computerPlayerBoard.receiveAttack(clickedPosition);
