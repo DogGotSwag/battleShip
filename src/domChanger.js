@@ -25,5 +25,10 @@ function renderPlayersBoards() {
 
 function renderBoard(player, grid, missedShots, hitShots){
   renderPlayersBoards();
+
+  for(let i = 0; i < missedShots.length; i += 1){
+    const shot = missedShots[i];
+    const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
+  }
 }
 export { renderPlayersBoards, renderBoard };
