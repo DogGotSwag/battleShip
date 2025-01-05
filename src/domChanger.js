@@ -24,6 +24,6 @@ function renderPlayersBoards() {
 
 
 function renderBoard(player, grid, missedShots, hitShots){
-  
+  renderPlayersBoards();
 }
 export { renderPlayersBoards, renderBoard };
