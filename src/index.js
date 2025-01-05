@@ -1,6 +1,6 @@
 import './style.css';
 import Player from './Player';
-import { renderPlayersBoards } from './domChanger';
+import { renderPlayersBoards, renderBoard } from './domChanger';
 
 const indexPlayer = new Player();
 
@@ -12,17 +12,35 @@ computerPlayerBoard.setShipAt([6, 3], [7, 3], [8, 3], [9, 3]);
 
 renderPlayersBoards();
 
-const coordinates = document.querySelectorAll('.coordinate');
-coordinates.forEach((box) => {
-  box.addEventListener('click', (e) => {
-    const parent = e.target.parentNode.parentNode.classList[0];
-    const clickedPosition = box.classList[1].slice(1,3).split('');    
+const boards = document.querySelectorAll('.player');
 
-    if (parent === 'realPlayer') {
-      realPlayerBoard.receiveAttack(clickedPosition);
-    }
-    if (parent === 'computerPlayer') {
-      computerPlayerBoard.receiveAttack(clickedPosition);
+boards.forEach((board) => {
+  board.addEventListener('click', (e) => {
+    const clicked = e.target;
+    const clickedType = clicked.classList[0]
+    if (clickedType === 'coordinate') {
+      const parent = clicked.parentNode.parentNode.classList[0];
+      const clickedPosition = clicked.classList[1].slice(1, 3).split('');
+      
+      if (parent === 'realPlayer') {
+        realPlayerBoard.receiveAttack(clickedPosition);
+        renderBoard(
+          'realPlayer',
+          realPlayerBoard.getGrid(),
+          realPlayerBoard.getMissedShots(),
+          realPlayerBoard.getHitShots()
+        );
+      }
+      if (parent === 'computerPlayer') {
+        computerPlayerBoard.receiveAttack(clickedPosition);
+        renderBoard(
+          'computerPlayer',
+          computerPlayerBoard.getGrid(),
+          computerPlayerBoard.getMissedShots(),
+          computerPlayerBoard.getHitShots()
+        );
+      }
     }
   });
 });
+
