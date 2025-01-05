@@ -39,3 +39,11 @@
 .coordinate.missed{
     pointer-events: none;
 }
+
+.statusCircle{
+    background-color: transparent;
+    --circle-size: 6px;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    border-radius: 50%;
+}
