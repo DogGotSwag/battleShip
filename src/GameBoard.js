@@ -2,7 +2,7 @@ import Ship from './Ship';
 
 class GameBoard {
   #missedShots = [];
-
+  
   #hitShots = [];
 
   #allShips = [];
@@ -46,6 +46,7 @@ class GameBoard {
     const coordinate = this.#grid[arr[0]][arr[1]];
     if (typeof coordinate === 'object') {
       coordinate.hit();
+      this.#hitShots.push([arr[0], arr[1]]);
       return 'Hit';
     }
     this.#missedShots.push([arr[0], arr[1]]);
