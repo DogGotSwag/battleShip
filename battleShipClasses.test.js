@@ -85,7 +85,7 @@ describe('test for Ship isSunk() size 10', () => {
 let currGameBoard;
 
 beforeEach(() => {
-  currGameBoard = new GameBoard(2);
+  currGameBoard = new GameBoard();
 });
 
 describe('test for GameBoard setShipAt()', () => {
