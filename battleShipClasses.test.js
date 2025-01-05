@@ -113,7 +113,6 @@ describe('test for GameBoard setShipAt()', () => {
 });
 
 describe('test for GameBoard receiveAttack()', () => {
-
   test('test for receiveAttack() with ship at [0,5]', () => {
     currGameBoard.setShipAt([0, 5]);
     expect(currGameBoard.receiveAttack([0, 5])).toBe('Hit');
@@ -144,7 +143,6 @@ describe('test for GameBoard receiveAttack()', () => {
 });
 
 describe('test for GameBoard getMissedShots()', () => {
-
   test('test for no missed shots', () => {
     expect(currGameBoard.getMissedShots()).toStrictEqual([]);
   });
@@ -205,7 +203,7 @@ describe('test for GameBoard getMissedShots()', () => {
   });
 
   test('test for 3 shots one hit get exact coordinates', () => {
-    currGameBoard.setShipAt([0,0]);
+    currGameBoard.setShipAt([0, 0]);
     currGameBoard.receiveAttack([0, 0]);
     currGameBoard.receiveAttack([9, 3]);
     currGameBoard.receiveAttack([8, 1]);
@@ -216,85 +214,120 @@ describe('test for GameBoard getMissedShots()', () => {
   });
 
   test('test for 4 shots only miss get exact coordinates', () => {
-    currGameBoard.setShipAt([9,2]);
-    currGameBoard.setShipAt([2,3]);
-    currGameBoard.setShipAt([5,7]);
+    currGameBoard.setShipAt([9, 2]);
+    currGameBoard.setShipAt([2, 3]);
+    currGameBoard.setShipAt([5, 7]);
     currGameBoard.receiveAttack([9, 2]);
     currGameBoard.receiveAttack([6, 8]);
     currGameBoard.receiveAttack([2, 3]);
     currGameBoard.receiveAttack([5, 7]);
-    expect(currGameBoard.getMissedShots()).toStrictEqual([
-      [6, 8],
-    ]);
+    expect(currGameBoard.getMissedShots()).toStrictEqual([[6, 8]]);
   });
 });
 
-
 describe('test for GameBoards allSunk()', () => {
-
   test('size 1 ship no shots', () => {
-    currGameBoard.setShipAt([0,0]);
+    currGameBoard.setShipAt([0, 0]);
     expect(currGameBoard.allSunk()).toBe(false);
   });
 
   test('size 1 ship one shot', () => {
-    currGameBoard.setShipAt([0,1]);
-    currGameBoard.receiveAttack([0,1]);
+    currGameBoard.setShipAt([0, 1]);
+    currGameBoard.receiveAttack([0, 1]);
     expect(currGameBoard.allSunk()).toBe(true);
   });
 
   test('size 4 ship only one shot hit', () => {
-    currGameBoard.setShipAt([5,1],[6,1],[7,1],[8,1] );
-    currGameBoard.receiveAttack([5,1]);
-    currGameBoard.receiveAttack([6,2]);
-    currGameBoard.receiveAttack([7,5]);
-    currGameBoard.receiveAttack([1,1]);
+    currGameBoard.setShipAt([5, 1], [6, 1], [7, 1], [8, 1]);
+    currGameBoard.receiveAttack([5, 1]);
+    currGameBoard.receiveAttack([6, 2]);
+    currGameBoard.receiveAttack([7, 5]);
+    currGameBoard.receiveAttack([1, 1]);
     expect(currGameBoard.allSunk()).toBe(false);
   });
 
   test('size 4 ship only 4 shots hit', () => {
-    currGameBoard.setShipAt([5,1],[6,1],[7,1],[8,1] );
-    currGameBoard.receiveAttack([5,1]);
-    currGameBoard.receiveAttack([6,1]);
-    currGameBoard.receiveAttack([7,1]);
-    currGameBoard.receiveAttack([8,1]);
+    currGameBoard.setShipAt([5, 1], [6, 1], [7, 1], [8, 1]);
+    currGameBoard.receiveAttack([5, 1]);
+    currGameBoard.receiveAttack([6, 1]);
+    currGameBoard.receiveAttack([7, 1]);
+    currGameBoard.receiveAttack([8, 1]);
     expect(currGameBoard.allSunk()).toBe(true);
   });
 
   test('two ships one destroyed', () => {
-    currGameBoard.setShipAt([3,6],[3,7],[3,8],[3,9] );
-    currGameBoard.setShipAt([6,1],[6,2] );
-    currGameBoard.receiveAttack([3,6]);
-    currGameBoard.receiveAttack([3,7]);
-    currGameBoard.receiveAttack([3,8]);
-    currGameBoard.receiveAttack([3,9]);
+    currGameBoard.setShipAt([3, 6], [3, 7], [3, 8], [3, 9]);
+    currGameBoard.setShipAt([6, 1], [6, 2]);
+    currGameBoard.receiveAttack([3, 6]);
+    currGameBoard.receiveAttack([3, 7]);
+    currGameBoard.receiveAttack([3, 8]);
+    currGameBoard.receiveAttack([3, 9]);
 
-    currGameBoard.receiveAttack([6,2]);
+    currGameBoard.receiveAttack([6, 2]);
     expect(currGameBoard.allSunk()).toBe(false);
   });
 });
 
-describe('tests for Player class', () =>{
+describe('tests for Player class', () => {
   const currPlayers = new Player();
   test('real player exists', () => {
-    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers, 'realPlayer');
+    const hasProperty = Object.prototype.hasOwnProperty.call(
+      currPlayers,
+      'realPlayer'
+    );
     expect(hasProperty).toBe(true);
   });
 
   test('computer player exists', () => {
-    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers, 'computerPlayer');
+    const hasProperty = Object.prototype.hasOwnProperty.call(
+      currPlayers,
+      'computerPlayer'
+    );
     expect(hasProperty).toBe(true);
   });
 
   test('real player has its own gameboard', () => {
-    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers.realPlayer, 'gameBoard');
+    const hasProperty = Object.prototype.hasOwnProperty.call(
+      currPlayers.realPlayer,
+      'gameBoard'
+    );
     expect(hasProperty).toBe(true);
   });
 
   test('real player has its own gameboard', () => {
-    const hasProperty = Object.prototype.hasOwnProperty.call(currPlayers.computerPlayer, 'gameBoard');
+    const hasProperty = Object.prototype.hasOwnProperty.call(
+      currPlayers.computerPlayer,
+      'gameBoard'
+    );
     expect(hasProperty).toBe(true);
   });
+});
 
-  
+describe.only('test for GameBoard getHitShots()', () => {
+  test('test for no missed shots', () => {
+    expect(currGameBoard.getHitShots()).toStrictEqual([]);
+  });
+
+  test('test for 3 shots one hit get correct length', () => {
+    currGameBoard.setShipAt([0, 0]);
+    currGameBoard.receiveAttack([0, 0]);
+    currGameBoard.receiveAttack([9, 3]);
+    currGameBoard.receiveAttack([8, 1]);
+    expect(currGameBoard.getHitShots().length).toBe(1);
+  });
+
+  test('test for 4 shots only miss get exact coordinates', () => {
+    currGameBoard.setShipAt([9, 2]);
+    currGameBoard.setShipAt([2, 3]);
+    currGameBoard.setShipAt([5, 7]);
+    currGameBoard.receiveAttack([9, 2]);
+    currGameBoard.receiveAttack([6, 8]);
+    currGameBoard.receiveAttack([2, 3]);
+    currGameBoard.receiveAttack([5, 7]);
+    expect(currGameBoard.getHitShots()).toStrictEqual([
+      [9, 2],
+      [2, 3],
+      [5, 7],
+    ]);
+  });
 });
