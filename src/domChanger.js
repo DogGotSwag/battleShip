@@ -29,6 +29,7 @@ function renderBoard(player, grid, missedShots, hitShots){
   for(let i = 0; i < missedShots.length; i += 1){
     const shot = missedShots[i];
     const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
+    box.classList.add('missed');
   }
 }
 export { renderPlayersBoards, renderBoard };
