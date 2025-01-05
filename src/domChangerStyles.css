@@ -29,3 +29,7 @@
 .coordinate:active{
     background-color: #06142c;
 }
+
+.coordinate.missed{
+    pointer-events: none;
+}
