@@ -47,3 +47,7 @@
     height: var(--circle-size);
     border-radius: 50%;
 }
+
+.coordinate.missed .statusCircle{
+    background-color: var(--grid-color);
+}
