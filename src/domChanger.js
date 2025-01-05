@@ -3,6 +3,9 @@ import './domChangerStyles.css';
 function renderPlayersBoards() {
   const boards = document.querySelectorAll('.player');
 
+  boards[0].innerHTML = '';
+  boards[1].innerHTML = '';
+
   for (let i = 0; i < 2; i += 1) {
     const current = boards[i];
     for (let j = 0; j < 10; j += 1) {
@@ -21,6 +24,6 @@ function renderPlayersBoards() {
 
 
 function renderBoard(player, grid, missedShots, hitShots){
-  console.log(player, grid, missedShots, hitShots);
+  
 }
 export { renderPlayersBoards, renderBoard };
