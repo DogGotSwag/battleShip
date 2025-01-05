@@ -20,7 +20,7 @@ function renderPlayersBoards() {
 }
 
 
-function renderBoard(){
-
+function renderBoard(player, grid, missedShots, hitShots){
+  console.log(player, grid, missedShots, hitShots);
 }
 export { renderPlayersBoards, renderBoard };
