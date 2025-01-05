@@ -18,6 +18,12 @@
     grid-template-columns: repeat(10, 1fr);
 }
 
+.coordinate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .coordinate:not(:last-child){
     border-right: solid max(1px, 0.0625rem) var(--grid-color);
 }
