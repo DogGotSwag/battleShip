@@ -51,3 +51,7 @@
 .coordinate.missed .statusCircle{
     background-color: var(--grid-color);
 }
+
+.coordinate.hitShot .statusCircle{
+    background-color: rgb(164, 46, 46);
+}
