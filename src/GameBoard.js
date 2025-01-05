@@ -3,6 +3,8 @@ import Ship from './Ship';
 class GameBoard {
   #missedShots = [];
 
+  #hitShots = [];
+
   #allShips = [];
 
   #grid = [
@@ -25,6 +27,10 @@ class GameBoard {
 
   getMissedShots() {
     return this.#missedShots;
+  }
+
+  getHitShots(){
+    return this.#hitShots;
   }
 
   setShipAt(...arr) {
