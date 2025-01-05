@@ -16,6 +16,11 @@ function renderPlayersBoards() {
       for (let k = 0; k < 10; k += 1) {
         const coordinateBox = document.createElement('div');
         coordinateBox.classList = `coordinate k${j}${k}`;
+
+        const statusCircle = document.createElement('div');
+        statusCircle.classList = 'statusCircle';
+
+        coordinateBox.appendChild(statusCircle);
         row.appendChild(coordinateBox);
       }
     }
