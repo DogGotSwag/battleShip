@@ -39,7 +39,10 @@ function renderBoard(player, grid, missedShots, hitShots){
 
   for(let i = 0; i < hitShots.length; i += 1){
     const shot = hitShots[i];
+    const ship = grid[shot[0]][shot[1]];
+    
     const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
+
     box.classList.add('hitShot');
   }
 }
