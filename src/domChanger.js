@@ -1,12 +1,14 @@
 import './domChangerStyles.css';
 
-function renderPlayersBoards() {
-  const boards = document.querySelectorAll('.player');
+function renderPlayersBoards(players = 'player') {
+  const boards = document.querySelectorAll(`.${players}`);
+  
+  for(let i = 0; i < boards.length; i += 1){
+    boards[i].innerHTML = '';
+  }
+ 
 
-  boards[0].innerHTML = '';
-  boards[1].innerHTML = '';
-
-  for (let i = 0; i < 2; i += 1) {
+  for (let i = 0; i < boards.length; i += 1) {
     const current = boards[i];
     for (let j = 0; j < 10; j += 1) {
       const row = document.createElement('div');
