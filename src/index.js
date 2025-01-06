@@ -30,6 +30,14 @@ boards.forEach((board) => {
           computerPlayerBoard.getMissedShots(),
           computerPlayerBoard.getHitShots()
         );
+
+        realPlayerBoard.receiveAttack(clickedPosition);
+        renderBoard(
+          'realPlayer',
+          realPlayerBoard.getGrid(),
+          realPlayerBoard.getMissedShots(),
+          realPlayerBoard.getHitShots()
+        );
       }
     }
   });
