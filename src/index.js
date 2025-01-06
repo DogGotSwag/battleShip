@@ -17,20 +17,11 @@ const boards = document.querySelectorAll('.player');
 boards.forEach((board) => {
   board.addEventListener('click', (e) => {
     const clicked = e.target;
-    const clickedType = clicked.classList[0]
+    const clickedType = clicked.classList[0];
     if (clickedType === 'coordinate') {
       const parent = clicked.parentNode.parentNode.classList[0];
       const clickedPosition = clicked.classList[1].slice(1, 3).split('');
-      
-      if (parent === 'realPlayer') {
-        realPlayerBoard.receiveAttack(clickedPosition);
-        renderBoard(
-          'realPlayer',
-          realPlayerBoard.getGrid(),
-          realPlayerBoard.getMissedShots(),
-          realPlayerBoard.getHitShots()
-        );
-      }
+
       if (parent === 'computerPlayer') {
         computerPlayerBoard.receiveAttack(clickedPosition);
         renderBoard(
@@ -43,4 +34,3 @@ boards.forEach((board) => {
     }
   });
 });
-
