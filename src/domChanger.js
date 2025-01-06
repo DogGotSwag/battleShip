@@ -31,7 +31,7 @@ function renderPlayersBoards(players = 'player') {
 
 
 function renderBoard(player, grid, missedShots, hitShots){
-  renderPlayersBoards();
+  renderPlayersBoards(player);
 
   for(let i = 0; i < missedShots.length; i += 1){
     const shot = missedShots[i];
