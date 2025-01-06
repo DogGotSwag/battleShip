@@ -40,6 +40,9 @@
     pointer-events: none;
 }
 
+.coordinate.sunk{
+    background-color:rgb(164, 46, 46) ;
+}
 .statusCircle{
     background-color: transparent;
     --circle-size: 6px;
