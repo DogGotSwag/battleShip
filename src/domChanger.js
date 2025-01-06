@@ -43,6 +43,8 @@ function renderBoard(player, grid, missedShots, hitShots){
     
     const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
 
+    if(ship.isSunk()) box.classList.add('sunk');
+
     box.classList.add('hitShot');
   }
 }
