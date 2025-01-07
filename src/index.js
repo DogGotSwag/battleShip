@@ -1,6 +1,7 @@
 import './style.css';
 import Player from './Player';
 import { renderPlayersBoards, renderBoard } from './domChanger';
+import computerAttack from './computerAttack';
 
 const indexPlayer = new Player();
 
@@ -31,7 +32,7 @@ boards.forEach((board) => {
           computerPlayerBoard.getHitShots()
         );
 
-        realPlayerBoard.receiveAttack(clickedPosition);
+        realPlayerBoard.receiveAttack(computerAttack());
         renderBoard(
           'realPlayer',
           realPlayerBoard.getGrid(),
