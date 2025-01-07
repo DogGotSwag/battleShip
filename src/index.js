@@ -24,7 +24,7 @@ boards.forEach((board) => {
       const clickedPosition = clicked.classList[1].slice(1, 3).split('');
 
       if (parent === 'computerPlayer') {
-        computerPlayerBoard.receiveAttack(clickedPosition);
+        const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
         renderBoard(
           'computerPlayer',
           computerPlayerBoard.getGrid(),
@@ -32,13 +32,15 @@ boards.forEach((board) => {
           computerPlayerBoard.getHitShots()
         );
 
-        realPlayerBoard.receiveAttack(computerAttack());
-        renderBoard(
-          'realPlayer',
-          realPlayerBoard.getGrid(),
-          realPlayerBoard.getMissedShots(),
-          realPlayerBoard.getHitShots()
-        );
+        if (hitOrMiss === 'Miss') {
+          realPlayerBoard.receiveAttack(computerAttack());
+          renderBoard(
+            'realPlayer',
+            realPlayerBoard.getGrid(),
+            realPlayerBoard.getMissedShots(),
+            realPlayerBoard.getHitShots()
+          );
+        }
       }
     }
   });
