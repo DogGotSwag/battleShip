@@ -303,7 +303,7 @@ describe('tests for Player class', () => {
   });
 });
 
-describe.only('test for GameBoard getHitShots()', () => {
+describe('test for GameBoard getHitShots()', () => {
   test('test for no missed shots', () => {
     expect(currGameBoard.getHitShots()).toStrictEqual([]);
   });
@@ -329,5 +329,56 @@ describe.only('test for GameBoard getHitShots()', () => {
       [2, 3],
       [5, 7],
     ]);
+  });
+});
+
+
+describe.only('tests for gameBoards availableCoordinates()', () =>{
+  test('no attacks length should be 100', () => {
+    expect(currGameBoard.availableCoordinates().length).toBe(100);
+  });
+
+  test('make sure all coordinates are initially present', () => {
+    let num = 0;
+    for(let i = 0; i < 10; i += 1){
+      for(let j = 0; j < 10; j += 1){
+        const check = [i,j];
+        const currCoord = currGameBoard.availableCoordinates()[num];
+        num += 1;
+        expect(JSON.stringify(check) === JSON.stringify(currCoord)).toBe(true);
+      }
+    }
+  });
+
+  test('5 shots fired should decrease length by 5', () => {
+    currGameBoard.receiveAttack([0,1]);
+    currGameBoard.receiveAttack([5,2]);
+    currGameBoard.receiveAttack([6,9]);
+    currGameBoard.receiveAttack([8,2]);
+    currGameBoard.receiveAttack([2,5]);
+
+    expect(currGameBoard.availableCoordinates().length).toBe(95);
+  });
+
+  test('test one shot, should not show up in .availableCoordinates()', () => {
+    currGameBoard.receiveAttack([3,7]);
+
+    const array = currGameBoard.availableCoordinates();
+    for(let i = 0; i < array.length; i += 1){
+      expect(JSON.stringify(array) === JSON.stringify([3,7])).toBe(false);
+    }
+  });
+
+  test('test 3 shots, should not show up in .availableCoordinates()', () => {
+    currGameBoard.receiveAttack([3,7]);
+    currGameBoard.receiveAttack([2,1]);
+    currGameBoard.receiveAttack([6,4]);
+
+    const array = currGameBoard.availableCoordinates();
+    for(let i = 0; i < array.length; i += 1){
+      expect(JSON.stringify(array) === JSON.stringify([3,7])).toBe(false);
+      expect(JSON.stringify(array) === JSON.stringify([2,1])).toBe(false);
+      expect(JSON.stringify(array) === JSON.stringify([6,4])).toBe(false);
+    }
   });
 });
