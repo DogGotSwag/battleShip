@@ -33,7 +33,7 @@ boards.forEach((board) => {
         );
 
         if (hitOrMiss === 'Miss') {
-          realPlayerBoard.receiveAttack(computerAttack());
+          realPlayerBoard.receiveAttack(computerAttack(realPlayerBoard.availableCoordinates()));
           renderBoard(
             'realPlayer',
             realPlayerBoard.getGrid(),
