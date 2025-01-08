@@ -161,6 +161,7 @@ class GameBoard {
 
   receiveAttack(arr) {
     const coordinate = this.#grid[arr[0]][arr[1]];
+    this.#removeCoordinate(arr);
     if (typeof coordinate === 'object') {
       coordinate.hit();
       this.#hitShots.push([arr[0], arr[1]]);
