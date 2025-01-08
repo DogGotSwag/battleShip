@@ -124,6 +124,16 @@ class GameBoard {
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
   ];
 
+  #removeCoordinate(coordinate) {
+    for (let i = 0; i < this.#availableShots.length; i += 1) {
+      const curr = this.#availableShots[i];
+      if (JSON.stringify(curr) === JSON.stringify(coordinate)) {
+        this.#availableShots.splice(i, 1);
+        break;
+      }
+    }
+  }
+
   getGrid() {
     return this.#grid;
   }
@@ -134,6 +144,10 @@ class GameBoard {
 
   getHitShots() {
     return this.#hitShots;
+  }
+
+  availableCoordinates() {
+    return this.#availableShots;
   }
 
   setShipAt(...arr) {
