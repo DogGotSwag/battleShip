@@ -65,4 +65,10 @@ function displayLoser(player){
   const loser = document.querySelector(`.${player}`);
   loser.classList.add('loser');
 }
+
+function gameOver(winner, loser){
+  displayWinner(winner);
+  displayLoser(loser);
+  disablePlay();
+}
 export { renderPlayersBoards, renderBoard, disablePlay, displayWinner };
