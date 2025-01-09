@@ -50,6 +50,7 @@ boards.forEach((board) => {
 
             if (realPlayerBoard.allSunk() === true){
               disablePlay();
+              continueAttack = '';
             }
           } while (continueAttack === 'Hit');
         }
