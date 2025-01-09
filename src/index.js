@@ -1,6 +1,6 @@
 import './style.css';
 import Player from './Player';
-import { renderPlayersBoards, renderBoard } from './domChanger';
+import { renderPlayersBoards, renderBoard, disablePlay } from './domChanger';
 import computerAttack from './computerAttack';
 
 const indexPlayer = new Player();
@@ -32,7 +32,7 @@ boards.forEach((board) => {
           computerPlayerBoard.getHitShots()
         );
         if (computerPlayerBoard.allSunk() === true){
-
+          disablePlay();
         }
 
         if (hitOrMiss === 'Miss') {
@@ -49,7 +49,7 @@ boards.forEach((board) => {
             );
 
             if (realPlayerBoard.allSunk() === true){
-              
+              disablePlay();
             }
           } while (continueAttack === 'Hit');
         }
