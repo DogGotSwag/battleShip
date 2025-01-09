@@ -33,13 +33,17 @@ boards.forEach((board) => {
         );
 
         if (hitOrMiss === 'Miss') {
-          realPlayerBoard.receiveAttack(computerAttack(realPlayerBoard.availableCoordinates()));
-          renderBoard(
+          let continueAttack;
+          do{            
+            continueAttack = realPlayerBoard.receiveAttack(computerAttack(realPlayerBoard.availableCoordinates()));
+            renderBoard(
             'realPlayer',
             realPlayerBoard.getGrid(),
             realPlayerBoard.getMissedShots(),
             realPlayerBoard.getHitShots()
           );
+          }
+          while(continueAttack === 'Hit');
         }
       }
     }
