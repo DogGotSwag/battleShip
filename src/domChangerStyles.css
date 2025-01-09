@@ -36,7 +36,8 @@
     background-color: #06142c;
 }
 
-.coordinate.missed, .coordinate.hitShot{
+.coordinate.missed, .coordinate.hitShot
+,.disabled {
     pointer-events: none;
 }
 

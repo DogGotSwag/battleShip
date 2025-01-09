@@ -52,6 +52,7 @@ function renderBoard(player, grid, missedShots, hitShots){
 }
 
 function disablePlay(){
-
+  const playerBoard = document.querySelector('.computerPlayer');
+  playerBoard.classList.add('disabled');
 }
 export { renderPlayersBoards, renderBoard, disablePlay };
