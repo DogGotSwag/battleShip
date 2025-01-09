@@ -50,4 +50,8 @@ function renderBoard(player, grid, missedShots, hitShots){
     box.classList.add('hitShot');
   }
 }
-export { renderPlayersBoards, renderBoard };
+
+function disablePlay(){
+
+}
+export { renderPlayersBoards, renderBoard, disablePlay };
