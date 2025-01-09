@@ -63,3 +63,7 @@
 .player.winner{
     border: green 1px solid ;
 }
+
+.player.loser{
+    border: red 1px solid;
+}

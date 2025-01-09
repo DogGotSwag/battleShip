@@ -60,4 +60,9 @@ function displayWinner(player){
   const winner = document.querySelector(`.${player}`);
   winner.classList.add('winner');
 }
+
+function displayLoser(player){
+  const loser = document.querySelector(`.${player}`);
+  loser.classList.add('loser');
+}
 export { renderPlayersBoards, renderBoard, disablePlay, displayWinner };
