@@ -71,4 +71,4 @@ function gameOver(winner, loser){
   displayLoser(loser);
   disablePlay();
 }
-export { renderPlayersBoards, renderBoard, disablePlay, displayWinner };
+export { renderPlayersBoards, renderBoard };
