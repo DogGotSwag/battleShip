@@ -1,6 +1,6 @@
 import './style.css';
 import Player from './Player';
-import { renderPlayersBoards, renderBoard } from './domChanger';
+import { renderPlayersBoards, renderBoard , gameOver} from './domChanger';
 import computerAttack from './computerAttack';
 
 const indexPlayer = new Player();
@@ -32,6 +32,7 @@ boards.forEach((board) => {
           computerPlayerBoard.getHitShots()
         );
         if (computerPlayerBoard.allSunk() === true){
+          gameOver('realPlayer','computerPlayer');
         }
 
         if (hitOrMiss === 'Miss') {
@@ -48,6 +49,7 @@ boards.forEach((board) => {
             );
 
             if (realPlayerBoard.allSunk() === true){
+              gameOver('computerPlayer','realPlayer');
               continueAttack = '';
             }
           } while (continueAttack === 'Hit');
