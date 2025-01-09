@@ -56,7 +56,8 @@ function disablePlay(){
   playerBoard.classList.add('disabled');
 }
 
-function displayWinner(){
-
+function displayWinner(player){
+  const winner = document.querySelector(`.${player}`);
+  winner.classList.add('winner');
 }
 export { renderPlayersBoards, renderBoard, disablePlay, displayWinner };
