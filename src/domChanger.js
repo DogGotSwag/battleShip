@@ -55,4 +55,8 @@ function disablePlay(){
   const playerBoard = document.querySelector('.computerPlayer');
   playerBoard.classList.add('disabled');
 }
-export { renderPlayersBoards, renderBoard, disablePlay };
+
+function displayWinner(){
+
+}
+export { renderPlayersBoards, renderBoard, disablePlay, displayWinner };
