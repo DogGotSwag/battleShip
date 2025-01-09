@@ -31,19 +31,27 @@ boards.forEach((board) => {
           computerPlayerBoard.getMissedShots(),
           computerPlayerBoard.getHitShots()
         );
+        if (computerPlayerBoard.allSunk() === true){
+
+        }
 
         if (hitOrMiss === 'Miss') {
           let continueAttack;
-          do{            
-            continueAttack = realPlayerBoard.receiveAttack(computerAttack(realPlayerBoard.availableCoordinates()));
+          do {
+            continueAttack = realPlayerBoard.receiveAttack(
+              computerAttack(realPlayerBoard.availableCoordinates())
+            );
             renderBoard(
-            'realPlayer',
-            realPlayerBoard.getGrid(),
-            realPlayerBoard.getMissedShots(),
-            realPlayerBoard.getHitShots()
-          );
-          }
-          while(continueAttack === 'Hit');
+              'realPlayer',
+              realPlayerBoard.getGrid(),
+              realPlayerBoard.getMissedShots(),
+              realPlayerBoard.getHitShots()
+            );
+
+            if (realPlayerBoard.allSunk() === true){
+              
+            }
+          } while (continueAttack === 'Hit');
         }
       }
     }
