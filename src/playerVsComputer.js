@@ -7,6 +7,7 @@ import {
   makeCoordinateForm,
 } from './domChanger';
 import computerAttack from './computerAttack';
+import generateAllCoordinates from './generateRandomCoordinates';
 
 function playerVsComputer( allCoordinates) {
   const indexPlayer = new Player();
@@ -18,8 +19,10 @@ function playerVsComputer( allCoordinates) {
     realPlayerBoard.setShipAt(...allCoordinates[i]);
   }
 
-  
-  computerPlayerBoard.setShipAt([6, 3], [7, 3], [8, 3], [9, 3]);
+  const computerCoordinates = generateAllCoordinates();
+  for(let i = 0; i < computerCoordinates.length; i +=1){
+    computerPlayerBoard.setShipAt(...computerCoordinates[i]);
+  }
 
   renderPlayersBoards();
 
