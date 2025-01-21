@@ -1,4 +1,5 @@
 import './domChangerStyles.css';
+import generateRandomCoordinates from './generateRandomCoordinates';
 
 function renderPlayersBoards(players = 'player') {
   const boards = document.querySelectorAll(`.${players}`);
@@ -108,6 +109,28 @@ function makeCoordinateForm(player) {
   const buttonArea = document.createElement('div');
   buttonArea.classList.add('buttonArea');
 
+  const randomizerButton = document.createElement('button');
+  randomizerButton.innerText = 'Randomize';
+  randomizerButton.setAttribute('type', 'button');
+  randomizerButton.classList.add('randomize');
+
+  randomizerButton.addEventListener('click', () => {
+    const obj = new generateRandomCoordinates();
+    const randomCoordinates = obj.generateAllCoordinates();
+    const inputs = document.querySelectorAll('input');
+    for(let i = 0; i < inputs.length; i += 1){
+      const shipCoordinates = randomCoordinates[i];
+      let word = '';
+      for(let j = 0; j<shipCoordinates.length-1; j += 1){
+        word += `(${shipCoordinates[j]}),`;
+      }
+      word += `(${shipCoordinates[shipCoordinates.length-1]})`;
+
+      inputs[i].value = word;
+      
+    }
+  });
+
   const resetButton = document.createElement('button');
   resetButton.innerText = 'Reset';
   resetButton.setAttribute('type','reset');
@@ -115,6 +138,7 @@ function makeCoordinateForm(player) {
   const submitButton = document.createElement('button');
   submitButton.innerText = 'Submit';
 
+  buttonArea.appendChild(randomizerButton);
   buttonArea.appendChild(resetButton);
   buttonArea.appendChild(submitButton);
 

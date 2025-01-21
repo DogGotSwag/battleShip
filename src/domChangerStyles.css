@@ -151,3 +151,7 @@
     font-size:15px;
     cursor: pointer;
 }
+
+.buttonArea .randomize{
+  width: 100px;
+}
