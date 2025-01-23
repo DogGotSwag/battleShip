@@ -9,18 +9,44 @@ import {
 import computerAttack from './computerAttack';
 import generateRandomCoordinates from './generateRandomCoordinates';
 
-function playerVsComputer( allCoordinates) {
+function inBounds(coordinate) {
+  const indexOne = parseInt(coordinate[0], 10);
+  const indexTwo = parseInt(coordinate[1], 10);
+  if (indexOne < 0 || indexOne > 9) return false;
+  if (indexTwo < 0 || indexTwo > 9) return false;
+  return true;
+}
+
+function getCornerShots(coordinate) {
+  const indexOne = parseInt(coordinate[0], 10);
+  const indexTwo = parseInt(coordinate[1], 10);
+  const inboundCoordinates = [];
+
+  const topLeft = [indexOne - 1, indexTwo - 1];
+  const topRight = [indexOne - 1, indexTwo + 1];
+  const bottomLeft = [indexOne + 1, indexTwo - 1];
+  const bottomRight = [indexOne + 1, indexTwo + 1];
+
+  if (inBounds(topLeft)) inboundCoordinates.push(topLeft);
+  if (inBounds(topRight)) inboundCoordinates.push(topRight);
+  if (inBounds(bottomLeft)) inboundCoordinates.push(bottomLeft);
+  if (inBounds(bottomRight)) inboundCoordinates.push(bottomRight);
+
+  return inboundCoordinates;
+}
+
+function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
 
   const realPlayerBoard = indexPlayer.realPlayer.gameBoard;
   const computerPlayerBoard = indexPlayer.computerPlayer.gameBoard;
 
-  for(let i = 0; i < allCoordinates.length; i +=1){
+  for (let i = 0; i < allCoordinates.length; i += 1) {
     realPlayerBoard.setShipAt(...allCoordinates[i]);
   }
   const makeCoordinates = new generateRandomCoordinates();
   const computerCoordinates = makeCoordinates.generateAllCoordinates();
-  for(let i = 0; i < computerCoordinates.length; i +=1){
+  for (let i = 0; i < computerCoordinates.length; i += 1) {
     computerPlayerBoard.setShipAt(...computerCoordinates[i]);
   }
 
@@ -36,6 +62,13 @@ function playerVsComputer( allCoordinates) {
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
         const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
+
+        if (hitOrMiss === 'Hit') {
+          const cornerCoordinates = getCornerShots(clickedPosition);
+          for (let i = 0; i < cornerCoordinates.length; i += 1) {
+            computerPlayerBoard.receiveAttack(cornerCoordinates[i]);
+          }
+        }
         renderBoard(
           'computerPlayer',
           computerPlayerBoard.getGrid(),
@@ -49,9 +82,18 @@ function playerVsComputer( allCoordinates) {
         if (hitOrMiss === 'Miss') {
           let continueAttack;
           do {
-            continueAttack = realPlayerBoard.receiveAttack(
-              computerAttack(realPlayerBoard.availableCoordinates())
+            const attackPosition = computerAttack(
+              realPlayerBoard.availableCoordinates()
             );
+            continueAttack = realPlayerBoard.receiveAttack(attackPosition);
+
+            if (continueAttack === 'Hit') {
+              const cornerCoordinates = getCornerShots(attackPosition);
+              for (let i = 0; i < cornerCoordinates.length; i += 1) {
+                realPlayerBoard.receiveAttack(cornerCoordinates[i]);
+              }
+            }
+
             renderBoard(
               'realPlayer',
               realPlayerBoard.getGrid(),
@@ -70,7 +112,7 @@ function playerVsComputer( allCoordinates) {
   });
 }
 
-function getAllCoordinates(){
+function getAllCoordinates() {
   const classes = [
     'four',
     'three',
@@ -87,13 +129,16 @@ function getAllCoordinates(){
   for (let i = 0; i < classes.length; i += 1) {
     const currInput = document.querySelector(`#${classes[i]}`);
     const [value] = [currInput.value];
-    const coordinates = value.replaceAll(')', '').replaceAll('(','').split(',');
+    const coordinates = value
+      .replaceAll(')', '')
+      .replaceAll('(', '')
+      .split(',');
     const shipCoordinates = [];
-    for(let j = 0; j < coordinates.length; j += 2){
+    for (let j = 0; j < coordinates.length; j += 2) {
       const array = [];
-      array[0] = coordinates[j];      
-      array[1] = coordinates[1+j];     
-      shipCoordinates.push(array); 
+      array[0] = coordinates[j];
+      array[1] = coordinates[1 + j];
+      shipCoordinates.push(array);
     }
     allCoordinates.push(shipCoordinates);
   }
