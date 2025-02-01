@@ -149,7 +149,7 @@ function makeCoordinateForm(player) {
 }
 
 function dragAndDropInterface(){
-
+  renderPlayersBoards('realPlayer');
 }
 
 export { renderPlayersBoards, renderBoard, gameOver, makeCoordinateForm, dragAndDropInterface };
