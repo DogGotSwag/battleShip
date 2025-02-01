@@ -1,4 +1,5 @@
 import './domChangerStyles.css';
+import './dragAndDrop.css';
 import generateRandomCoordinates from './generateRandomCoordinates';
 
 function renderPlayersBoards(players = 'player') {
@@ -87,8 +88,19 @@ function makeCoordinateForm(player) {
   form.appendChild(fieldSet);
   fieldSet.appendChild(legend);
 
-  const forAttrArray =  ['four', 'three', 'threeTwo', 'two', 'twoTwo', 'twoThree', 'one', 'oneTwo', 'oneThree', 'oneFour'];
-  const labelTexts = [4,3,3,2,2,2,1,1,1,1];
+  const forAttrArray = [
+    'four',
+    'three',
+    'threeTwo',
+    'two',
+    'twoTwo',
+    'twoThree',
+    'one',
+    'oneTwo',
+    'oneThree',
+    'oneFour',
+  ];
+  const labelTexts = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
   const ul = document.createElement('ul');
   for (let i = 0; i < forAttrArray.length; i += 1) {
@@ -118,22 +130,21 @@ function makeCoordinateForm(player) {
     const obj = new generateRandomCoordinates();
     const randomCoordinates = obj.generateAllCoordinates();
     const inputs = document.querySelectorAll('input');
-    for(let i = 0; i < inputs.length; i += 1){
+    for (let i = 0; i < inputs.length; i += 1) {
       const shipCoordinates = randomCoordinates[i];
       let word = '';
-      for(let j = 0; j<shipCoordinates.length-1; j += 1){
+      for (let j = 0; j < shipCoordinates.length - 1; j += 1) {
         word += `(${shipCoordinates[j]}),`;
       }
-      word += `(${shipCoordinates[shipCoordinates.length-1]})`;
+      word += `(${shipCoordinates[shipCoordinates.length - 1]})`;
 
       inputs[i].value = word;
-      
     }
   });
 
   const resetButton = document.createElement('button');
   resetButton.innerText = 'Reset';
-  resetButton.setAttribute('type','reset');
+  resetButton.setAttribute('type', 'reset');
 
   const submitButton = document.createElement('button');
   submitButton.innerText = 'Submit';
@@ -142,14 +153,35 @@ function makeCoordinateForm(player) {
   buttonArea.appendChild(resetButton);
   buttonArea.appendChild(submitButton);
 
-
   form.appendChild(buttonArea);
 
   container.appendChild(frag);
 }
 
-function dragAndDropInterface(){
-  renderPlayersBoards('realPlayer');
+function setDragAndDropShips(player, shipCoordinates) {
+  for (let i = 0; i < shipCoordinates.length; i += 1) {
+    // const shot = shipCoordinates[i];
+    // const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
+    // box.classList.add('missed');
+    for (let j = 0; j < shipCoordinates[i].length; j += 1) {
+      const shot = shipCoordinates[i][j];
+      const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
+      box.classList.add('drag');
+    }
+  }
 }
 
-export { renderPlayersBoards, renderBoard, gameOver, makeCoordinateForm, dragAndDropInterface };
+function dragAndDropInterface(player) {
+  renderPlayersBoards(player);
+  const obj = new generateRandomCoordinates();
+  const randomCoordinates = obj.generateAllCoordinates();
+  setDragAndDropShips(player, randomCoordinates);
+}
+
+export {
+  renderPlayersBoards,
+  renderBoard,
+  gameOver,
+  makeCoordinateForm,
+  dragAndDropInterface,
+};
