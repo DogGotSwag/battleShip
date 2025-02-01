@@ -146,12 +146,11 @@ function getAllCoordinates() {
 }
 
 export default () => {
-  makeCoordinateForm('player');
-  const form = document.querySelector('.getCoordinateForm');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const allShipCoordinates = getAllCoordinates();
-    playerVsComputer(allShipCoordinates);
-  });
+  // makeCoordinateForm('player');
+  // const form = document.querySelector('.getCoordinateForm');
+  // form.addEventListener('submit', (e) => {
+  //   e.preventDefault();
+  //   const allShipCoordinates = getAllCoordinates();
+  //   playerVsComputer(allShipCoordinates);
+  // });
 };
