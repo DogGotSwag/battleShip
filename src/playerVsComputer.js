@@ -5,6 +5,7 @@ import {
   renderBoard,
   gameOver,
   makeCoordinateForm,
+  dragAndDropInterface
 } from './domChanger';
 import computerAttack from './computerAttack';
 import generateRandomCoordinates from './generateRandomCoordinates';
@@ -153,4 +154,6 @@ export default () => {
   //   const allShipCoordinates = getAllCoordinates();
   //   playerVsComputer(allShipCoordinates);
   // });
+
+  dragAndDropInterface('realPlayer');
 };
