@@ -166,6 +166,7 @@ function setDragAndDropShips(player, shipCoordinates) {
       box.innerHTML = '';
       const dragBox = document.createElement('div');
       dragBox.classList.add('drag');
+      dragBox.draggable = true;
       box.append(dragBox);
     }
   }
