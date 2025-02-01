@@ -148,4 +148,8 @@ function makeCoordinateForm(player) {
   container.appendChild(frag);
 }
 
-export { renderPlayersBoards, renderBoard, gameOver, makeCoordinateForm };
+function dragAndDropInterface(){
+
+}
+
+export { renderPlayersBoards, renderBoard, gameOver, makeCoordinateForm, dragAndDropInterface };
