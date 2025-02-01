@@ -160,13 +160,13 @@ function makeCoordinateForm(player) {
 
 function setDragAndDropShips(player, shipCoordinates) {
   for (let i = 0; i < shipCoordinates.length; i += 1) {
-    // const shot = shipCoordinates[i];
-    // const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
-    // box.classList.add('missed');
     for (let j = 0; j < shipCoordinates[i].length; j += 1) {
       const shot = shipCoordinates[i][j];
       const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
-      box.classList.add('drag');
+      box.innerHTML = '';
+      const dragBox = document.createElement('div');
+      dragBox.classList.add('drag');
+      box.append(dragBox);
     }
   }
 }
