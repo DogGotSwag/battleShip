@@ -12,6 +12,9 @@ function setDragAndDropShips(player, shipCoordinates) {
       const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
       const dragBox = document.createElement('div');
       dragBox.classList.add('drag');
+      dragBox.classList.add( `ship_${shipCoordinates[i].length}`);
+      dragBox.classList.add( `number_${j}`);
+
       dragBox.draggable = true;
 
       dragBox.addEventListener('dragstart', () => {
