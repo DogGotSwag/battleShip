@@ -1,6 +1,9 @@
+/* eslint-disable no-loop-func */
 import { renderPlayersBoards } from './domChanger';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 import './dragAndDrop.css';
+
+let currDrag = [];
 
 function setDragAndDropShips(player, shipCoordinates) {
   for (let i = 0; i < shipCoordinates.length; i += 1) {
@@ -10,6 +13,10 @@ function setDragAndDropShips(player, shipCoordinates) {
       const dragBox = document.createElement('div');
       dragBox.classList.add('drag');
       dragBox.draggable = true;
+
+      dragBox.addEventListener('dragstart', () => {
+        currDrag.push(dragBox);
+      });
       box.append(dragBox);
     }
   }
@@ -25,7 +32,12 @@ function setUpGridBoxes(player) {
     targets[i].addEventListener('dragleave', (e) => {
       e.preventDefault();
     });
-    targets[i].addEventListener('drop', () => {});
+    targets[i].addEventListener('drop', () => {
+      for(let j = 0; j < currDrag.length; j +=1){
+        targets[i].prepend(currDrag[j]);
+      }
+      currDrag = [];
+    });
   }
 }
 function dragAndDropInterface(player) {
