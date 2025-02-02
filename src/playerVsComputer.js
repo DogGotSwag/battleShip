@@ -5,8 +5,9 @@ import {
   renderBoard,
   gameOver,
   makeCoordinateForm,
-  dragAndDropInterface
 } from './domChanger';
+
+import dragAndDropInterface from './dragAndDrop';
 import computerAttack from './computerAttack';
 import generateRandomCoordinates from './generateRandomCoordinates';
 
