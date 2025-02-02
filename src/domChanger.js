@@ -17,7 +17,7 @@ function renderPlayersBoards(players = 'player') {
 
       for (let k = 0; k < 10; k += 1) {
         const coordinateBox = document.createElement('div');
-        coordinateBox.classList = `coordinate k${j}${k} target`;
+        coordinateBox.classList = `coordinate k${j}${k}`;
 
         const statusCircle = document.createElement('div');
         statusCircle.classList = 'statusCircle';
