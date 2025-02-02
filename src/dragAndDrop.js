@@ -4,6 +4,7 @@ import GenerateRandomCoordinates from './generateRandomCoordinates';
 import './dragAndDrop.css';
 
 let currDrag = [];
+let currShipIndex;
 
 function setDragAndDropShips(player, shipCoordinates) {
   const shipLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -23,14 +24,16 @@ function setDragAndDropShips(player, shipCoordinates) {
 
       dragBox.addEventListener('dragstart', () => {
         const length = dragBox.classList[1].split('_')[1];
-        const shipNumber = dragBox.classList[2].split('_')[1];
+        [currShipIndex] = [...dragBox.classList[2].split('_')[1]];
+        
         const letter = dragBox.classList[3];
         for (let k = 0; k < length; k += 1) {
           const element = document.querySelector(
             `.ship_${length}.number_${k}.${letter}`
           );
-          currDrag.append(element);
+          currDrag.push(element);
         }
+
       });
       box.append(dragBox);
 
@@ -49,10 +52,11 @@ function setUpGridBoxes(player) {
       e.preventDefault();
     });
     targets[i].addEventListener('drop', () => {
-      for (let j = 0; j < currDrag.length; j += 1) {
-        targets[i].prepend(currDrag[j]);
-      }
-      currDrag = [];
+      // for (let j = 0; j < currDrag.length; j += 1) {
+      //   console.log(currDrag[j]);
+        
+      // }
+      // currDrag = [];
     });
   }
 }
