@@ -15,7 +15,7 @@ function setDragAndDropShips(player, shipCoordinates) {
   }
 }
 
-function addEventListenerTargets(player) {
+function setUpGridBoxes(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
     targets[i] .innerHTML = '';
@@ -32,7 +32,7 @@ function dragAndDropInterface(player) {
   renderPlayersBoards(player);
   const obj = new GenerateRandomCoordinates();
   const randomCoordinates = obj.generateAllCoordinates();
-  addEventListenerTargets(player);
+  setUpGridBoxes(player);
   setDragAndDropShips(player, randomCoordinates);
 }
 
