@@ -25,7 +25,7 @@ function setDragAndDropShips(player, shipCoordinates) {
       dragBox.addEventListener('dragstart', () => {
         const length = dragBox.classList[1].split('_')[1];
         [currShipIndex] = [...dragBox.classList[2].split('_')[1]];
-        
+
         const letter = dragBox.classList[3];
         for (let k = 0; k < length; k += 1) {
           const element = document.querySelector(
@@ -33,15 +33,13 @@ function setDragAndDropShips(player, shipCoordinates) {
           );
           currDrag.push(element);
         }
-
       });
       box.append(dragBox);
-
     }
   }
 }
 
-function getPosition(parent){
+function getPosition(parent) {
   const row = Number(parent.classList[1].split('')[1]);
   const col = Number(parent.classList[1].split('')[2]);
   return [row, col];
@@ -61,14 +59,22 @@ function setUpGridBoxes(player) {
       const initial = currDrag[currShipIndex];
       const position = getPosition(initial.parentNode);
       const newPosition = getPosition(e.target);
-      const transform = [newPosition[0]-position[0], newPosition[1]-position[1]];
+      const transform = [
+        newPosition[0] - position[0],
+        newPosition[1] - position[1],
+      ];
 
-      // for (let j = 0; j < currDrag.length; j += 1) {
-      //   const currBox = currDrag[j];
-      //   console.log(currBox);
-        
-        
-      // }
+      for (let j = 0; j < currDrag.length; j += 1) {
+        const currBox = currDrag[j];
+        const currBoxOldPosition = getPosition(currBox.parentNode);
+        const currBoxNewPosition = [
+          currBoxOldPosition[0] + transform[0],
+          currBoxOldPosition[1] + transform[1],
+        ];
+
+        const box = document.querySelector(`.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`);
+        box.append(currBox);
+      }
       currDrag = [];
     });
   }
