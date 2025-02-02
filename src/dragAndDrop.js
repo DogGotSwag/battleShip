@@ -45,6 +45,14 @@ function getPosition(parent) {
   return [row, col];
 }
 
+function getTransform(target) {
+  const initial = currDrag[currShipIndex];
+  const position = getPosition(initial.parentNode);
+  const newPosition = getPosition(target);
+
+  return [newPosition[0] - position[0], newPosition[1] - position[1]];
+}
+
 function setUpGridBoxes(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
@@ -56,13 +64,7 @@ function setUpGridBoxes(player) {
       e.preventDefault();
     });
     targets[i].addEventListener('drop', (e) => {
-      const initial = currDrag[currShipIndex];
-      const position = getPosition(initial.parentNode);
-      const newPosition = getPosition(e.target);
-      const transform = [
-        newPosition[0] - position[0],
-        newPosition[1] - position[1],
-      ];
+      const transform = getTransform(e.target);
 
       for (let j = 0; j < currDrag.length; j += 1) {
         const currBox = currDrag[j];
@@ -72,7 +74,9 @@ function setUpGridBoxes(player) {
           currBoxOldPosition[1] + transform[1],
         ];
 
-        const box = document.querySelector(`.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`);
+        const box = document.querySelector(
+          `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+        );
         box.append(currBox);
       }
       currDrag = [];
