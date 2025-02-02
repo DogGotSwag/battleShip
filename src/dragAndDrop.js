@@ -41,6 +41,12 @@ function setDragAndDropShips(player, shipCoordinates) {
   }
 }
 
+function getPosition(parent){
+  const row = Number(parent.classList[1].split('')[1]);
+  const col = Number(parent.classList[1].split('')[2]);
+  return [row, col];
+}
+
 function setUpGridBoxes(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
@@ -51,12 +57,19 @@ function setUpGridBoxes(player) {
     targets[i].addEventListener('dragleave', (e) => {
       e.preventDefault();
     });
-    targets[i].addEventListener('drop', () => {
+    targets[i].addEventListener('drop', (e) => {
+      const initial = currDrag[currShipIndex];
+      const position = getPosition(initial.parentNode);
+      const newPosition = getPosition(e.target);
+      const transform = [newPosition[0]-position[0], newPosition[1]-position[1]];
+
       // for (let j = 0; j < currDrag.length; j += 1) {
-      //   console.log(currDrag[j]);
+      //   const currBox = currDrag[j];
+      //   console.log(currBox);
+        
         
       // }
-      // currDrag = [];
+      currDrag = [];
     });
   }
 }
