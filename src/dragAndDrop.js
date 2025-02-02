@@ -17,14 +17,23 @@ function setDragAndDropShips(player, shipCoordinates) {
       dragBox.classList.add('drag');
       dragBox.classList.add(`ship_${shipCoordinates[i].length}`);
       dragBox.classList.add(`number_${j}`);
-      dragBox.classList.add(`letter${currShipLetter}`);
+      dragBox.classList.add(`${currShipLetter}`);
 
       dragBox.draggable = true;
 
       dragBox.addEventListener('dragstart', () => {
-        currDrag.push(dragBox);
+        const length = dragBox.classList[1].split('_')[1];
+        const shipNumber = dragBox.classList[2].split('_')[1];
+        const letter = dragBox.classList[3];
+        for (let k = 0; k < length; k += 1) {
+          const element = document.querySelector(
+            `.ship_${length}.number_${k}.${letter}`
+          );
+          currDrag.append(element);
+        }
       });
       box.append(dragBox);
+
     }
   }
 }
