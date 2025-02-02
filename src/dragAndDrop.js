@@ -7,7 +7,6 @@ function setDragAndDropShips(player, shipCoordinates) {
     for (let j = 0; j < shipCoordinates[i].length; j += 1) {
       const shot = shipCoordinates[i][j];
       const box = document.querySelector(`.${player} .k${shot[0]}${shot[1]}`);
-      box.innerHTML = '';
       const dragBox = document.createElement('div');
       dragBox.classList.add('drag');
       dragBox.draggable = true;
@@ -19,6 +18,7 @@ function setDragAndDropShips(player, shipCoordinates) {
 function addEventListenerTargets(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
+    targets[i] .innerHTML = '';
     targets[i].addEventListener('dragover', (e) => {
       e.preventDefault();
     });
@@ -32,8 +32,8 @@ function dragAndDropInterface(player) {
   renderPlayersBoards(player);
   const obj = new GenerateRandomCoordinates();
   const randomCoordinates = obj.generateAllCoordinates();
-  setDragAndDropShips(player, randomCoordinates);
   addEventListenerTargets(player);
+  setDragAndDropShips(player, randomCoordinates);
 }
 
 export default dragAndDropInterface;
