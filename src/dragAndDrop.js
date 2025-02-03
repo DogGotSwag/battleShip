@@ -48,7 +48,12 @@ function getPosition(parent) {
 function getTransform(target) {
   const initial = currDrag[currShipIndex];
   const position = getPosition(initial.parentNode);
-  const newPosition = getPosition(target);
+  let newPosition;
+  if (target.classList[0] === 'coordinate') {
+    newPosition = getPosition(target);
+  } else {
+    newPosition = getPosition(target.parentNode);
+  }
 
   return [newPosition[0] - position[0], newPosition[1] - position[1]];
 }
@@ -60,8 +65,44 @@ function setUpGridBoxes(player) {
     targets[i].addEventListener('dragover', (e) => {
       e.preventDefault();
     });
+
+    targets[i].addEventListener('dragenter', (e) => {
+      e.preventDefault();
+
+      const transform = getTransform(e.target);
+
+      for (let j = 0; j < currDrag.length; j += 1) {
+        const currBox = currDrag[j];
+        const currBoxOldPosition = getPosition(currBox.parentNode);
+        const currBoxNewPosition = [
+          currBoxOldPosition[0] + transform[0],
+          currBoxOldPosition[1] + transform[1],
+        ];
+
+        const box = document.querySelector(
+          `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+        );
+
+        box.classList.add('valid');
+      }
+    });
     targets[i].addEventListener('dragleave', (e) => {
       e.preventDefault();
+      // const transform = getTransform(e.target);
+
+      // for (let j = 0; j < currDrag.length; j += 1) {
+      //   const currBox = currDrag[j];
+      //   const currBoxOldPosition = getPosition(currBox.parentNode);
+      //   const currBoxNewPosition = [
+      //     currBoxOldPosition[0] + transform[0],
+      //     currBoxOldPosition[1] + transform[1],
+      //   ];
+
+      //   const box = document.querySelector(
+      //     `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+      //   );
+      //   box.classList.remove('valid');
+      // }
     });
     targets[i].addEventListener('drop', (e) => {
       const transform = getTransform(e.target);
