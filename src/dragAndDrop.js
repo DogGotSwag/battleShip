@@ -68,8 +68,11 @@ function setUpGridBoxes(player) {
 
     targets[i].addEventListener('dragenter', (e) => {
       e.preventDefault();
-
       const transform = getTransform(e.target);
+      const allValidBoxes = document.querySelectorAll('.valid');      
+      for(let j = 0; j < allValidBoxes.length; j +=1){                
+        allValidBoxes[j].classList.remove('valid');
+      }
 
       for (let j = 0; j < currDrag.length; j += 1) {
         const currBox = currDrag[j];
@@ -86,24 +89,11 @@ function setUpGridBoxes(player) {
         box.classList.add('valid');
       }
     });
+
     targets[i].addEventListener('dragleave', (e) => {
       e.preventDefault();
-      // const transform = getTransform(e.target);
-
-      // for (let j = 0; j < currDrag.length; j += 1) {
-      //   const currBox = currDrag[j];
-      //   const currBoxOldPosition = getPosition(currBox.parentNode);
-      //   const currBoxNewPosition = [
-      //     currBoxOldPosition[0] + transform[0],
-      //     currBoxOldPosition[1] + transform[1],
-      //   ];
-
-      //   const box = document.querySelector(
-      //     `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
-      //   );
-      //   box.classList.remove('valid');
-      // }
     });
+
     targets[i].addEventListener('drop', (e) => {
       const transform = getTransform(e.target);
 
@@ -119,6 +109,11 @@ function setUpGridBoxes(player) {
           `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
         );
         box.append(currBox);
+      }
+
+      const allValidBoxes = document.querySelectorAll('.valid');
+      for(let j = 0; j < allValidBoxes; j +=1){
+        allValidBoxes[j].classList.remove('valid');
       }
       currDrag = [];
     });
