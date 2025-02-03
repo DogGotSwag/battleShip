@@ -39,6 +39,13 @@ function setDragAndDropShips(player, shipCoordinates) {
   }
 }
 
+function removeValidBoxes() {
+  const allValidBoxes = document.querySelectorAll('.valid');
+  for (let j = 0; j < allValidBoxes.length; j += 1) {
+    allValidBoxes[j].classList.remove('valid');
+  }
+}
+
 function getPosition(parent) {
   const row = Number(parent.classList[1].split('')[1]);
   const col = Number(parent.classList[1].split('')[2]);
@@ -69,10 +76,7 @@ function setUpGridBoxes(player) {
     targets[i].addEventListener('dragenter', (e) => {
       e.preventDefault();
       const transform = getTransform(e.target);
-      const allValidBoxes = document.querySelectorAll('.valid');      
-      for(let j = 0; j < allValidBoxes.length; j +=1){                
-        allValidBoxes[j].classList.remove('valid');
-      }
+      removeValidBoxes();
 
       for (let j = 0; j < currDrag.length; j += 1) {
         const currBox = currDrag[j];
@@ -81,11 +85,9 @@ function setUpGridBoxes(player) {
           currBoxOldPosition[0] + transform[0],
           currBoxOldPosition[1] + transform[1],
         ];
-
         const box = document.querySelector(
           `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
         );
-
         box.classList.add('valid');
       }
     });
@@ -111,10 +113,7 @@ function setUpGridBoxes(player) {
         box.append(currBox);
       }
 
-      const allValidBoxes = document.querySelectorAll('.valid');
-      for(let j = 0; j < allValidBoxes; j +=1){
-        allValidBoxes[j].classList.remove('valid');
-      }
+      removeValidBoxes();
       currDrag = [];
     });
   }
