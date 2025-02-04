@@ -28,12 +28,23 @@ function horizontalOrVertical(elementOne, elementTwo) {
   return orientation;
 }
 
-function getNewHorizontalCoordinates( firstShip, length){
+function getNewHorizontalCoordinates(firstShip, length) {
   const position = getPosition(firstShip.parentNode);
   const newPositions = [];
 
-  for(let i = 1; i < length; i +=1){
-    const currPos = [position[0], position[1]+i];
+  for (let i = 1; i < length; i += 1) {
+    const currPos = [position[0], position[1] + i];
+    newPositions.push(currPos);
+  }
+
+  return newPositions;
+}
+function getNewVerticalCoordinates(firstShip, length) {
+  const position = getPosition(firstShip.parentNode);
+  const newPositions = [];
+
+  for (let i = 1; i < length; i += 1) {
+    const currPos = [position[0] + i, position[1]];
     newPositions.push(currPos);
   }
 
@@ -75,7 +86,6 @@ function setDragAndDropShips(player, shipCoordinates) {
           const shipGroup = document.querySelectorAll(
             `.ship_${length}.${letter}`
           );
-          
           
         });
       }
