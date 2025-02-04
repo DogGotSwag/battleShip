@@ -31,6 +31,7 @@ function setDragAndDropShips(player, shipCoordinates) {
           const element = document.querySelector(
             `.ship_${length}.number_${k}.${letter}`
           );
+          element.classList.add('inUse');
           currDrag.push(element);
         }
       });
@@ -43,6 +44,13 @@ function removeValidBoxes() {
   const allValidBoxes = document.querySelectorAll('.valid');
   for (let j = 0; j < allValidBoxes.length; j += 1) {
     allValidBoxes[j].classList.remove('valid');
+  }
+}
+
+function removeInUse() {
+  const allInUse = document.querySelectorAll('.inUse');
+  for (let j = 0; j < allInUse.length; j += 1) {
+    allInUse[j].classList.remove('inUse');
   }
 }
 
@@ -132,6 +140,7 @@ function setUpGridBoxes(player) {
 
     targets[i].addEventListener('dragend', () => {
       removeValidBoxes();
+      removeInUse();
       currDrag = [];
     });
   }
