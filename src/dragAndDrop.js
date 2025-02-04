@@ -51,6 +51,25 @@ function getNewVerticalCoordinates(firstShip, length) {
   return newPositions;
 }
 
+function moveToNewOrientation(newCoordinates, shipGroup, player) {
+  for (let k = 0; k < newCoordinates.length; k += 1) {
+    const currCoordinate = newCoordinates[k];
+    const newBoxPosition = document.querySelector(
+      `.${player} .k${currCoordinate[0]}${currCoordinate[1]}`
+    );
+    newBoxPosition.append(shipGroup[k + 1]);
+  }
+}
+
+function getNewOrientationCoordinates(orientation, shipGroup, length) {
+  let newCoordinates;
+  if (orientation === 'vertical') {
+    newCoordinates = getNewHorizontalCoordinates(shipGroup, length);
+  } else newCoordinates = getNewVerticalCoordinates(shipGroup, length);
+
+  return newCoordinates;
+}
+
 function setDragAndDropShips(player, shipCoordinates) {
   const shipLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i < shipCoordinates.length; i += 1) {
@@ -89,19 +108,13 @@ function setDragAndDropShips(player, shipCoordinates) {
 
           const orientation = horizontalOrVertical(shipGroup[0], shipGroup[1]);
 
-          let newCoordinates;
-          if (orientation === 'vertical') {
-            newCoordinates = getNewHorizontalCoordinates(shipGroup[0], length);
-          } else
-            newCoordinates = getNewVerticalCoordinates(shipGroup[0], length);
+          const newCoordinates = getNewOrientationCoordinates(
+            orientation,
+            shipGroup[0],
+            length
+          );
 
-          for (let k = 0; k < newCoordinates.length; k += 1) {
-            const currCoordinate = newCoordinates[k];
-            const newBoxPosition = document.querySelector(
-              `.${player} .k${currCoordinate[0]}${currCoordinate[1]}`
-            );
-            newBoxPosition.append(shipGroup[k+1]);
-          }
+          moveToNewOrientation(newCoordinates, shipGroup, player);
         });
       }
       box.append(dragBox);
