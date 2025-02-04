@@ -28,6 +28,18 @@ function horizontalOrVertical(elementOne, elementTwo) {
   return orientation;
 }
 
+function getNewHorizontalCoordinates( firstShip, length){
+  const position = getPosition(firstShip.parentNode);
+  const newPositions = [];
+
+  for(let i = 1; i < length; i +=1){
+    const currPos = [position[0], position[1]+i];
+    newPositions.push(currPos);
+  }
+
+  return newPositions;
+}
+
 function setDragAndDropShips(player, shipCoordinates) {
   const shipLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i < shipCoordinates.length; i += 1) {
@@ -63,7 +75,8 @@ function setDragAndDropShips(player, shipCoordinates) {
           const shipGroup = document.querySelectorAll(
             `.ship_${length}.${letter}`
           );
-          horizontalOrVertical(shipGroup[0], shipGroup[1]);
+          
+          
         });
       }
       box.append(dragBox);
