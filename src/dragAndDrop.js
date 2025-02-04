@@ -21,12 +21,12 @@ function setDragAndDropShips(player, shipCoordinates) {
       dragBox.classList.add(`${currShipLetter}`);
 
       dragBox.draggable = true;
+      const length = dragBox.classList[1].split('_')[1];
+      const letter = dragBox.classList[3];
 
       dragBox.addEventListener('dragstart', () => {
-        const length = dragBox.classList[1].split('_')[1];
         [currShipIndex] = [...dragBox.classList[2].split('_')[1]];
 
-        const letter = dragBox.classList[3];
         for (let k = 0; k < length; k += 1) {
           const element = document.querySelector(
             `.ship_${length}.number_${k}.${letter}`
@@ -35,8 +35,20 @@ function setDragAndDropShips(player, shipCoordinates) {
           currDrag.push(element);
         }
       });
+
+      if(length > 1){
+        dragBox.addEventListener('dblclick', () => {
+          const shipGroup = document.querySelectorAll(
+            `.ship_${length}.${letter}`
+          );
+          for( let k = 0; k < shipGroup.length; k +=1){
+            console.log(shipGroup[k]);
+          }
+        });
+      }
       box.append(dragBox);
     }
+
   }
 }
 
