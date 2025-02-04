@@ -46,6 +46,12 @@ function removeValidBoxes() {
   }
 }
 
+function inBounds(coordinate) {
+  if (coordinate[0] < 0 || coordinate[0] > 9) return false;
+  if (coordinate[1] < 0 || coordinate[1] > 9) return false;
+  return true;
+}
+
 function getPosition(parent) {
   const row = Number(parent.classList[1].split('')[1]);
   const col = Number(parent.classList[1].split('')[2]);
@@ -75,6 +81,7 @@ function setUpGridBoxes(player) {
 
     targets[i].addEventListener('dragenter', (e) => {
       e.preventDefault();
+
       const transform = getTransform(e.target);
       removeValidBoxes();
 
@@ -85,6 +92,11 @@ function setUpGridBoxes(player) {
           currBoxOldPosition[0] + transform[0],
           currBoxOldPosition[1] + transform[1],
         ];
+
+        if (!inBounds(currBoxNewPosition)) {
+          removeValidBoxes();
+          break;
+        }
         const box = document.querySelector(
           `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
         );
@@ -97,22 +109,28 @@ function setUpGridBoxes(player) {
     });
 
     targets[i].addEventListener('drop', (e) => {
-      const transform = getTransform(e.target);
+      const validBoxes = document.querySelectorAll('.valid');
 
-      for (let j = 0; j < currDrag.length; j += 1) {
-        const currBox = currDrag[j];
-        const currBoxOldPosition = getPosition(currBox.parentNode);
-        const currBoxNewPosition = [
-          currBoxOldPosition[0] + transform[0],
-          currBoxOldPosition[1] + transform[1],
-        ];
+      if (validBoxes.length > 0) {
+        const transform = getTransform(e.target);
 
-        const box = document.querySelector(
-          `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
-        );
-        box.append(currBox);
+        for (let j = 0; j < currDrag.length; j += 1) {
+          const currBox = currDrag[j];
+          const currBoxOldPosition = getPosition(currBox.parentNode);
+          const currBoxNewPosition = [
+            currBoxOldPosition[0] + transform[0],
+            currBoxOldPosition[1] + transform[1],
+          ];
+
+          const box = document.querySelector(
+            `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+          );
+          box.append(currBox);
+        }
       }
+    });
 
+    targets[i].addEventListener('dragend', () => {
       removeValidBoxes();
       currDrag = [];
     });
