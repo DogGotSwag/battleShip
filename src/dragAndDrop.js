@@ -87,6 +87,15 @@ function setDragAndDropShips(player, shipCoordinates) {
             `.ship_${length}.${letter}`
           );
           
+          const orientation = horizontalOrVertical(shipGroup[0], shipGroup[1]);
+
+          let newCoordinates;
+          if (orientation === 'vertical') {
+            newCoordinates = getNewHorizontalCoordinates(shipGroup[0], length);
+          } else
+            newCoordinates = getNewVerticalCoordinates(shipGroup[0], length);
+
+            
         });
       }
       box.append(dragBox);
