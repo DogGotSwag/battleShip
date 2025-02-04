@@ -12,6 +12,19 @@ function getPosition(parent) {
   return [row, col];
 }
 
+function inBounds(coordinate) {
+  if (coordinate[0] < 0 || coordinate[0] > 9) return false;
+  if (coordinate[1] < 0 || coordinate[1] > 9) return false;
+  return true;
+}
+
+function allInBounds(coordinateList){
+  for(let i = 0; i < coordinateList.length; i+=1){
+    if (inBounds(coordinateList[i]) === false) return false;
+  }
+  return true
+}
+
 function horizontalOrVertical(elementOne, elementTwo) {
   const positionOne = getPosition(elementOne.parentNode);
   const positionTwo = getPosition(elementTwo.parentNode);
@@ -113,8 +126,11 @@ function setDragAndDropShips(player, shipCoordinates) {
             shipGroup[0],
             length
           );
-
-          moveToNewOrientation(newCoordinates, shipGroup, player);
+          const withinBounds = allInBounds(newCoordinates);
+          
+          if(withinBounds){
+            moveToNewOrientation(newCoordinates, shipGroup, player);
+          }
         });
       }
       box.append(dragBox);
@@ -134,12 +150,6 @@ function removeInUse() {
   for (let j = 0; j < allInUse.length; j += 1) {
     allInUse[j].classList.remove('inUse');
   }
-}
-
-function inBounds(coordinate) {
-  if (coordinate[0] < 0 || coordinate[0] > 9) return false;
-  if (coordinate[1] < 0 || coordinate[1] > 9) return false;
-  return true;
 }
 
 function getTransform(target) {
