@@ -6,6 +6,28 @@ import './dragAndDrop.css';
 let currDrag = [];
 let currShipIndex;
 
+function getPosition(parent) {
+  const row = Number(parent.classList[1].split('')[1]);
+  const col = Number(parent.classList[1].split('')[2]);
+  return [row, col];
+}
+
+function horizontalOrVertical(elementOne, elementTwo) {
+  const positionOne = getPosition(elementOne.parentNode);
+  const positionTwo = getPosition(elementTwo.parentNode);
+
+  let orientation;
+
+  if (positionOne[0] + 1 === positionTwo[0]) {
+    orientation = 'vertical';
+  }
+  if (positionOne[1] + 1 === positionTwo[1]) {
+    orientation = 'horizontal';
+  }
+
+  return orientation;
+}
+
 function setDragAndDropShips(player, shipCoordinates) {
   const shipLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i < shipCoordinates.length; i += 1) {
@@ -36,19 +58,16 @@ function setDragAndDropShips(player, shipCoordinates) {
         }
       });
 
-      if(length > 1){
+      if (length > 1) {
         dragBox.addEventListener('dblclick', () => {
           const shipGroup = document.querySelectorAll(
             `.ship_${length}.${letter}`
           );
-          for( let k = 0; k < shipGroup.length; k +=1){
-            console.log(shipGroup[k]);
-          }
+          horizontalOrVertical(shipGroup[0], shipGroup[1]);
         });
       }
       box.append(dragBox);
     }
-
   }
 }
 
@@ -70,12 +89,6 @@ function inBounds(coordinate) {
   if (coordinate[0] < 0 || coordinate[0] > 9) return false;
   if (coordinate[1] < 0 || coordinate[1] > 9) return false;
   return true;
-}
-
-function getPosition(parent) {
-  const row = Number(parent.classList[1].split('')[1]);
-  const col = Number(parent.classList[1].split('')[2]);
-  return [row, col];
 }
 
 function getTransform(target) {
