@@ -86,7 +86,7 @@ function setDragAndDropShips(player, shipCoordinates) {
           const shipGroup = document.querySelectorAll(
             `.ship_${length}.${letter}`
           );
-          
+
           const orientation = horizontalOrVertical(shipGroup[0], shipGroup[1]);
 
           let newCoordinates;
@@ -95,7 +95,13 @@ function setDragAndDropShips(player, shipCoordinates) {
           } else
             newCoordinates = getNewVerticalCoordinates(shipGroup[0], length);
 
-            
+          for (let k = 0; k < newCoordinates.length; k += 1) {
+            const currCoordinate = newCoordinates[k];
+            const newBoxPosition = document.querySelector(
+              `.${player} .k${currCoordinate[0]}${currCoordinate[1]}`
+            );
+            newBoxPosition.append(shipGroup[k+1]);
+          }
         });
       }
       box.append(dragBox);
