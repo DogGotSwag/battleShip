@@ -18,11 +18,11 @@ function inBounds(coordinate) {
   return true;
 }
 
-function allInBounds(coordinateList){
-  for(let i = 0; i < coordinateList.length; i+=1){
+function allInBounds(coordinateList) {
+  for (let i = 0; i < coordinateList.length; i += 1) {
     if (inBounds(coordinateList[i]) === false) return false;
   }
-  return true
+  return true;
 }
 
 function horizontalOrVertical(elementOne, elementTwo) {
@@ -83,6 +83,79 @@ function getNewOrientationCoordinates(orientation, shipGroup, length) {
   return newCoordinates;
 }
 
+function getSurroundingPositions(coordinateList) {
+  const surroundingCoordinates = [];
+  for (let i = 0; i < coordinateList.length; i += 1) {
+    const curr = coordinateList[i];
+    const top = [curr[0] - 1, curr[1]];
+    const topLeft = [curr[0] - 1, curr[1] - 1];
+    const topRight = [curr[0] - 1, curr[1] + 1];
+    const left = [curr[0], curr[1] - 1];
+    const right = [curr[0], curr[1] + 1];
+    const bottom = [curr[0] + 1, curr[1]];
+    const bottomLeft = [curr[0] + 1, curr[1] - 1];
+    const bottomRight = [curr[0] + 1, curr[1] + 1];
+
+    if (inBounds(top)) surroundingCoordinates.push(top);
+    if (inBounds(topLeft)) surroundingCoordinates.push(topLeft);
+    if (inBounds(topRight)) surroundingCoordinates.push(topRight);
+    if (inBounds(left)) surroundingCoordinates.push(left);
+    if (inBounds(right)) surroundingCoordinates.push(right);
+    if (inBounds(bottom)) surroundingCoordinates.push(bottom);
+    if (inBounds(bottomLeft)) surroundingCoordinates.push(bottomLeft);
+    if (inBounds(bottomRight)) surroundingCoordinates.push(bottomRight);
+    if (inBounds(curr)) surroundingCoordinates.push(curr);
+  }
+  return surroundingCoordinates;
+}
+
+function removeDuplicates(coordinateList) {
+  const noDupes = [];
+  for (let i = 0; i < coordinateList.length; i += 1) {
+    const curr = coordinateList[i];
+    let isThereDupe = false;
+    for (let j = 0; j < noDupes.length; j += 1) {
+      if (JSON.stringify(noDupes[j]) === JSON.stringify(curr)) {
+        isThereDupe = true;
+      }
+    }
+    if (isThereDupe === false) noDupes.push(curr);
+  }
+  return noDupes;
+}
+
+function removeException(coordinateList, exception, exceptionTwo) {
+  const final = [];
+  for (let i = 0; i < coordinateList.length; i += 1) {
+    const curr = coordinateList[i];
+    if (
+      JSON.stringify(curr) !== JSON.stringify(exception) &&
+      JSON.stringify(curr) !== JSON.stringify(exceptionTwo)
+    ) {
+      final.push(curr);
+    }
+  }
+  return final;
+}
+
+function checkForConflicts(coordinateList, exception, exceptionTwo, player) {
+  const surroundingCoordinates = getSurroundingPositions(coordinateList);
+  const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
+  const finalWithException = removeException(
+    noDuplicateCoordinates,
+    exception,
+    exceptionTwo
+  );
+
+  let noConflicts = true;
+  for (let i = 0; i < finalWithException.length; i += 1) {
+    const curr = finalWithException[i];
+    const box = document.querySelector(`.${player} .k${curr[0]}${curr[1]}`);
+    if (box.innerHTML !== '') noConflicts = false;
+  }
+  return noConflicts;
+}
+
 function setDragAndDropShips(player, shipCoordinates) {
   const shipLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i < shipCoordinates.length; i += 1) {
@@ -127,8 +200,14 @@ function setDragAndDropShips(player, shipCoordinates) {
             length
           );
           const withinBounds = allInBounds(newCoordinates);
-          
-          if(withinBounds){
+          const noConflicts = checkForConflicts(
+            newCoordinates,
+            getPosition(shipGroup[0].parentNode),
+            getPosition(shipGroup[1].parentNode),
+            player
+          );
+
+          if (withinBounds && noConflicts) {
             moveToNewOrientation(newCoordinates, shipGroup, player);
           }
         });
