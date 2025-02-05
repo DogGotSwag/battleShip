@@ -8,6 +8,15 @@ function getPosition(parent) {
   return [row, col];
 }
 
+function getCoordinatesFromNodeList(nodeList) {
+  const coordinates = [];
+  for (let i = 0; i < nodeList.length; i += 1) {
+    const curr = nodeList[i];
+    coordinates.push(curr);
+  }
+  return coordinates;
+}
+
 function inBounds(coordinate) {
   if (coordinate[0] < 0 || coordinate[0] > 9) return false;
   if (coordinate[1] < 0 || coordinate[1] > 9) return false;
@@ -227,7 +236,7 @@ function removeInUse() {
 }
 
 function getTransform(target) {
-  const initial = document.querySelector('.index')
+  const initial = document.querySelector('.index');
   const position = getPosition(initial.parentNode);
   let newPosition;
   if (target.classList[0] === 'coordinate') {
@@ -254,23 +263,23 @@ function setUpGridBoxes(player) {
       removeValidBoxes();
 
       const inUse = document.querySelectorAll('.inUse');
+      const allCoordinates = getCoordinatesFromNodeList(inUse);
+      const isAllInBounds = allInBounds(allCoordinates);
 
-      for (let j = 0; j < inUse.length; j += 1) {
-        const currBox = inUse[j];
-        const currBoxOldPosition = getPosition(currBox.parentNode);
-        const currBoxNewPosition = [
-          currBoxOldPosition[0] + transform[0],
-          currBoxOldPosition[1] + transform[1],
-        ];
+      if (isAllInBounds) {
+        for (let j = 0; j < inUse.length; j += 1) {
+          const currBox = inUse[j];
+          const currBoxOldPosition = getPosition(currBox.parentNode);
+          const currBoxNewPosition = [
+            currBoxOldPosition[0] + transform[0],
+            currBoxOldPosition[1] + transform[1],
+          ];
 
-        if (!inBounds(currBoxNewPosition)) {
-          removeValidBoxes();
-          break;
+          const box = document.querySelector(
+            `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+          );
+          box.classList.add('valid');
         }
-        const box = document.querySelector(
-          `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
-        );
-        box.classList.add('valid');
       }
     });
 
@@ -305,12 +314,11 @@ function setUpGridBoxes(player) {
       removeValidBoxes();
       removeInUse();
       const inUse = document.querySelectorAll('.inUse');
-      for(let j = 0; j < inUse.length; j += 1){
+      for (let j = 0; j < inUse.length; j += 1) {
         inUse[j].classList.remove('inUse');
       }
       const index = document.querySelector('.index');
       index.classList.remove('index');
-
     });
   }
 }
