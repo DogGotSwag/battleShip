@@ -143,7 +143,12 @@ function removeException(coordinateList, exception, exceptionTwo) {
   return final;
 }
 
-function checkForConflicts(coordinateList, exception, exceptionTwo, player) {
+function checkSurroundingCoordinates(
+  coordinateList,
+  exception,
+  exceptionTwo,
+  player
+) {
   const surroundingCoordinates = getSurroundingPositions(coordinateList);
   const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
   const finalWithException = removeException(
@@ -204,7 +209,7 @@ function setDragAndDropShips(player, shipCoordinates) {
             length
           );
           const withinBounds = allInBounds(newCoordinates);
-          const noConflicts = checkForConflicts(
+          const noConflicts = checkSurroundingCoordinates(
             newCoordinates,
             getPosition(shipGroup[0].parentNode),
             getPosition(shipGroup[1].parentNode),
