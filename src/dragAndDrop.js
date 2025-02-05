@@ -287,10 +287,8 @@ function setUpGridBoxes(player) {
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
       const newLocation = transformedCoordinates(allCoordinates, transform);
-      console.log(newLocation);
       
-      
-      const isAllInBounds = allInBounds(allCoordinates);
+      const isAllInBounds = allInBounds(newLocation);
 
       if (isAllInBounds) {
         for (let j = 0; j < inUse.length; j += 1) {
