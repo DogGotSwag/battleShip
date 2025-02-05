@@ -1,10 +1,6 @@
-/* eslint-disable no-loop-func */
 import { renderPlayersBoards } from './domChanger';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 import './dragAndDrop.css';
-
-let currDrag = [];
-let currShipIndex;
 
 function getPosition(parent) {
   const row = Number(parent.classList[1].split('')[1]);
@@ -175,14 +171,13 @@ function setDragAndDropShips(player, shipCoordinates) {
       const letter = dragBox.classList[3];
 
       dragBox.addEventListener('dragstart', () => {
-        [currShipIndex] = [...dragBox.classList[2].split('_')[1]];
+        dragBox.classList.add('index');
 
         for (let k = 0; k < length; k += 1) {
           const element = document.querySelector(
             `.ship_${length}.number_${k}.${letter}`
           );
           element.classList.add('inUse');
-          currDrag.push(element);
         }
       });
 
@@ -232,7 +227,7 @@ function removeInUse() {
 }
 
 function getTransform(target) {
-  const initial = currDrag[currShipIndex];
+  const initial = document.querySelector('.index')
   const position = getPosition(initial.parentNode);
   let newPosition;
   if (target.classList[0] === 'coordinate') {
@@ -258,8 +253,10 @@ function setUpGridBoxes(player) {
       const transform = getTransform(e.target);
       removeValidBoxes();
 
-      for (let j = 0; j < currDrag.length; j += 1) {
-        const currBox = currDrag[j];
+      const inUse = document.querySelectorAll('.inUse');
+
+      for (let j = 0; j < inUse.length; j += 1) {
+        const currBox = inUse[j];
         const currBoxOldPosition = getPosition(currBox.parentNode);
         const currBoxNewPosition = [
           currBoxOldPosition[0] + transform[0],
@@ -286,9 +283,10 @@ function setUpGridBoxes(player) {
 
       if (validBoxes.length > 0) {
         const transform = getTransform(e.target);
+        const inUse = document.querySelectorAll('.inUse');
 
-        for (let j = 0; j < currDrag.length; j += 1) {
-          const currBox = currDrag[j];
+        for (let j = 0; j < inUse.length; j += 1) {
+          const currBox = inUse[j];
           const currBoxOldPosition = getPosition(currBox.parentNode);
           const currBoxNewPosition = [
             currBoxOldPosition[0] + transform[0],
@@ -306,7 +304,13 @@ function setUpGridBoxes(player) {
     targets[i].addEventListener('dragend', () => {
       removeValidBoxes();
       removeInUse();
-      currDrag = [];
+      const inUse = document.querySelectorAll('.inUse');
+      for(let j = 0; j < inUse.length; j += 1){
+        inUse[j].classList.remove('inUse');
+      }
+      const index = document.querySelector('.index');
+      index.classList.remove('index');
+
     });
   }
 }
