@@ -143,6 +143,16 @@ function removeException(coordinateList, exception, exceptionTwo) {
   return final;
 }
 
+function checkForConflicts(coordinateList, player){
+  let noConflicts = true;
+  for (let i = 0; i < coordinateList.length; i += 1) {
+    const curr = coordinateList[i];
+    const box = document.querySelector(`.${player} .k${curr[0]}${curr[1]}`);
+    if (box.innerHTML !== '') noConflicts = false;
+  }
+  return noConflicts;
+}
+
 function checkSurroundingCoordinates(
   coordinateList,
   exception,
@@ -157,13 +167,7 @@ function checkSurroundingCoordinates(
     exceptionTwo
   );
 
-  let noConflicts = true;
-  for (let i = 0; i < finalWithException.length; i += 1) {
-    const curr = finalWithException[i];
-    const box = document.querySelector(`.${player} .k${curr[0]}${curr[1]}`);
-    if (box.innerHTML !== '') noConflicts = false;
-  }
-  return noConflicts;
+  return checkForConflicts(finalWithException, player);
 }
 
 function setDragAndDropShips(player, shipCoordinates) {
