@@ -12,7 +12,7 @@ function getCoordinatesFromNodeList(nodeList) {
   const coordinates = [];
   for (let i = 0; i < nodeList.length; i += 1) {
     const curr = nodeList[i];
-    coordinates.push(curr);
+    coordinates.push(getPosition(curr.parentNode));
   }
   return coordinates;
 }
@@ -273,6 +273,7 @@ function setUpGridBoxes(player) {
 
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
+      
       const isAllInBounds = allInBounds(allCoordinates);
 
       if (isAllInBounds) {
