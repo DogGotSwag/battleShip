@@ -257,6 +257,19 @@ function getTransform(target) {
   return [newPosition[0] - position[0], newPosition[1] - position[1]];
 }
 
+function transformedCoordinates(coordinateList, transform) {
+  const coordinates = [];
+  for (let i = 0; i < coordinateList.length; i += 1) {
+    const currBox = coordinateList[i];
+    const currBoxNewPosition = [
+      currBox[0] + transform[0],
+      currBox[1] + transform[1],
+    ];
+    coordinates.push(currBoxNewPosition);
+  }
+  return coordinates
+}
+
 function setUpGridBoxes(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
@@ -273,6 +286,9 @@ function setUpGridBoxes(player) {
 
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
+      const newLocation = transformedCoordinates(allCoordinates, transform);
+      console.log(newLocation);
+      
       
       const isAllInBounds = allInBounds(allCoordinates);
 
