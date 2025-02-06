@@ -285,9 +285,9 @@ function setUpGridBoxes(player) {
 
       const isAllInBounds = allInBounds(newLocation);
     
-      // const noConflicts = checkSurroundingCoordinates(newLocation, player, ...allCoordinates);      
+      const noConflicts = checkSurroundingCoordinates(newLocation, player, ...allCoordinates);      
 
-      if (isAllInBounds) {
+      if (isAllInBounds && noConflicts) {
         for (let j = 0; j < inUse.length; j += 1) {
           const currBox = inUse[j];
           const currBoxOldPosition = getPosition(currBox.parentNode);
