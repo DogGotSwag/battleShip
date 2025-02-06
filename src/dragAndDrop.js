@@ -231,6 +231,12 @@ function removeValidBoxes() {
     allValidBoxes[j].classList.remove('valid');
   }
 }
+function removeInvalidBoxes() {
+  const allValidBoxes = document.querySelectorAll('.invalid');
+  for (let j = 0; j < allValidBoxes.length; j += 1) {
+    allValidBoxes[j].classList.remove('invalid');
+  }
+}
 
 function removeInUse() {
   const allInUse = document.querySelectorAll('.inUse');
@@ -278,6 +284,7 @@ function setUpGridBoxes(player) {
 
       const transform = getTransform(e.target);
       removeValidBoxes();
+      removeInvalidBoxes();
 
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
@@ -300,6 +307,21 @@ function setUpGridBoxes(player) {
             `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
           );
           box.classList.add('valid');
+        }
+      }
+      else{
+        for (let j = 0; j < inUse.length; j += 1) {
+          const currBox = inUse[j];
+          const currBoxOldPosition = getPosition(currBox.parentNode);
+          const currBoxNewPosition = [
+            currBoxOldPosition[0] + transform[0],
+            currBoxOldPosition[1] + transform[1],
+          ];
+
+          const box = document.querySelector(
+            `.${player} .k${currBoxNewPosition[0]}${currBoxNewPosition[1]}`
+          );
+          box.classList.add('invalid');
         }
       }
     });
@@ -333,6 +355,7 @@ function setUpGridBoxes(player) {
 
     targets[i].addEventListener('dragend', () => {
       removeValidBoxes();
+      removeInvalidBoxes();
       removeInUse();
       const inUse = document.querySelectorAll('.inUse');
       for (let j = 0; j < inUse.length; j += 1) {

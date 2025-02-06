@@ -10,3 +10,7 @@
 .inUse{
     background-color: rgb(61, 61, 61);
 }
+
+.invalid{
+    background-color: rgb(158, 17, 17);
+}
