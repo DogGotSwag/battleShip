@@ -129,21 +129,22 @@ function removeDuplicates(coordinateList) {
   return noDupes;
 }
 
-function removeException(coordinateList, exception, exceptionTwo) {
+function removeException(coordinateList, exceptions) {
   const final = [];
   for (let i = 0; i < coordinateList.length; i += 1) {
     const curr = coordinateList[i];
-    if (
-      JSON.stringify(curr) !== JSON.stringify(exception) &&
-      JSON.stringify(curr) !== JSON.stringify(exceptionTwo)
-    ) {
-      final.push(curr);
+    let allowIn = true;
+    for (let j = 0; j < exceptions.length; j += 1) {
+      if (JSON.stringify(curr) !== JSON.stringify(exceptions[j])) {
+        allowIn = false;
+      }
     }
+    if (allowIn) final.push(curr);
   }
   return final;
 }
 
-function checkForConflicts(coordinateList, player){
+function checkForConflicts(coordinateList, player) {
   let noConflicts = true;
   for (let i = 0; i < coordinateList.length; i += 1) {
     const curr = coordinateList[i];
@@ -153,18 +154,12 @@ function checkForConflicts(coordinateList, player){
   return noConflicts;
 }
 
-function checkSurroundingCoordinates(
-  coordinateList,
-  exception,
-  exceptionTwo,
-  player
-) {
+function checkSurroundingCoordinates(coordinateList, player, ...exceptions) {
   const surroundingCoordinates = getSurroundingPositions(coordinateList);
   const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
   const finalWithException = removeException(
     noDuplicateCoordinates,
-    exception,
-    exceptionTwo
+    exceptions
   );
 
   return checkForConflicts(finalWithException, player);
@@ -215,9 +210,9 @@ function setDragAndDropShips(player, shipCoordinates) {
           const withinBounds = allInBounds(newCoordinates);
           const noConflicts = checkSurroundingCoordinates(
             newCoordinates,
+            player,
             getPosition(shipGroup[0].parentNode),
-            getPosition(shipGroup[1].parentNode),
-            player
+            getPosition(shipGroup[1].parentNode)
           );
 
           if (withinBounds && noConflicts) {
@@ -267,7 +262,7 @@ function transformedCoordinates(coordinateList, transform) {
     ];
     coordinates.push(currBoxNewPosition);
   }
-  return coordinates
+  return coordinates;
 }
 
 function setUpGridBoxes(player) {
@@ -287,8 +282,11 @@ function setUpGridBoxes(player) {
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
       const newLocation = transformedCoordinates(allCoordinates, transform);
-      
+
       const isAllInBounds = allInBounds(newLocation);
+      const surroundingCoordinates = getSurroundingPositions(newLocation);
+      const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
+      // const noConflicts = checkForConflicts(noDuplicateCoordinates, player);
 
       if (isAllInBounds) {
         for (let j = 0; j < inUse.length; j += 1) {
