@@ -135,7 +135,7 @@ function removeException(coordinateList, exceptions) {
     const curr = coordinateList[i];
     let allowIn = true;
     for (let j = 0; j < exceptions.length; j += 1) {
-      if (JSON.stringify(curr) !== JSON.stringify(exceptions[j])) {
+      if (JSON.stringify(curr) === JSON.stringify(exceptions[j])) {
         allowIn = false;
       }
     }
@@ -284,9 +284,8 @@ function setUpGridBoxes(player) {
       const newLocation = transformedCoordinates(allCoordinates, transform);
 
       const isAllInBounds = allInBounds(newLocation);
-      const surroundingCoordinates = getSurroundingPositions(newLocation);
-      const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
-      // const noConflicts = checkForConflicts(noDuplicateCoordinates, player);
+    
+      // const noConflicts = checkSurroundingCoordinates(newLocation, player, ...allCoordinates);      
 
       if (isAllInBounds) {
         for (let j = 0; j < inUse.length; j += 1) {
