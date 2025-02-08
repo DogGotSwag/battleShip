@@ -366,6 +366,7 @@ function addStartButton(player){
   const board = document.querySelector(`.${player}`);  
   const button = document.createElement('button');
   button.innerText = 'Start';
+  button.setAttribute('type', 'button');
   button.classList.add('startButton');
   board.appendChild(button);
 }
@@ -378,4 +379,4 @@ function dragAndDropInterface(player) {
   addStartButton(player);
 }
 
-export default dragAndDropInterface;
+export { dragAndDropInterface, getPosition};
