@@ -1,184 +1,203 @@
-
-*{
-    box-sizing:border-box;
-    appearance: none;
-    border: none;
-    outline: none;
+* {
+  box-sizing: border-box;
+  appearance: none;
+  border: none;
+  outline: none;
 }
-.player{
-    display: grid;
-    grid-template-rows: repeat(10,1fr);
-    cursor: crosshair;
+.player {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  cursor: crosshair;
 
-    --grid-color: #b7bdc8;
+  --grid-color: #b7bdc8;
 }
-.boardRow:not(:last-child){
-    border-bottom: solid max(1px, 0.0625rem) var(--grid-color);
-}
-
-.boardRow{
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
+.boardRow:not(:last-child) {
+  border-bottom: solid max(1px, 0.0625rem) var(--grid-color);
 }
 
-.coordinate{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.boardRow {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
 }
 
-.coordinate:not(:last-child){
-    border-right: solid max(1px, 0.0625rem) var(--grid-color);
+.coordinate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.coordinate:hover{
-    background-color: #030b19;
+.coordinate:not(:last-child) {
+  border-right: solid max(1px, 0.0625rem) var(--grid-color);
 }
 
-.coordinate:active{
-    background-color: #06142c;
+.coordinate:hover {
+  background-color: #030b19;
 }
 
-.coordinate.missed, .coordinate.hitShot
-,.disabled {
-    pointer-events: none;
+.coordinate:active {
+  background-color: #06142c;
 }
 
-.coordinate.sunk{
-    background-color:rgb(164, 46, 46) ;
-}
-.statusCircle{
-    background-color: transparent;
-    --circle-size: 6px;
-    width: var(--circle-size);
-    height: var(--circle-size);
-    border-radius: 50%;
+.coordinate.missed,
+.coordinate.hitShot,
+.disabled {
+  pointer-events: none;
 }
 
-.coordinate.missed .statusCircle{
-    background-color: var(--grid-color);
+.coordinate.sunk {
+  background-color: rgb(164, 46, 46);
+}
+.statusCircle {
+  background-color: transparent;
+  --circle-size: 6px;
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: 50%;
 }
 
-.coordinate.hitShot .statusCircle{
-    background-color: rgb(164, 46, 46);
+.coordinate.missed .statusCircle {
+  background-color: var(--grid-color);
 }
 
-.player.winner{
-    border: green 1px solid ;
+.coordinate.hitShot .statusCircle {
+  background-color: rgb(164, 46, 46);
 }
 
-.player.loser{
-    border: red 1px solid;
+.player.winner {
+  border: green 1px solid;
 }
 
-.player:has(.getCoordinateForm){
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+.player.loser {
+  border: red 1px solid;
 }
 
-.getCoordinateForm{
-    display: grid;
-    grid-template-rows:4fr 1fr;
-    grid-template-columns: 1fr;
-    padding-top: 10px;
+.player:has(.getCoordinateForm) {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 }
 
-.getCoordinateForm .formFieldSet{
-    border: 1px solid var(--grid-color);
-    width: 90%;
-    justify-self: center;
+.getCoordinateForm {
+  display: grid;
+  grid-template-rows: 4fr 1fr;
+  grid-template-columns: 1fr;
+  padding-top: 10px;
 }
 
-.formFieldSet legend{
-    color: var(--grid-color);
-    margin-left: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.buttonArea{
-    width: 90%;
-    justify-self: center;
+.getCoordinateForm .formFieldSet {
+  border: 1px solid var(--grid-color);
+  width: 90%;
+  justify-self: center;
 }
 
-.formFieldSet li{
-    list-style: none;
-    display: flex;
-    align-items: center;
+.formFieldSet legend {
+  color: var(--grid-color);
+  margin-left: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.buttonArea {
+  width: 90%;
+  justify-self: center;
+}
+
+.formFieldSet li {
+  list-style: none;
+  display: flex;
+  align-items: center;
 }
 
 .formFieldSet li * {
-    height: 20px;
+  height: 20px;
 }
 
-.formFieldSet *{
-    color: var(--grid-color);
+.formFieldSet * {
+  color: var(--grid-color);
 }
 
-.formFieldSet input{
-    border: var(--grid-color) 1px solid;
-    padding: 3px 6px;
+.formFieldSet input {
+  border: var(--grid-color) 1px solid;
+  padding: 3px 6px;
 }
 
-.formFieldSet input:active{
-    border: var(--grid-color) 2px solid;
+.formFieldSet input:active {
+  border: var(--grid-color) 2px solid;
 }
 
 .formFieldSet label {
-    padding-right: 10px;
-    padding-left: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
-.formFieldSet ul{
-    height: 100%;
-    display: grid;
-    grid-template-rows: repeat(10,1fr);
+.formFieldSet ul {
+  height: 100%;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
 }
 
-.buttonArea{
+.buttonArea {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   align-items: center;
   gap: 25px;
 }
 
-.buttonArea button{
-    border-radius: 3px;
-    width: 60px;
-    height: 30px;
-    border: 1px solid var(--grid-color);
-    color: var(--grid-color);
-    font-size:15px;
-    cursor: pointer;
+.buttonArea button {
+  border-radius: 3px;
+  width: 60px;
+  height: 30px;
+  border: 1px solid var(--grid-color);
+  color: var(--grid-color);
+  font-size: 15px;
+  cursor: pointer;
 }
 
-.buttonArea .randomize{
+.buttonArea .randomize {
   width: 100px;
 }
 
-.player{
-    position: relative;
+.player {
+  position: relative;
 }
 
-.startButton{
-    position: absolute;
-    background-color: bisque;
-    width: 80px;
-    height: 40px;
+.startButton {
+  position: absolute;
+  background-color: bisque;
+  width: 80px;
+  height: 40px;
 
-    bottom: -50px;
-    right: 0px;
+  bottom: -50px;
+  right: 0px;
 
-    border-radius: 3px;
-    font-family:'Courier New', Courier, monospace ;
-    font-size: 20px;
-    font-weight: 800;
-    border: 1px solid var(--grid-color);
-    background-color: #010409;
-    color: var(--grid-color);
-    cursor: pointer;
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  font-weight: 800;
+  border: 1px solid var(--grid-color);
+  background-color: #010409;
+  color: var(--grid-color);
+  cursor: pointer;
 }
 
-.startButton:active{
-    background-color:#020915;
+.startButton:active {
+  background-color: #020915;
+}
+
+.randomButton {
+  position: absolute;
+  background-color: bisque;
+  width: 90px;
+  height: 40px;
+
+  bottom: -50px;
+  right: 90px;
+
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  font-weight: 800;
+  border: 1px solid var(--grid-color);
+  background-color: #010409;
+  color: var(--grid-color);
+  cursor: pointer;
 }

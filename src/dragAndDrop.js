@@ -9,7 +9,7 @@ import {
   getNewOrientationCoordinates,
   checkSurroundingCoordinates,
   transformedCoordinates,
-  getTransform
+  getTransform,
 } from './coordinates';
 
 function removeClass(className) {
@@ -217,6 +217,23 @@ function addStartButton(player) {
   button.classList.add('startButton');
   board.appendChild(button);
 }
+
+function addRandomButton(player) {
+  const board = document.querySelector(`.${player}`);
+  const button = document.createElement('button');
+  button.innerText = 'Random';
+  button.setAttribute('type', 'button');
+  button.classList.add('randomButton');
+  board.appendChild(button);
+
+  button.addEventListener('click', () => {
+    const obj = new GenerateRandomCoordinates();
+    const randomCoordinates = obj.generateAllCoordinates();
+    setUpGridBoxes(player);
+    setDragAndDropShips(player, randomCoordinates);
+  });
+}
+
 function dragAndDropInterface(player) {
   renderPlayersBoards(player);
   const obj = new GenerateRandomCoordinates();
@@ -224,6 +241,7 @@ function dragAndDropInterface(player) {
   setUpGridBoxes(player);
   setDragAndDropShips(player, randomCoordinates);
   addStartButton(player);
+  addRandomButton(player);
 }
 
 export { dragAndDropInterface, getPosition };
