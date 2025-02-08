@@ -4,7 +4,6 @@ import {
   renderPlayersBoards,
   renderBoard,
   gameOver,
-  // makeCoordinateForm,
 } from './domChanger';
 
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
@@ -116,48 +115,8 @@ function playerVsComputer(allCoordinates) {
   });
 }
 
-// function getAllCoordinates() {
-//   const classes = [
-//     'four',
-//     'three',
-//     'threeTwo',
-//     'two',
-//     'twoTwo',
-//     'twoThree',
-//     'one',
-//     'oneTwo',
-//     'oneThree',
-//     'oneFour',
-//   ];
-//   const allCoordinates = [];
-//   for (let i = 0; i < classes.length; i += 1) {
-//     const currInput = document.querySelector(`#${classes[i]}`);
-//     const [value] = [currInput.value];
-//     const coordinates = value
-//       .replaceAll(')', '')
-//       .replaceAll('(', '')
-//       .split(',');
-//     const shipCoordinates = [];
-//     for (let j = 0; j < coordinates.length; j += 2) {
-//       const array = [];
-//       array[0] = coordinates[j];
-//       array[1] = coordinates[1 + j];
-//       shipCoordinates.push(array);
-//     }
-//     allCoordinates.push(shipCoordinates);
-//   }
-//   return allCoordinates;
-// }
 
 export default () => {
-  // makeCoordinateForm('player');
-  // const form = document.querySelector('.getCoordinateForm');
-  // form.addEventListener('submit', (e) => {
-  //   e.preventDefault();
-  //   const allShipCoordinates = getAllCoordinates();
-  //   playerVsComputer(allShipCoordinates);
-  // });
-
   dragAndDropInterface('realPlayer');
   const startButton = document.querySelector('.startButton');
 
