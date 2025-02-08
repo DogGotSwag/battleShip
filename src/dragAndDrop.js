@@ -344,10 +344,7 @@ function setUpGridBoxes(player) {
       removeClass('valid');
       removeClass('invalid');
       removeClass('inUse');
-      const inUse = document.querySelectorAll('.inUse');
-      for (let j = 0; j < inUse.length; j += 1) {
-        inUse[j].classList.remove('inUse');
-      }
+      
       const index = document.querySelector('.index');
       index.classList.remove('index');
     });
