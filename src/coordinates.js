@@ -81,14 +81,18 @@ function getSurroundingPositions(coordinateList) {
   const surroundingCoordinates = [];
   for (let i = 0; i < coordinateList.length; i += 1) {
     const curr = coordinateList[i];
-    const top = [curr[0] - 1, curr[1]];
-    const topLeft = [curr[0] - 1, curr[1] - 1];
-    const topRight = [curr[0] - 1, curr[1] + 1];
-    const left = [curr[0], curr[1] - 1];
-    const right = [curr[0], curr[1] + 1];
-    const bottom = [curr[0] + 1, curr[1]];
-    const bottomLeft = [curr[0] + 1, curr[1] - 1];
-    const bottomRight = [curr[0] + 1, curr[1] + 1];
+
+    const indexOne = Number(curr[0]);
+    const indexTwo = Number(curr[1]);
+
+    const top = [indexOne - 1, indexTwo];
+    const topLeft = [indexOne - 1, indexTwo - 1];
+    const topRight = [indexOne - 1, indexTwo + 1];
+    const left = [indexOne, indexTwo - 1];
+    const right = [indexOne, indexTwo + 1];
+    const bottom = [indexOne + 1, indexTwo];
+    const bottomLeft = [indexOne + 1, indexTwo - 1];
+    const bottomRight = [indexOne + 1, indexTwo + 1];
 
     if (inBounds(top)) surroundingCoordinates.push(top);
     if (inBounds(topLeft)) surroundingCoordinates.push(topLeft);
