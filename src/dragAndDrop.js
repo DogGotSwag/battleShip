@@ -2,6 +2,13 @@ import { renderPlayersBoards } from './domChanger';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 import './dragAndDrop.css';
 
+function removeClass(className) {
+  const allInUse = document.querySelectorAll(`.${className}`);
+  for (let j = 0; j < allInUse.length; j += 1) {
+    allInUse[j].classList.remove(className);
+  }
+}
+
 function getPosition(parent) {
   const row = Number(parent.classList[1].split('')[1]);
   const col = Number(parent.classList[1].split('')[2]);
@@ -217,18 +224,21 @@ function setDragAndDropShips(player, shipCoordinates) {
 
           if (withinBounds && noConflicts) {
             moveToNewOrientation(newCoordinates, shipGroup, player);
+          } else {
+            for (let k = 0; k < shipGroup.length; k += 1) {
+              const currPosition = shipGroup[k];
+              currPosition.classList.add('rejected');
+            }
           }
         });
       }
+
+      dragBox.addEventListener('animationend', (e) => {
+        e.target.classList.remove('rejected');
+      });
+
       box.append(dragBox);
     }
-  }
-}
-
-function removeClass(className){
-  const allInUse = document.querySelectorAll(`.${className}`);
-  for (let j = 0; j < allInUse.length; j += 1) {
-    allInUse[j].classList.remove(className);
   }
 }
 
@@ -278,8 +288,12 @@ function setUpGridBoxes(player) {
       const newLocation = transformedCoordinates(allCoordinates, transform);
 
       const isAllInBounds = allInBounds(newLocation);
-    
-      const noConflicts = checkSurroundingCoordinates(newLocation, player, ...allCoordinates);      
+
+      const noConflicts = checkSurroundingCoordinates(
+        newLocation,
+        player,
+        ...allCoordinates
+      );
 
       if (isAllInBounds && noConflicts) {
         for (let j = 0; j < inUse.length; j += 1) {
@@ -295,8 +309,7 @@ function setUpGridBoxes(player) {
           );
           box.classList.add('valid');
         }
-      }
-      else{
+      } else {
         for (let j = 0; j < inUse.length; j += 1) {
           const currBox = inUse[j];
           const currBoxOldPosition = getPosition(currBox.parentNode);
