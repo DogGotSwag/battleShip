@@ -225,23 +225,10 @@ function setDragAndDropShips(player, shipCoordinates) {
   }
 }
 
-function removeValidBoxes() {
-  const allValidBoxes = document.querySelectorAll('.valid');
-  for (let j = 0; j < allValidBoxes.length; j += 1) {
-    allValidBoxes[j].classList.remove('valid');
-  }
-}
-function removeInvalidBoxes() {
-  const allValidBoxes = document.querySelectorAll('.invalid');
-  for (let j = 0; j < allValidBoxes.length; j += 1) {
-    allValidBoxes[j].classList.remove('invalid');
-  }
-}
-
-function removeInUse() {
-  const allInUse = document.querySelectorAll('.inUse');
+function removeClass(className){
+  const allInUse = document.querySelectorAll(`.${className}`);
   for (let j = 0; j < allInUse.length; j += 1) {
-    allInUse[j].classList.remove('inUse');
+    allInUse[j].classList.remove(className);
   }
 }
 
@@ -283,8 +270,8 @@ function setUpGridBoxes(player) {
       e.preventDefault();
 
       const transform = getTransform(e.target);
-      removeValidBoxes();
-      removeInvalidBoxes();
+      removeClass('valid');
+      removeClass('invalid');
 
       const inUse = document.querySelectorAll('.inUse');
       const allCoordinates = getCoordinatesFromNodeList(inUse);
@@ -354,9 +341,9 @@ function setUpGridBoxes(player) {
     });
 
     targets[i].addEventListener('dragend', () => {
-      removeValidBoxes();
-      removeInvalidBoxes();
-      removeInUse();
+      removeClass('valid');
+      removeClass('invalid');
+      removeClass('inUse');
       const inUse = document.querySelectorAll('.inUse');
       for (let j = 0; j < inUse.length; j += 1) {
         inUse[j].classList.remove('inUse');
