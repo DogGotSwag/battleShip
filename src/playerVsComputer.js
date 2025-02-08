@@ -4,10 +4,10 @@ import {
   renderPlayersBoards,
   renderBoard,
   gameOver,
-  makeCoordinateForm,
+  // makeCoordinateForm,
 } from './domChanger';
 
-import dragAndDropInterface from './dragAndDrop';
+import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack from './computerAttack';
 import generateRandomCoordinates from './generateRandomCoordinates';
 
@@ -59,7 +59,9 @@ function playerVsComputer(allCoordinates) {
   boards.forEach((board) => {
     board.addEventListener('click', (e) => {
       const clicked = e.target;
-      const clickedType = clicked.classList[0];
+      const clickedType = clicked.classList[0];      
+      console.log(clicked);
+      
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
@@ -114,38 +116,38 @@ function playerVsComputer(allCoordinates) {
   });
 }
 
-function getAllCoordinates() {
-  const classes = [
-    'four',
-    'three',
-    'threeTwo',
-    'two',
-    'twoTwo',
-    'twoThree',
-    'one',
-    'oneTwo',
-    'oneThree',
-    'oneFour',
-  ];
-  const allCoordinates = [];
-  for (let i = 0; i < classes.length; i += 1) {
-    const currInput = document.querySelector(`#${classes[i]}`);
-    const [value] = [currInput.value];
-    const coordinates = value
-      .replaceAll(')', '')
-      .replaceAll('(', '')
-      .split(',');
-    const shipCoordinates = [];
-    for (let j = 0; j < coordinates.length; j += 2) {
-      const array = [];
-      array[0] = coordinates[j];
-      array[1] = coordinates[1 + j];
-      shipCoordinates.push(array);
-    }
-    allCoordinates.push(shipCoordinates);
-  }
-  return allCoordinates;
-}
+// function getAllCoordinates() {
+//   const classes = [
+//     'four',
+//     'three',
+//     'threeTwo',
+//     'two',
+//     'twoTwo',
+//     'twoThree',
+//     'one',
+//     'oneTwo',
+//     'oneThree',
+//     'oneFour',
+//   ];
+//   const allCoordinates = [];
+//   for (let i = 0; i < classes.length; i += 1) {
+//     const currInput = document.querySelector(`#${classes[i]}`);
+//     const [value] = [currInput.value];
+//     const coordinates = value
+//       .replaceAll(')', '')
+//       .replaceAll('(', '')
+//       .split(',');
+//     const shipCoordinates = [];
+//     for (let j = 0; j < coordinates.length; j += 2) {
+//       const array = [];
+//       array[0] = coordinates[j];
+//       array[1] = coordinates[1 + j];
+//       shipCoordinates.push(array);
+//     }
+//     allCoordinates.push(shipCoordinates);
+//   }
+//   return allCoordinates;
+// }
 
 export default () => {
   // makeCoordinateForm('player');
@@ -157,4 +159,21 @@ export default () => {
   // });
 
   dragAndDropInterface('realPlayer');
+  const startButton = document.querySelector('.startButton');
+
+  startButton.addEventListener('click', () => {
+    const board = startButton.parentNode;
+    board.removeChild(startButton);
+    const letters = 'ABCDEFGHIJ';
+    const allCoordinates = [];
+    for (let i = 0; i < letters.length; i += 1) {
+      const shipCoordinates = [];
+      const shipGroup = document.querySelectorAll(`.drag.${letters[i]}`);
+      for (let j = 0; j < shipGroup.length; j += 1) {
+        shipCoordinates.push(getPosition(shipGroup[j].parentNode));
+      }
+      allCoordinates.push(shipCoordinates);
+    }
+    playerVsComputer(allCoordinates);
+  });
 };
