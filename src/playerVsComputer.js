@@ -59,7 +59,6 @@ function playerVsComputer(allCoordinates) {
     board.addEventListener('click', (e) => {
       const clicked = e.target;
       const clickedType = clicked.classList[0];      
-      console.log(clicked);
       
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
