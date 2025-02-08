@@ -136,7 +136,7 @@ function removeDuplicates(coordinateList) {
   return noDupes;
 }
 
-function removeException(coordinateList, exceptions) {
+function removeExceptions(coordinateList, exceptions) {
   const final = [];
   for (let i = 0; i < coordinateList.length; i += 1) {
     const curr = coordinateList[i];
@@ -164,7 +164,7 @@ function checkForConflicts(coordinateList, player) {
 function checkSurroundingCoordinates(coordinateList, player, ...exceptions) {
   const surroundingCoordinates = getSurroundingPositions(coordinateList);
   const noDuplicateCoordinates = removeDuplicates(surroundingCoordinates);
-  const finalWithException = removeException(
+  const finalWithException = removeExceptions(
     noDuplicateCoordinates,
     exceptions
   );
