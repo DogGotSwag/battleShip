@@ -361,12 +361,21 @@ function setUpGridBoxes(player) {
     });
   }
 }
+
+function addStartButton(player){
+  const board = document.querySelector(`.${player}`);  
+  const button = document.createElement('button');
+  button.innerText = 'Start';
+  button.classList.add('startButton');
+  board.appendChild(button);
+}
 function dragAndDropInterface(player) {
   renderPlayersBoards(player);
   const obj = new GenerateRandomCoordinates();
   const randomCoordinates = obj.generateAllCoordinates();
   setUpGridBoxes(player);
   setDragAndDropShips(player, randomCoordinates);
+  addStartButton(player);
 }
 
 export default dragAndDropInterface;

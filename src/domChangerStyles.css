@@ -155,3 +155,30 @@
 .buttonArea .randomize{
   width: 100px;
 }
+
+.player{
+    position: relative;
+}
+
+.startButton{
+    position: absolute;
+    background-color: bisque;
+    width: 80px;
+    height: 40px;
+
+    bottom: -50px;
+    right: 0px;
+
+    border-radius: 3px;
+    font-family:'Courier New', Courier, monospace ;
+    font-size: 20px;
+    font-weight: 800;
+    border: 1px solid var(--grid-color);
+    background-color: #010409;
+    color: var(--grid-color);
+    cursor: pointer;
+}
+
+.startButton:active{
+    background-color:#020915;
+}
