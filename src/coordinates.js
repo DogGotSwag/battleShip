@@ -167,6 +167,19 @@ function transformedCoordinates(coordinateList, transform) {
   return coordinates;
 }
 
+function getTransform(target) {
+    const initial = document.querySelector('.index');
+    const position = getPosition(initial.parentNode);
+    let newPosition;
+    if (target.classList[0] === 'coordinate') {
+      newPosition = getPosition(target);
+    } else {
+      newPosition = getPosition(target.parentNode);
+    }
+  
+    return [newPosition[0] - position[0], newPosition[1] - position[1]];
+  }
+
 export {
   inBounds,
   getCornerShots,
@@ -182,4 +195,5 @@ export {
   checkForConflicts,
   checkSurroundingCoordinates,
   transformedCoordinates,
+  getTransform
 };

@@ -9,6 +9,7 @@ import {
   getNewOrientationCoordinates,
   checkSurroundingCoordinates,
   transformedCoordinates,
+  getTransform
 } from './coordinates';
 
 function removeClass(className) {
@@ -114,19 +115,6 @@ function setDragAndDropShips(player, shipCoordinates) {
   }
 }
 
-function getTransform(target) {
-  const initial = document.querySelector('.index');
-  const position = getPosition(initial.parentNode);
-  let newPosition;
-  if (target.classList[0] === 'coordinate') {
-    newPosition = getPosition(target);
-  } else {
-    newPosition = getPosition(target.parentNode);
-  }
-
-  return [newPosition[0] - position[0], newPosition[1] - position[1]];
-}
-
 function setUpGridBoxes(player) {
   const targets = document.querySelectorAll(`.${player} .coordinate`);
   for (let i = 0; i < targets.length; i += 1) {
@@ -229,7 +217,6 @@ function addStartButton(player) {
   button.classList.add('startButton');
   board.appendChild(button);
 }
-
 function dragAndDropInterface(player) {
   renderPlayersBoards(player);
   const obj = new GenerateRandomCoordinates();
