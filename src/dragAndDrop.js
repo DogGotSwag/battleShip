@@ -344,9 +344,7 @@ function setUpGridBoxes(player) {
       removeClass('valid');
       removeClass('invalid');
       removeClass('inUse');
-      
-      const index = document.querySelector('.index');
-      index.classList.remove('index');
+      removeClass('index');
     });
   }
 }
