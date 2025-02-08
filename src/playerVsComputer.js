@@ -6,35 +6,13 @@ import {
   gameOver,
 } from './domChanger';
 
+import { getCornerShots } from './coordinates';
+
+
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 
-function inBounds(coordinate) {
-  const indexOne = parseInt(coordinate[0], 10);
-  const indexTwo = parseInt(coordinate[1], 10);
-  if (indexOne < 0 || indexOne > 9) return false;
-  if (indexTwo < 0 || indexTwo > 9) return false;
-  return true;
-}
-
-function getCornerShots(coordinate) {
-  const indexOne = parseInt(coordinate[0], 10);
-  const indexTwo = parseInt(coordinate[1], 10);
-  const inboundCoordinates = [];
-
-  const topLeft = [indexOne - 1, indexTwo - 1];
-  const topRight = [indexOne - 1, indexTwo + 1];
-  const bottomLeft = [indexOne + 1, indexTwo - 1];
-  const bottomRight = [indexOne + 1, indexTwo + 1];
-
-  if (inBounds(topLeft)) inboundCoordinates.push(topLeft);
-  if (inBounds(topRight)) inboundCoordinates.push(topRight);
-  if (inBounds(bottomLeft)) inboundCoordinates.push(bottomLeft);
-  if (inBounds(bottomRight)) inboundCoordinates.push(bottomRight);
-
-  return inboundCoordinates;
-}
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
