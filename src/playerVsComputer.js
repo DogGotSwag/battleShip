@@ -8,7 +8,7 @@ import {
 
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack from './computerAttack';
-import generateRandomCoordinates from './generateRandomCoordinates';
+import GenerateRandomCoordinates from './generateRandomCoordinates';
 
 function inBounds(coordinate) {
   const indexOne = parseInt(coordinate[0], 10);
@@ -45,7 +45,7 @@ function playerVsComputer(allCoordinates) {
   for (let i = 0; i < allCoordinates.length; i += 1) {
     realPlayerBoard.setShipAt(...allCoordinates[i]);
   }
-  const makeCoordinates = new generateRandomCoordinates();
+  const makeCoordinates = new GenerateRandomCoordinates();
   const computerCoordinates = makeCoordinates.generateAllCoordinates();
   for (let i = 0; i < computerCoordinates.length; i += 1) {
     computerPlayerBoard.setShipAt(...computerCoordinates[i]);
