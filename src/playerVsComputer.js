@@ -56,9 +56,10 @@ function playerVsComputer(allCoordinates) {
   const boards = document.querySelectorAll('.player');
 
   boards.forEach((board) => {
+    
     board.addEventListener('click', (e) => {
       const clicked = e.target;
-      const clickedType = clicked.classList[0];      
+      const clickedType = clicked.classList[0];
       
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
@@ -119,7 +120,8 @@ export default () => {
   dragAndDropInterface('realPlayer');
   const startButton = document.querySelector('.startButton');
 
-  startButton.addEventListener('click', () => {
+  startButton.addEventListener('click', (e) => {
+    e.stopPropagation();
     const board = startButton.parentNode;
     board.removeChild(startButton);
     const letters = 'ABCDEFGHIJ';
