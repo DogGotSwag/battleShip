@@ -10,11 +10,10 @@ function renderPlayersBoards(players = 'player') {
 
   for (let i = 0; i < boards.length; i += 1) {
     const current = boards[i];
+    const frag = document.createDocumentFragment();
     for (let j = 0; j < 10; j += 1) {
       const row = document.createElement('div');
       row.className = 'boardRow';
-      current.appendChild(row);
-
       for (let k = 0; k < 10; k += 1) {
         const coordinateBox = document.createElement('div');
         coordinateBox.classList = `coordinate k${j}${k}`;
@@ -24,7 +23,9 @@ function renderPlayersBoards(players = 'player') {
 
         coordinateBox.appendChild(statusCircle);
         row.appendChild(coordinateBox);
+        frag.appendChild(row);
       }
+      current.appendChild(frag);
     }
   }
 }
