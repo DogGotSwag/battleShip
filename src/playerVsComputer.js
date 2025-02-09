@@ -1,18 +1,12 @@
 import './style.css';
 import Player from './Player';
-import {
-  renderPlayersBoards,
-  renderBoard,
-  gameOver,
-} from './domChanger';
+import { renderPlayersBoards, renderBoard, gameOver } from './domChanger';
 
-import { getCornerShots } from './coordinates';
-
+import { getCornerShots, getSurroundingPositions } from './coordinates';
 
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
@@ -32,22 +26,49 @@ function playerVsComputer(allCoordinates) {
   renderPlayersBoards();
 
   const boards = document.querySelectorAll('.player');
+  const realPlayerHitNotSunk = [];
+  const computerPlayerHitNotSunk = [];
 
   boards.forEach((board) => {
-    
     board.addEventListener('click', (e) => {
       const clicked = e.target;
       const clickedType = clicked.classList[0];
-      
+
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
         const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
+          realPlayerHitNotSunk.push(clickedPosition);
           const cornerCoordinates = getCornerShots(clickedPosition);
           for (let i = 0; i < cornerCoordinates.length; i += 1) {
             computerPlayerBoard.receiveAttack(cornerCoordinates[i]);
+          }
+
+          const isSunk = computerPlayerBoard
+            .getGrid()
+            [clickedPosition[0]][clickedPosition[1]].isSunk();
+
+          if (isSunk) {
+            const allSunk = [];
+            for (let i = 0; i < realPlayerHitNotSunk.length; i += 1) {
+              const currCoord = realPlayerHitNotSunk[i];
+              const currCoordSunk = computerPlayerBoard
+                .getGrid()
+                [currCoord[0]][currCoord[1]].isSunk();
+
+              if (currCoordSunk) {
+                allSunk.push(currCoord);
+                realPlayerHitNotSunk.splice(i, 1);
+                i -= 1;
+              }
+            }
+
+            const surroundingCoordinates = getSurroundingPositions(allSunk);
+            for (let j = 0; j < surroundingCoordinates.length; j += 1) {
+              computerPlayerBoard.receiveAttack(surroundingCoordinates[j]);
+            }
           }
         }
         renderBoard(
@@ -69,9 +90,36 @@ function playerVsComputer(allCoordinates) {
             continueAttack = realPlayerBoard.receiveAttack(attackPosition);
 
             if (continueAttack === 'Hit') {
+              computerPlayerHitNotSunk.push(attackPosition);
               const cornerCoordinates = getCornerShots(attackPosition);
               for (let i = 0; i < cornerCoordinates.length; i += 1) {
                 realPlayerBoard.receiveAttack(cornerCoordinates[i]);
+              }
+
+              const isSunk = realPlayerBoard
+                .getGrid()
+                [attackPosition[0]][attackPosition[1]].isSunk();                
+
+              if (isSunk) {
+                const allSunk = [];
+                for (let i = 0; i < computerPlayerHitNotSunk.length; i += 1) {
+                  const currCoord = computerPlayerHitNotSunk[i];
+                  
+                  const currCoordSunk = realPlayerBoard
+                    .getGrid()
+                    [currCoord[0]][currCoord[1]].isSunk();
+
+                  if (currCoordSunk) {
+                    allSunk.push(currCoord);
+                    computerPlayerHitNotSunk.splice(i, 1);
+                    i -= 1;
+                  }
+                }
+
+                const surroundingCoordinates = getSurroundingPositions(allSunk);
+                for (let j = 0; j < surroundingCoordinates.length; j += 1) {
+                  realPlayerBoard.receiveAttack(surroundingCoordinates[j]);
+                }
               }
             }
 
@@ -92,7 +140,6 @@ function playerVsComputer(allCoordinates) {
     });
   });
 }
-
 
 export default () => {
   dragAndDropInterface('realPlayer');
