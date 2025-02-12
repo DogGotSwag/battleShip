@@ -158,6 +158,11 @@ function makeCoordinateForm(player) {
   container.appendChild(frag);
 }
 
+function clearMain(){
+  const main = document.querySelector('.main');
+  main.innerHTML = "";
+}
+
 
 export {
   renderPlayersBoards,
