@@ -1,6 +1,7 @@
 import dropMenu from 'didieral.button-module';
 
 import playerVsComputer from './playerVsComputer';
+import playerVsPlayer from './playerVsPlayer';
 
 playerVsComputer();
 dropMenu('.dropButton');
@@ -14,5 +15,5 @@ singlePlayer.addEventListener('click', () => {
 });
 
 twoPlayer.addEventListener('click', () => {
-
+    playerVsPlayer();
 });
