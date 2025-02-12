@@ -10,7 +10,7 @@ const singlePlayer = document.querySelector('.singlePlayer');
 const twoPlayer = document.querySelector('.twoPlayer');
 
 singlePlayer.addEventListener('click', () => {
-    
+    playerVsComputer();
 });
 
 twoPlayer.addEventListener('click', () => {

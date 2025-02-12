@@ -1,6 +1,6 @@
 import './style.css';
 import Player from './Player';
-import { renderPlayersBoards, renderBoard, gameOver } from './domChanger';
+import { renderPlayersBoards, renderBoard, gameOver, singlePlayerSetup } from './domChanger';
 
 import { getCornerShots, getSurroundingPositions } from './coordinates';
 
@@ -142,6 +142,7 @@ function playerVsComputer(allCoordinates) {
 }
 
 export default () => {
+  singlePlayerSetup();
   dragAndDropInterface('realPlayer');
   const startButton = document.querySelector('.startButton');
 
