@@ -163,10 +163,30 @@ function clearMain(){
   main.innerHTML = "";
 }
 
+function singlePlayerSetup(){
+  clearMain();
+  const realPlayer = document.createElement('div');
+  realPlayer.classList.add('realPlayer');
+  realPlayer.classList.add('player');
+
+  const computerPlayer = document.createElement('div');
+  computerPlayer.classList.add('computerPlayer');
+  computerPlayer.classList.add('player');
+
+  const main = document.querySelector('.main');
+  const frag = document.createDocumentFragment();
+
+  frag.appendChild(realPlayer);
+  frag.appendChild(computerPlayer);
+
+  main.appendChild(frag);
+}
+
 
 export {
   renderPlayersBoards,
   renderBoard,
   gameOver,
   makeCoordinateForm,
+  singlePlayerSetup
 };
