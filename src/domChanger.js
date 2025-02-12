@@ -182,11 +182,23 @@ function singlePlayerSetup(){
   main.appendChild(frag);
 }
 
+function twoPlayerSetup(){
+  clearMain();
+  const player = document.createElement('div');
+  player.classList.add('player');
+
+  const main = document.querySelector('.main');
+  const frag = document.createDocumentFragment();
+  frag.appendChild(player);
+  main.appendChild(frag);
+}
+
 
 export {
   renderPlayersBoards,
   renderBoard,
   gameOver,
   makeCoordinateForm,
-  singlePlayerSetup
+  singlePlayerSetup,
+  twoPlayerSetup
 };
