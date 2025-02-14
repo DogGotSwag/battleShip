@@ -7,10 +7,10 @@
 }
 
 .whiteWall{
-    background-color: rgb(121, 121, 121);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: whitesmoke;
 }
