@@ -17,16 +17,24 @@ function getCoordinates(){
   return coordinates;
 }
 
+function addClassToNodeList(nodeList, className){
+  for(let i = 0; i < nodeList.length; i+=1){
+    nodeList[i].classList.add(className);
+  }
+}
+
+function removeClassToNodeList(nodeList, className){
+  for(let i = 0; i < nodeList.length; i+=1){
+    nodeList[i].classList.remove(className);
+  }
+}
+
 function inBetween(player){
   const board = document.querySelector(`.${player}`);
   board.classList.add('whiteWallArea');
-  const boardRows = document.querySelectorAll(`.${player} .boardRow`);
-  const buttons = document.querySelectorAll(`.${player} button`);
-  for(let i = 0; i < boardRows.length; i+=1){
-    boardRows[i].classList.add('disappear');
-  }
-  buttons[0].classList.add('disappear');
-  buttons[1].classList.add('disappear');
+  const boardChildren = document.querySelectorAll(`.${player} > *`);  
+
+  addClassToNodeList(boardChildren, 'disappear');
 
   const whiteWall = document.createElement('div');
   whiteWall.classList.add('whiteWall');
@@ -37,12 +45,7 @@ function inBetween(player){
   whiteWall.addEventListener('click', ()=> {
     board.removeChild(whiteWall);
     board.classList.remove('whiteWallArea');
-
-    for(let i = 0; i < boardRows.length; i+=1){
-      boardRows[i].classList.remove('disappear');
-    }
-    buttons[0].classList.remove('disappear');
-    buttons[1].classList.remove('disappear');
+    removeClassToNodeList(boardChildren, 'disappear');
   });
 }
 
