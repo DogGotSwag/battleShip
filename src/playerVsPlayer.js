@@ -1,5 +1,6 @@
 import { twoPlayerSetup } from "./domChanger";
 import { dragAndDropInterface, getPosition } from "./dragAndDrop";
+import './playerVsPlayerStyles.css';
 
 function getCoordinates(){
   const letters = 'ABCDEFGHIJ';
@@ -15,6 +16,37 @@ function getCoordinates(){
 
   return coordinates;
 }
+
+function inBetween(player){
+  const board = document.querySelector(`.${player}`);
+  board.classList.add('whiteWallArea');
+  const boardRows = document.querySelectorAll(`.${player} .boardRow`);
+  const buttons = document.querySelectorAll(`.${player} button`);
+  for(let i = 0; i < boardRows.length; i+=1){
+    boardRows[i].classList.add('disappear');
+  }
+  buttons[0].classList.add('disappear');
+  buttons[1].classList.add('disappear');
+
+  const whiteWall = document.createElement('div');
+  whiteWall.classList.add('whiteWall');
+  whiteWall.innerText = "Switch to Player 2 click when ready";
+
+  board.appendChild(whiteWall);
+
+  whiteWall.addEventListener('click', ()=> {
+    board.removeChild(whiteWall);
+    board.classList.remove('whiteWallArea');
+
+    for(let i = 0; i < boardRows.length; i+=1){
+      boardRows[i].classList.remove('disappear');
+    }
+    buttons[0].classList.remove('disappear');
+    buttons[1].classList.remove('disappear');
+  });
+}
+
+
 
 export default () => {
   twoPlayerSetup("player");
@@ -33,10 +65,9 @@ export default () => {
     startButtonTwo.addEventListener('click', (event) => {
       event.stopPropagation();
       playerTwoCoordinates = getCoordinates();
-      console.log(playerOneCoordinates);
-      console.log(playerTwoCoordinates);
-      
     });
+
+    inBetween('player');
 
   });
 };
