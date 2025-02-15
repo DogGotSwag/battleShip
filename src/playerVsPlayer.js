@@ -4,6 +4,8 @@ import {
   renderPlayersBoards,
   renderBoard,
   singlePlayerSetup,
+  disablePlay,
+  enablePlay,
 } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
@@ -44,7 +46,8 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   const playerTwoHitNotSunk = [];
   const hitNotSunkArray = [playerOneHitNotSunk, playerTwoHitNotSunk];
 
-  const playerBoardClasses = ['realPlayer','computerPlayer'];
+  const playerBoardClasses = ['realPlayer', 'computerPlayer'];
+  disablePlay(playerBoardClasses[0]);
 
   const boards = document.querySelectorAll('.player');
 
@@ -103,12 +106,18 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
             playerArray[index].getHitShots()
           );
         } else {
+          disablePlay(playerBoardClasses[index]);
           renderBoard(
             playerBoardClasses[index],
             playerArray[index].getGrid(),
             playerArray[index].getMissedShots(),
             playerArray[index].getHitShots()
           );
+
+          if (index === 0) enablePlay(playerBoardClasses[1]);
+          else {
+            enablePlay(playerBoardClasses[0]);
+          }
         }
       }
     });
