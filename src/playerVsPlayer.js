@@ -6,6 +6,7 @@ import {
   singlePlayerSetup,
   disablePlay,
   enablePlay,
+  gameOver
 } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
@@ -53,6 +54,9 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
 
   for (let index = 0; index < boards.length; index += 1) {
     const board = boards[index];
+    let indexComplement;
+    if(index === 0) indexComplement = 1;
+    else indexComplement = 0;
 
     board.addEventListener('click', (e) => {
       const clicked = e.target;
@@ -96,7 +100,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
           }
 
           if (playerArray[index].allSunk() === true) {
-            // gameOver('realPlayer', 'player');
+            gameOver(playerBoardClasses[index], playerBoardClasses[indexComplement]);
           }
 
           renderBoard(
@@ -114,10 +118,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
             playerArray[index].getHitShots()
           );
 
-          if (index === 0) enablePlay(playerBoardClasses[1]);
-          else {
-            enablePlay(playerBoardClasses[0]);
-          }
+          enablePlay(playerBoardClasses[indexComplement]);
         }
       }
     });
