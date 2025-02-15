@@ -22,6 +22,24 @@ function getCornerShots(coordinate) {
   return inboundCoordinates;
 }
 
+function getAdjacentShots(coordinate) {
+  const indexOne = parseInt(coordinate[0], 10);
+  const indexTwo = parseInt(coordinate[1], 10);
+  const inboundCoordinates = [];
+
+  const left = [indexOne, indexTwo - 1];
+  const right = [indexOne, indexTwo + 1];
+  const up = [indexOne - 1, indexTwo];
+  const down = [indexOne + 1, indexTwo];
+
+  if (inBounds(left)) inboundCoordinates.push(left);
+  if (inBounds(right)) inboundCoordinates.push(right);
+  if (inBounds(up)) inboundCoordinates.push(up);
+  if (inBounds(down)) inboundCoordinates.push(down);
+
+  return inboundCoordinates;
+}
+
 function allInBounds(coordinateList) {
   for (let i = 0; i < coordinateList.length; i += 1) {
     if (inBounds(coordinateList[i]) === false) return false;
@@ -172,17 +190,17 @@ function transformedCoordinates(coordinateList, transform) {
 }
 
 function getTransform(target) {
-    const initial = document.querySelector('.index');
-    const position = getPosition(initial.parentNode);
-    let newPosition;
-    if (target.classList[0] === 'coordinate') {
-      newPosition = getPosition(target);
-    } else {
-      newPosition = getPosition(target.parentNode);
-    }
-  
-    return [newPosition[0] - position[0], newPosition[1] - position[1]];
+  const initial = document.querySelector('.index');
+  const position = getPosition(initial.parentNode);
+  let newPosition;
+  if (target.classList[0] === 'coordinate') {
+    newPosition = getPosition(target);
+  } else {
+    newPosition = getPosition(target.parentNode);
   }
+
+  return [newPosition[0] - position[0], newPosition[1] - position[1]];
+}
 
 export {
   inBounds,
@@ -199,5 +217,6 @@ export {
   checkForConflicts,
   checkSurroundingCoordinates,
   transformedCoordinates,
-  getTransform
+  getTransform,
+  getAdjacentShots
 };
