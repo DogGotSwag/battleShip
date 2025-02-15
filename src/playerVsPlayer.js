@@ -3,14 +3,15 @@ import {
   inBetween,
   renderPlayersBoards,
   renderBoard,
-} from "./domChanger";
-import { dragAndDropInterface, getPosition } from "./dragAndDrop";
-import "./playerVsPlayerStyles.css";
-import Player from "./Player";
-import { getCornerShots, getSurroundingPositions } from "./coordinates";
+  singlePlayerSetup
+} from './domChanger';
+import { dragAndDropInterface, getPosition } from './dragAndDrop';
+import './playerVsPlayerStyles.css';
+import Player from './Player';
+import { getCornerShots, getSurroundingPositions } from './coordinates';
 
 function getCoordinates() {
-  const letters = "ABCDEFGHIJ";
+  const letters = 'ABCDEFGHIJ';
   const coordinates = [];
   for (let i = 0; i < letters.length; i += 1) {
     const shipCoordinates = [];
@@ -25,6 +26,7 @@ function getCoordinates() {
 }
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
+  singlePlayerSetup();
   renderPlayersBoards();
   const indexPlayer = new Player();
 
@@ -32,14 +34,14 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   const playerTwoBoard = indexPlayer.computerPlayer.gameBoard;
 
   const playerArray = [playerOneBoard, playerTwoBoard];
-  let index = 1;
+  const index = 1;
 
   for (let i = 0; i < playerOneCoordinates.length; i += 1) {
     playerOneBoard.setShipAt(...playerOneCoordinates[i]);
     playerTwoBoard.setShipAt(...playerTwoCoordinates[i]);
   }
 
-  const board = document.querySelector(".player");
+  const board = document.querySelector('.player');
 
   const playerOneHitNotSunk = [];
   const playerTwoHitNotSunk = [];
@@ -47,16 +49,16 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   const hitNotSunkArray = [playerOneHitNotSunk, playerTwoHitNotSunk];
 
 
-  board.addEventListener("click", (e) => {
+  board.addEventListener('click', (e) => {
     const clicked = e.target;
     const clickedType = clicked.classList[0];
 
-    if (clickedType === "coordinate") {
-      const clickedPosition = clicked.classList[1].slice(1, 3).split("");
+    if (clickedType === 'coordinate') {
+      const clickedPosition = clicked.classList[1].slice(1, 3).split('');
 
       const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
-      if (hitOrMiss === "Hit") {
+      if (hitOrMiss === 'Hit') {
         hitNotSunkArray[index].push(clickedPosition);
         const cornerCoordinates = getCornerShots(clickedPosition);
         for (let i = 0; i < cornerCoordinates.length; i += 1) {
@@ -93,14 +95,14 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
         }
 
         renderBoard(
-          "player",
+          'player',
           playerArray[index].getGrid(),
           playerArray[index].getMissedShots(),
           playerArray[index].getHitShots()
         );
       } else {
         renderBoard(
-          "player",
+          'player',
           playerArray[index].getGrid(),
           playerArray[index].getMissedShots(),
           playerArray[index].getHitShots()
@@ -111,26 +113,26 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
 }
 
 export default () => {
-  twoPlayerSetup("player");
+  twoPlayerSetup('player');
 
   let playerOneCoordinates = [];
   let playerTwoCoordinates = [];
 
-  dragAndDropInterface("player");
-  const startButton = document.querySelector(".startButton");
-  startButton.addEventListener("click", (e) => {
+  dragAndDropInterface('player');
+  const startButton = document.querySelector('.startButton');
+  startButton.addEventListener('click', (e) => {
     e.stopPropagation();
     playerOneCoordinates = getCoordinates();
 
-    dragAndDropInterface("player");
-    const startButtonTwo = document.querySelector(".startButton");
-    startButtonTwo.addEventListener("click", (event) => {
+    dragAndDropInterface('player');
+    const startButtonTwo = document.querySelector('.startButton');
+    startButtonTwo.addEventListener('click', (event) => {
       event.stopPropagation();
       playerTwoCoordinates = getCoordinates();
 
       makeGame(playerOneCoordinates, playerTwoCoordinates);
     });
 
-    inBetween("player", "Switch to Player 2 click when ready");
+    inBetween('player', 'Switch to Player 2 click when ready');
   });
 };
