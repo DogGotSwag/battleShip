@@ -5,9 +5,8 @@
   ],
 
   "rules": {
-    "quotes": [ "error" , "single"],
-    "plugins": ["import"]
-    //change here
+    "quotes": [ "error" , "single"]
+    // "plugins": ["import"]
   },
 
   "env": {
