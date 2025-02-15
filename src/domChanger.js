@@ -56,6 +56,11 @@ function disablePlay(player = 'computerPlayer') {
   playerBoard.classList.add('disabled');
 }
 
+function enablePlay(player = 'computerPlayer') {
+  const playerBoard = document.querySelector(`.${player}` );
+  playerBoard.classList.remove('disabled');
+}
+
 function displayWinner(player) {
   const winner = document.querySelector(`.${player}`);
   winner.classList.add('winner');
@@ -234,5 +239,6 @@ export {
   singlePlayerSetup,
   twoPlayerSetup,
   inBetween,
-  disablePlay
+  disablePlay,
+  enablePlay
 };
