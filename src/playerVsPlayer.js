@@ -17,6 +17,10 @@ function getCoordinates() {
   return coordinates;
 }
 
+function makeGame(playerOneCoordinates, playerTwoCoordinates){
+  
+}
+
 export default () => {
   twoPlayerSetup('player');
 
@@ -34,6 +38,8 @@ export default () => {
     startButtonTwo.addEventListener('click', (event) => {
       event.stopPropagation();
       playerTwoCoordinates = getCoordinates();
+
+      makeGame(playerOneCoordinates, playerTwoCoordinates);
     });
 
     inBetween('player', 'Switch to Player 2 click when ready');
