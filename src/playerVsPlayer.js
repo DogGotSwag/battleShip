@@ -1,4 +1,4 @@
-import { twoPlayerSetup } from './domChanger';
+import { twoPlayerSetup, inBetween } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 
@@ -15,38 +15,6 @@ function getCoordinates() {
   }
 
   return coordinates;
-}
-
-function addClassToNodeList(nodeList, className) {
-  for (let i = 0; i < nodeList.length; i += 1) {
-    nodeList[i].classList.add(className);
-  }
-}
-
-function removeClassToNodeList(nodeList, className) {
-  for (let i = 0; i < nodeList.length; i += 1) {
-    nodeList[i].classList.remove(className);
-  }
-}
-
-function inBetween(player, message) {
-  const board = document.querySelector(`.${player}`);
-  board.classList.add('whiteWallArea');
-  const boardChildren = document.querySelectorAll(`.${player} > *`);
-
-  addClassToNodeList(boardChildren, 'disappear');
-
-  const whiteWall = document.createElement('div');
-  whiteWall.classList.add('whiteWall');
-  whiteWall.innerText = message;
-
-  board.appendChild(whiteWall);
-
-  whiteWall.addEventListener('click', () => {
-    board.removeChild(whiteWall);
-    board.classList.remove('whiteWallArea');
-    removeClassToNodeList(boardChildren, 'disappear');
-  });
 }
 
 export default () => {
