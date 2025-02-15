@@ -44,6 +44,10 @@
   pointer-events: none;
 }
 
+.disabled{
+  opacity: .6;
+}
+
 .coordinate.sunk {
   background-color: rgb(164, 46, 46);
 }
