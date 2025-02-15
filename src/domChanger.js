@@ -74,7 +74,8 @@ function displayLoser(player) {
 function gameOver(winner, loser) {
   displayWinner(winner);
   displayLoser(loser);
-  disablePlay();
+  disablePlay(winner);
+  disablePlay(loser);
 }
 
 function makeCoordinateForm(player) {
