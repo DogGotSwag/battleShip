@@ -1,7 +1,8 @@
-import { twoPlayerSetup, inBetween, renderPlayersBoards } from './domChanger';
+import { twoPlayerSetup, inBetween, renderPlayersBoards, renderBoard } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
+import { getCornerShots, getSurroundingPositions } from './coordinates';
 
 function getCoordinates() {
   const letters = 'ABCDEFGHIJ';
@@ -31,14 +32,61 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates){
   }
 
   const board = document.querySelector('.player');
+  const realPlayerHitNotSunk = [];
+
 
   board.addEventListener('click', (e) => {
-      // const clicked = e.target;
-      // const clickedType = clicked.classList[0];
+      const clicked = e.target;
+      const clickedType = clicked.classList[0];
 
-      // if(clickedType === 'coordinate'){
-      //   alert('hit');
-      // }
+      if(clickedType === 'coordinate'){
+        const clickedPosition = clicked.classList[1].slice(1, 3).split('');
+        
+        const hitOrMiss = playerTwoBoard.receiveAttack(clickedPosition);
+
+        if (hitOrMiss === 'Hit') {
+          realPlayerHitNotSunk.push(clickedPosition);
+          const cornerCoordinates = getCornerShots(clickedPosition);
+          for (let i = 0; i < cornerCoordinates.length; i += 1) {
+            playerTwoBoard.receiveAttack(cornerCoordinates[i]);
+          }
+
+          const isSunk = playerTwoBoard
+            .getGrid()
+            [clickedPosition[0]][clickedPosition[1]].isSunk();
+
+          if (isSunk) {
+            const allSunk = [];
+            for (let i = 0; i < realPlayerHitNotSunk.length; i += 1) {
+              const currCoord = realPlayerHitNotSunk[i];
+              const currCoordSunk = playerTwoBoard
+                .getGrid()
+                [currCoord[0]][currCoord[1]].isSunk();
+
+              if (currCoordSunk) {
+                allSunk.push(currCoord);
+                realPlayerHitNotSunk.splice(i, 1);
+                i -= 1;
+              }
+            }
+
+            const surroundingCoordinates = getSurroundingPositions(allSunk);
+            for (let j = 0; j < surroundingCoordinates.length; j += 1) {
+              playerTwoBoard.receiveAttack(surroundingCoordinates[j]);
+            }
+          }
+        }
+        renderBoard(
+          'player',
+          playerTwoBoard.getGrid(),
+          playerTwoBoard.getMissedShots(),
+          playerTwoBoard.getHitShots()
+        );
+        if (playerTwoBoard.allSunk() === true) {
+          // gameOver('realPlayer', 'player');
+        }
+        
+      }
   });
 }
 
