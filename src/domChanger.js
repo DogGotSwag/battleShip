@@ -51,8 +51,8 @@ function renderBoard(player, grid, missedShots, hitShots) {
   }
 }
 
-function disablePlay() {
-  const playerBoard = document.querySelector('.computerPlayer');
+function disablePlay(player = 'computerPlayer') {
+  const playerBoard = document.querySelector(`.${player}` );
   playerBoard.classList.add('disabled');
 }
 
@@ -233,5 +233,6 @@ export {
   makeCoordinateForm,
   singlePlayerSetup,
   twoPlayerSetup,
-  inBetween
+  inBetween,
+  disablePlay
 };
