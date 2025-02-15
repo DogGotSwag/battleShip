@@ -40,7 +40,13 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   }
 
   const board = document.querySelector(".player");
+
+  const playerOneHitNotSunk = [];
+  const playerTwoHitNotSunk = [];
+
   const realPlayerHitNotSunk = [];
+  const hitNotSunkArray = [playerOneHitNotSunk, playerTwoHitNotSunk];
+
 
   board.addEventListener("click", (e) => {
     const clicked = e.target;
@@ -52,7 +58,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
       const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
       if (hitOrMiss === "Hit") {
-        realPlayerHitNotSunk.push(clickedPosition);
+        hitNotSunkArray[1].push(clickedPosition);
         const cornerCoordinates = getCornerShots(clickedPosition);
         for (let i = 0; i < cornerCoordinates.length; i += 1) {
           playerArray[index].receiveAttack(cornerCoordinates[i]);
@@ -64,15 +70,15 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
 
         if (isSunk) {
           const allSunk = [];
-          for (let i = 0; i < realPlayerHitNotSunk.length; i += 1) {
-            const currCoord = realPlayerHitNotSunk[i];
+          for (let i = 0; i < hitNotSunkArray[1].length; i += 1) {
+            const currCoord = hitNotSunkArray[1][i];
             const currCoordSunk = playerArray[index]
               .getGrid()
               [currCoord[0]][currCoord[1]].isSunk();
 
             if (currCoordSunk) {
               allSunk.push(currCoord);
-              realPlayerHitNotSunk.splice(i, 1);
+              hitNotSunkArray[1].splice(i, 1);
               i -= 1;
             }
           }
