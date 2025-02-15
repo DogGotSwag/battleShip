@@ -1,4 +1,4 @@
-import { twoPlayerSetup, inBetween } from './domChanger';
+import { twoPlayerSetup, inBetween, renderPlayersBoards } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
@@ -19,6 +19,7 @@ function getCoordinates() {
 }
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates){
+  renderPlayersBoards();
   const indexPlayer = new Player();
 
   const playerOneBoard = indexPlayer.realPlayer.gameBoard;
@@ -28,6 +29,17 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates){
     playerOneBoard.setShipAt(...playerOneCoordinates[i]);
     playerTwoBoard.setShipAt(...playerTwoCoordinates[i]);
   }
+
+  const board = document.querySelector('.player');
+
+  board.addEventListener('click', (e) => {
+      // const clicked = e.target;
+      // const clickedType = clicked.classList[0];
+
+      // if(clickedType === 'coordinate'){
+      //   alert('hit');
+      // }
+  });
 }
 
 export default () => {
