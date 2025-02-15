@@ -3,7 +3,7 @@ import {
   inBetween,
   renderPlayersBoards,
   renderBoard,
-  singlePlayerSetup
+  singlePlayerSetup,
 } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
@@ -34,82 +34,85 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   const playerTwoBoard = indexPlayer.computerPlayer.gameBoard;
 
   const playerArray = [playerOneBoard, playerTwoBoard];
-  const index = 1;
 
   for (let i = 0; i < playerOneCoordinates.length; i += 1) {
     playerOneBoard.setShipAt(...playerOneCoordinates[i]);
     playerTwoBoard.setShipAt(...playerTwoCoordinates[i]);
   }
 
-  const board = document.querySelector('.player');
-
   const playerOneHitNotSunk = [];
   const playerTwoHitNotSunk = [];
-
   const hitNotSunkArray = [playerOneHitNotSunk, playerTwoHitNotSunk];
 
+  const playerBoardClasses = ['realPlayer','computerPlayer'];
 
-  board.addEventListener('click', (e) => {
-    const clicked = e.target;
-    const clickedType = clicked.classList[0];
+  const boards = document.querySelectorAll('.player');
 
-    if (clickedType === 'coordinate') {
-      const clickedPosition = clicked.classList[1].slice(1, 3).split('');
+  for (let index = 0; index < boards.length; index += 1) {
+    const board = boards[index];
 
-      const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
+    board.addEventListener('click', (e) => {
+      const clicked = e.target;
+      const clickedType = clicked.classList[0];
 
-      if (hitOrMiss === 'Hit') {
-        hitNotSunkArray[index].push(clickedPosition);
-        const cornerCoordinates = getCornerShots(clickedPosition);
-        for (let i = 0; i < cornerCoordinates.length; i += 1) {
-          playerArray[index].receiveAttack(cornerCoordinates[i]);
-        }
+      if (clickedType === 'coordinate') {
+        const clickedPosition = clicked.classList[1].slice(1, 3).split('');
 
-        const isSunk = playerArray[index]
-          .getGrid()
-          [clickedPosition[0]][clickedPosition[1]].isSunk();
+        const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
-        if (isSunk) {
-          const allSunk = [];
-          for (let i = 0; i < hitNotSunkArray[index].length; i += 1) {
-            const currCoord = hitNotSunkArray[index][i];
-            const currCoordSunk = playerArray[index]
-              .getGrid()
-              [currCoord[0]][currCoord[1]].isSunk();
+        if (hitOrMiss === 'Hit') {
+          hitNotSunkArray[index].push(clickedPosition);
+          const cornerCoordinates = getCornerShots(clickedPosition);
+          for (let i = 0; i < cornerCoordinates.length; i += 1) {
+            playerArray[index].receiveAttack(cornerCoordinates[i]);
+          }
 
-            if (currCoordSunk) {
-              allSunk.push(currCoord);
-              hitNotSunkArray[index].splice(i, 1);
-              i -= 1;
+          const isSunk = playerArray[index]
+            .getGrid()
+            [clickedPosition[0]][clickedPosition[1]].isSunk();
+
+          if (isSunk) {
+            const allSunk = [];
+            for (let i = 0; i < hitNotSunkArray[index].length; i += 1) {
+              const currCoord = hitNotSunkArray[index][i];
+              const currCoordSunk = playerArray[index]
+                .getGrid()
+                [currCoord[0]][currCoord[1]].isSunk();
+
+              if (currCoordSunk) {
+                allSunk.push(currCoord);
+                hitNotSunkArray[index].splice(i, 1);
+                i -= 1;
+              }
+            }
+
+            const surroundingCoordinates = getSurroundingPositions(allSunk);
+            for (let j = 0; j < surroundingCoordinates.length; j += 1) {
+              playerArray[index].receiveAttack(surroundingCoordinates[j]);
             }
           }
 
-          const surroundingCoordinates = getSurroundingPositions(allSunk);
-          for (let j = 0; j < surroundingCoordinates.length; j += 1) {
-            playerArray[index].receiveAttack(surroundingCoordinates[j]);
+          if (playerArray[index].allSunk() === true) {
+            // gameOver('realPlayer', 'player');
           }
-        }
 
-        if (playerArray[index].allSunk() === true) {
-          // gameOver('realPlayer', 'player');
+          renderBoard(
+            playerBoardClasses[index],
+            playerArray[index].getGrid(),
+            playerArray[index].getMissedShots(),
+            playerArray[index].getHitShots()
+          );
+        } else {
+          renderBoard(
+            playerBoardClasses[index],
+            playerArray[index].getGrid(),
+            playerArray[index].getMissedShots(),
+            playerArray[index].getHitShots()
+          );
         }
-
-        renderBoard(
-          'player',
-          playerArray[index].getGrid(),
-          playerArray[index].getMissedShots(),
-          playerArray[index].getHitShots()
-        );
-      } else {
-        renderBoard(
-          'player',
-          playerArray[index].getGrid(),
-          playerArray[index].getMissedShots(),
-          playerArray[index].getHitShots()
-        );
       }
-    }
-  });
+    });
+  }
 }
 
 export default () => {
