@@ -14,12 +14,12 @@ function playerVsComputer(allCoordinates) {
   const realPlayerBoard = indexPlayer.realPlayer.gameBoard;
   const computerPlayerBoard = indexPlayer.computerPlayer.gameBoard;
 
-  for (let i = 0; i < allCoordinates.length; i += 1) {
-    realPlayerBoard.setShipAt(...allCoordinates[i]);
-  }
   const makeCoordinates = new GenerateRandomCoordinates();
   const computerCoordinates = makeCoordinates.generateAllCoordinates();
-  for (let i = 0; i < computerCoordinates.length; i += 1) {
+
+
+  for (let i = 0; i < allCoordinates.length; i += 1) {
+    realPlayerBoard.setShipAt(...allCoordinates[i]);
     computerPlayerBoard.setShipAt(...computerCoordinates[i]);
   }
 
