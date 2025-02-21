@@ -6,7 +6,7 @@ import {
   singlePlayerSetup,
   disablePlay,
   enablePlay,
-  gameOver
+  gameOver,
 } from './domChanger';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
@@ -28,24 +28,35 @@ function getCoordinates() {
   return coordinates;
 }
 
+function setBoard(one, two, playerOneBoard, playerTwoBoard) {
+  for (let i = 0; i < one.length; i += 1) {
+    playerOneBoard.setShipAt(...one[i]);
+    playerTwoBoard.setShipAt(...two[i]);
+  }
+}
+
+function sendAttacks(coordinates, board) {
+  for (let i = 0; i < coordinates.length; i += 1) {
+    board.receiveAttack(coordinates[i]);
+  }
+}
+
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
   renderPlayersBoards();
   const indexPlayer = new Player();
-
   const playerOneBoard = indexPlayer.realPlayer.gameBoard;
   const playerTwoBoard = indexPlayer.computerPlayer.gameBoard;
-
   const playerArray = [playerOneBoard, playerTwoBoard];
 
-  for (let i = 0; i < playerOneCoordinates.length; i += 1) {
-    playerOneBoard.setShipAt(...playerOneCoordinates[i]);
-    playerTwoBoard.setShipAt(...playerTwoCoordinates[i]);
-  }
-
-  const playerOneHitNotSunk = [];
-  const playerTwoHitNotSunk = [];
-  const hitNotSunkArray = [playerOneHitNotSunk, playerTwoHitNotSunk];
+  setBoard(
+    playerOneCoordinates,
+    playerTwoCoordinates,
+    playerOneBoard,
+    playerTwoBoard
+  );
+  
+  const hitNotSunkArray = [[], []];
 
   const playerBoardClasses = ['realPlayer', 'computerPlayer'];
   disablePlay(playerBoardClasses[0]);
@@ -55,7 +66,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   for (let index = 0; index < boards.length; index += 1) {
     const board = boards[index];
     let indexComplement;
-    if(index === 0) indexComplement = 1;
+    if (index === 0) indexComplement = 1;
     else indexComplement = 0;
 
     board.addEventListener('click', (e) => {
@@ -70,9 +81,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
         if (hitOrMiss === 'Hit') {
           hitNotSunkArray[index].push(clickedPosition);
           const cornerCoordinates = getCornerShots(clickedPosition);
-          for (let i = 0; i < cornerCoordinates.length; i += 1) {
-            playerArray[index].receiveAttack(cornerCoordinates[i]);
-          }
+          sendAttacks(cornerCoordinates, playerArray[index]);
 
           const isSunk = playerArray[index]
             .getGrid()
@@ -94,13 +103,14 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
             }
 
             const surroundingCoordinates = getSurroundingPositions(allSunk);
-            for (let j = 0; j < surroundingCoordinates.length; j += 1) {
-              playerArray[index].receiveAttack(surroundingCoordinates[j]);
-            }
+            sendAttacks(surroundingCoordinates, playerArray[index]);
           }
 
           if (playerArray[index].allSunk() === true) {
-            gameOver(playerBoardClasses[index], playerBoardClasses[indexComplement]);
+            gameOver(
+              playerBoardClasses[index],
+              playerBoardClasses[indexComplement]
+            );
           }
 
           renderBoard(
