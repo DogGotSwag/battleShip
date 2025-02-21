@@ -41,6 +41,10 @@ function sendAttacks(coordinates, board) {
   }
 }
 
+function checkIfSunk(board, position) {
+  return board.getGrid()[position[0]][position[1]].isSunk();
+}
+
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
   renderPlayersBoards();
@@ -57,7 +61,6 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   );
 
   const hitNotSunkArray = [[], []];
-
   const playerBoardClasses = ['realPlayer', 'computerPlayer'];
   disablePlay(playerBoardClasses[0]);
 
@@ -82,17 +85,13 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
           const cornerCoordinates = getCornerShots(clickedPosition);
           sendAttacks(cornerCoordinates, playerArray[index]);
 
-          const isSunk = playerArray[index]
-            .getGrid()
-            [clickedPosition[0]][clickedPosition[1]].isSunk();
+          const isSunk = checkIfSunk(playerArray[index], clickedPosition);
 
           if (isSunk) {
             const allSunk = [];
             for (let i = 0; i < hitNotSunkArray[index].length; i += 1) {
               const currCoord = hitNotSunkArray[index][i];
-              const currCoordSunk = playerArray[index]
-                .getGrid()
-                [currCoord[0]][currCoord[1]].isSunk();
+              const currCoordSunk = checkIfSunk(playerArray[index], currCoord);
 
               if (currCoordSunk) {
                 allSunk.push(currCoord);
