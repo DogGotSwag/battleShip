@@ -55,7 +55,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
     playerOneBoard,
     playerTwoBoard
   );
-  
+
   const hitNotSunkArray = [[], []];
 
   const playerBoardClasses = ['realPlayer', 'computerPlayer'];
@@ -75,7 +75,6 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
 
       if (clickedType === 'coordinate') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
-
         const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
@@ -112,32 +111,24 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
               playerBoardClasses[indexComplement]
             );
           }
-
-          renderBoard(
-            playerBoardClasses[index],
-            playerArray[index].getGrid(),
-            playerArray[index].getMissedShots(),
-            playerArray[index].getHitShots()
-          );
         } else {
           disablePlay(playerBoardClasses[index]);
-          renderBoard(
-            playerBoardClasses[index],
-            playerArray[index].getGrid(),
-            playerArray[index].getMissedShots(),
-            playerArray[index].getHitShots()
-          );
-
           enablePlay(playerBoardClasses[indexComplement]);
         }
-      }
-    });
+      } // if
+
+      renderBoard(
+        playerBoardClasses[index],
+        playerArray[index].getGrid(),
+        playerArray[index].getMissedShots(),
+        playerArray[index].getHitShots()
+      );
+    }); // eventList
   }
 }
 
 export default () => {
   twoPlayerSetup('player');
-
   let playerOneCoordinates = [];
   let playerTwoCoordinates = [];
 
