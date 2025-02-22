@@ -9,37 +9,11 @@ import {
 
 import {
   getCoordinatesFromNodeList,
-  getCornerShots,
-  getSurroundingPositions,
 } from './coordinates';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-import { setBoard, sendAttacks, checkIfSunk } from './commonGameFunctions';
-
-function realHit(oppositeBoard, clickedPosition, hitNotSunk) {
-  hitNotSunk.push(clickedPosition);
-  const cornerCoordinates = getCornerShots(clickedPosition);
-  sendAttacks(cornerCoordinates, oppositeBoard);
-
-  const isSunk = checkIfSunk(oppositeBoard, clickedPosition);
-
-  if (isSunk) {
-    const allSunk = [];
-    for (let i = 0; i < hitNotSunk.length; i += 1) {
-      const currCoord = hitNotSunk[i];
-      const currCoordSunk = checkIfSunk(oppositeBoard, currCoord);
-
-      if (currCoordSunk) {
-        allSunk.push(currCoord);
-        hitNotSunk.splice(i, 1);
-        i -= 1;
-      }
-    }
-    const surroundingCoordinates = getSurroundingPositions(allSunk);
-    sendAttacks(surroundingCoordinates, oppositeBoard);
-  }
-}
+import { setBoard } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
