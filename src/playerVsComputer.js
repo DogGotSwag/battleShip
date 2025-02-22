@@ -13,7 +13,7 @@ import {
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-import { setBoard } from './commonGameFunctions';
+import { setBoard, realHit } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
