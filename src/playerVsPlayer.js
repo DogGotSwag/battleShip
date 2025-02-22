@@ -88,7 +88,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
             sendAttacks(surroundingCoordinates, playerArray[index]);
           }
 
-          if (playerArray[index].allSunk() === true) {
+          if (playerArray[index].allSunk()) {
             gameOver(
               playerBoardClasses[index],
               playerBoardClasses[indexComplement]
