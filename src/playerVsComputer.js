@@ -9,7 +9,7 @@ import {
 
 import { getCornerShots, getSurroundingPositions } from './coordinates';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
-import computerAttack, {adjacentAttack} from './computerAttack';
+import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 import { setBoard, sendAttacks, checkIfSunk } from './commonGameFunctions';
 
@@ -50,17 +50,13 @@ function playerVsComputer(allCoordinates) {
           const cornerCoordinates = getCornerShots(clickedPosition);
           sendAttacks(cornerCoordinates, computerPlayerBoard);
 
-          const isSunk = computerPlayerBoard
-            .getGrid()
-            [clickedPosition[0]][clickedPosition[1]].isSunk();
+          const isSunk = checkIfSunk(computerPlayerBoard, clickedPosition);
 
           if (isSunk) {
             const allSunk = [];
             for (let i = 0; i < realPlayerHitNotSunk.length; i += 1) {
               const currCoord = realPlayerHitNotSunk[i];
-              const currCoordSunk = computerPlayerBoard
-                .getGrid()
-                [currCoord[0]][currCoord[1]].isSunk();
+              const currCoordSunk = checkIfSunk(computerPlayerBoard, currCoord);
 
               if (currCoordSunk) {
                 allSunk.push(currCoord);
@@ -89,37 +85,35 @@ function playerVsComputer(allCoordinates) {
           do {
             let attackPosition;
 
-            if(adjacentShots.length === 0 ){
+            if (adjacentShots.length === 0) {
               attackPosition = computerAttack(
                 realPlayerBoard.availableCoordinates()
               );
               continueAttack = realPlayerBoard.receiveAttack(attackPosition);
-            }
-            else{
-              attackPosition = computerAttack(adjacentShots); 
+            } else {
+              attackPosition = computerAttack(adjacentShots);
               continueAttack = realPlayerBoard.receiveAttack(attackPosition);
               adjacentShots = [];
             }
-          
+
             if (continueAttack === 'Hit') {
-              adjacentShots = adjacentAttack(attackPosition, realPlayerBoard.availableCoordinates());
-              
+              adjacentShots = adjacentAttack(
+                attackPosition,
+                realPlayerBoard.availableCoordinates()
+              );
+
               computerPlayerHitNotSunk.push(attackPosition);
               const cornerCoordinates = getCornerShots(attackPosition);
-              sendAttacks(cornerCoordinates, realPlayerBoard)
-              
-              const isSunk = realPlayerBoard
-                .getGrid()
-                [attackPosition[0]][attackPosition[1]].isSunk();
+              sendAttacks(cornerCoordinates, realPlayerBoard);
+
+              const isSunk = checkIfSunk(realPlayerBoard, attackPosition);
 
               if (isSunk) {
                 const allSunk = [];
                 for (let i = 0; i < computerPlayerHitNotSunk.length; i += 1) {
                   const currCoord = computerPlayerHitNotSunk[i];
 
-                  const currCoordSunk = realPlayerBoard
-                    .getGrid()
-                    [currCoord[0]][currCoord[1]].isSunk();
+                  const currCoordSunk = checkIfSunk(realPlayerBoard, currCoord);
 
                   if (currCoordSunk) {
                     allSunk.push(currCoord);
