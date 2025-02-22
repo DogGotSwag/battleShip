@@ -8,10 +8,10 @@ import {
 } from './domChanger';
 
 import { getCornerShots, getSurroundingPositions } from './coordinates';
-
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack, {adjacentAttack} from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
+import { setBoard, sendAttacks, checkIfSunk } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
