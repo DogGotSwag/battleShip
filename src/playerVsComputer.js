@@ -21,7 +21,7 @@ function playerVsComputer(allCoordinates) {
 
   const makeCoordinates = new GenerateRandomCoordinates();
   const computerCoordinates = makeCoordinates.generateAllCoordinates();
-  
+
   setBoard(
     allCoordinates,
     computerCoordinates,
@@ -48,9 +48,7 @@ function playerVsComputer(allCoordinates) {
         if (hitOrMiss === 'Hit') {
           realPlayerHitNotSunk.push(clickedPosition);
           const cornerCoordinates = getCornerShots(clickedPosition);
-          for (let i = 0; i < cornerCoordinates.length; i += 1) {
-            computerPlayerBoard.receiveAttack(cornerCoordinates[i]);
-          }
+          sendAttacks(cornerCoordinates, computerPlayerBoard);
 
           const isSunk = computerPlayerBoard
             .getGrid()
@@ -72,9 +70,7 @@ function playerVsComputer(allCoordinates) {
             }
 
             const surroundingCoordinates = getSurroundingPositions(allSunk);
-            for (let j = 0; j < surroundingCoordinates.length; j += 1) {
-              computerPlayerBoard.receiveAttack(surroundingCoordinates[j]);
-            }
+            sendAttacks(surroundingCoordinates, computerPlayerBoard);
           }
         }
         renderBoard(
