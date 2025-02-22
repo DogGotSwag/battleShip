@@ -57,7 +57,11 @@ function getCoordinatesFromNodeList(nodeList) {
   const coordinates = [];
   for (let i = 0; i < nodeList.length; i += 1) {
     const curr = nodeList[i];
-    coordinates.push(getPosition(curr.parentNode));
+    if (curr.classList[0] === 'coordinate') {
+      coordinates.push(getPosition(curr));
+    }else{
+      coordinates.push(getPosition(curr.parentNode));
+    }
   }
   return coordinates;
 }
