@@ -106,9 +106,7 @@ function playerVsComputer(allCoordinates) {
               
               computerPlayerHitNotSunk.push(attackPosition);
               const cornerCoordinates = getCornerShots(attackPosition);
-              for (let i = 0; i < cornerCoordinates.length; i += 1) {
-                realPlayerBoard.receiveAttack(cornerCoordinates[i]);
-              }
+              sendAttacks(cornerCoordinates, realPlayerBoard)
               
               const isSunk = realPlayerBoard
                 .getGrid()
@@ -131,9 +129,7 @@ function playerVsComputer(allCoordinates) {
                 }
 
                 const surroundingCoordinates = getSurroundingPositions(allSunk);
-                for (let j = 0; j < surroundingCoordinates.length; j += 1) {
-                  realPlayerBoard.receiveAttack(surroundingCoordinates[j]);
-                }
+                sendAttacks(surroundingCoordinates, realPlayerBoard);
               }
             }
 
