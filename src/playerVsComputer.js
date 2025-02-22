@@ -21,11 +21,13 @@ function playerVsComputer(allCoordinates) {
 
   const makeCoordinates = new GenerateRandomCoordinates();
   const computerCoordinates = makeCoordinates.generateAllCoordinates();
-
-  for (let i = 0; i < allCoordinates.length; i += 1) {
-    realPlayerBoard.setShipAt(...allCoordinates[i]);
-    computerPlayerBoard.setShipAt(...computerCoordinates[i]);
-  }
+  
+  setBoard(
+    allCoordinates,
+    computerCoordinates,
+    realPlayerBoard,
+    computerPlayerBoard
+  );
 
   renderPlayersBoards();
 
