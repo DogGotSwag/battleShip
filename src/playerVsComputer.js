@@ -7,11 +7,35 @@ import {
   singlePlayerSetup,
 } from './domChanger';
 
-import { getCornerShots, getSurroundingPositions } from './coordinates';
+import { getCoordinatesFromNodeList, getCornerShots, getSurroundingPositions } from './coordinates';
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
 import { setBoard, sendAttacks, checkIfSunk } from './commonGameFunctions';
+
+function realHit( oppositeBoard, clickedPosition, hitNotSunk) {
+  hitNotSunk.push(clickedPosition);
+  const cornerCoordinates = getCornerShots(clickedPosition);
+  sendAttacks(cornerCoordinates, oppositeBoard);
+
+  const isSunk = checkIfSunk(oppositeBoard, clickedPosition);
+
+  if (isSunk) {
+    const allSunk = [];
+    for (let i = 0; i < hitNotSunk.length; i += 1) {
+      const currCoord = hitNotSunk[i];
+      const currCoordSunk = checkIfSunk(oppositeBoard, currCoord);
+
+      if (currCoordSunk) {
+        allSunk.push(currCoord);
+        hitNotSunk.splice(i, 1);
+        i -= 1;
+      }
+    }
+    const surroundingCoordinates = getSurroundingPositions(allSunk);
+    sendAttacks(surroundingCoordinates, oppositeBoard);
+  }
+}
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
@@ -32,7 +56,7 @@ function playerVsComputer(allCoordinates) {
   renderPlayersBoards();
 
   const boards = document.querySelectorAll('.player');
-  const realPlayerHitNotSunk = [];
+  // const realPlayerHitNotSunk = [];
   const computerPlayerHitNotSunk = [];
 
   boards.forEach((board) => {
@@ -43,31 +67,13 @@ function playerVsComputer(allCoordinates) {
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
+        
+        const hitNotSunk = document.querySelectorAll('.computerPlayer .hitShot:not(.sunk)');
+        const hitNotSunkCoords = getCoordinatesFromNodeList(hitNotSunk);
         const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
-          realPlayerHitNotSunk.push(clickedPosition);
-          const cornerCoordinates = getCornerShots(clickedPosition);
-          sendAttacks(cornerCoordinates, computerPlayerBoard);
-
-          const isSunk = checkIfSunk(computerPlayerBoard, clickedPosition);
-
-          if (isSunk) {
-            const allSunk = [];
-            for (let i = 0; i < realPlayerHitNotSunk.length; i += 1) {
-              const currCoord = realPlayerHitNotSunk[i];
-              const currCoordSunk = checkIfSunk(computerPlayerBoard, currCoord);
-
-              if (currCoordSunk) {
-                allSunk.push(currCoord);
-                realPlayerHitNotSunk.splice(i, 1);
-                i -= 1;
-              }
-            }
-
-            const surroundingCoordinates = getSurroundingPositions(allSunk);
-            sendAttacks(surroundingCoordinates, computerPlayerBoard);
-          }
+          realHit(computerPlayerBoard, clickedPosition, hitNotSunkCoords);
         }
         renderBoard(
           'computerPlayer',
