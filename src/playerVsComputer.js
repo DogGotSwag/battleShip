@@ -85,7 +85,7 @@ function playerVsComputer(allCoordinates) {
           computerPlayerBoard.getMissedShots(),
           computerPlayerBoard.getHitShots()
         );
-        if (computerPlayerBoard.allSunk() === true) {
+        if (computerPlayerBoard.allSunk()) {
           gameOver('computerPlayer', 'realPlayer');
         }
 
@@ -127,7 +127,7 @@ function playerVsComputer(allCoordinates) {
               realPlayerBoard.getHitShots()
             );
 
-            if (realPlayerBoard.allSunk() === true) {
+            if (realPlayerBoard.allSunk()) {
               gameOver('realPlayer', 'computerPlayer');
               continueAttack = '';
             }
