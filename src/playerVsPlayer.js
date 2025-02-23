@@ -11,8 +11,8 @@ import {
 import { dragAndDropInterface, getPosition } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
-import { getCornerShots, getSurroundingPositions } from './coordinates';
-import { setBoard, sendAttacks, checkIfSunk } from './commonGameFunctions';
+import { getCoordinatesFromNodeList } from './coordinates';
+import { setBoard, realHit } from './commonGameFunctions';
 
 function getCoordinates() {
   const letters = 'ABCDEFGHIJ';
@@ -44,7 +44,6 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
     playerTwoBoard
   );
 
-  const hitNotSunkArray = [[], []];
   const playerBoardClasses = ['realPlayer', 'computerPlayer'];
   disablePlay(playerBoardClasses[0]);
 
@@ -65,29 +64,12 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
         const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
-          hitNotSunkArray[index].push(clickedPosition);
-          const cornerCoordinates = getCornerShots(clickedPosition);
-          sendAttacks(cornerCoordinates, playerArray[index]);
-
-          const isSunk = checkIfSunk(playerArray[index], clickedPosition);
-
-          if (isSunk) {
-            const allSunk = [];
-            for (let i = 0; i < hitNotSunkArray[index].length; i += 1) {
-              const currCoord = hitNotSunkArray[index][i];
-              const currCoordSunk = checkIfSunk(playerArray[index], currCoord);
-
-              if (currCoordSunk) {
-                allSunk.push(currCoord);
-                hitNotSunkArray[index].splice(i, 1);
-                i -= 1;
-              }
-            }
-
-            const surroundingCoordinates = getSurroundingPositions(allSunk);
-            sendAttacks(surroundingCoordinates, playerArray[index]);
-          }
-
+          const hitNotSunk = document.querySelectorAll(
+            `.${playerBoardClasses[index]} .hitShot:not(.sunk)`
+          );
+          const hitNotSunkCoords = getCoordinatesFromNodeList(hitNotSunk);
+          realHit(playerArray[index], clickedPosition, hitNotSunkCoords);
+          
           if (playerArray[index].allSunk()) {
             gameOver(
               playerBoardClasses[index],
