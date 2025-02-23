@@ -8,12 +8,12 @@ import {
 } from './domChanger';
 
 import {
-  getCoordinatesFromNodeList,
+  getCoordinatesFromNodeList
 } from './coordinates';
-import { dragAndDropInterface, getPosition } from './dragAndDrop';
+import { dragAndDropInterface } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-import { setBoard, realHit } from './commonGameFunctions';
+import { setBoard, realHit, getCoordinates } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
@@ -122,16 +122,7 @@ export default () => {
     e.stopPropagation();
     const board = startButton.parentNode;
     board.removeChild(startButton);
-    const letters = 'ABCDEFGHIJ';
-    const allCoordinates = [];
-    for (let i = 0; i < letters.length; i += 1) {
-      const shipCoordinates = [];
-      const shipGroup = document.querySelectorAll(`.drag.${letters[i]}`);
-      for (let j = 0; j < shipGroup.length; j += 1) {
-        shipCoordinates.push(getPosition(shipGroup[j].parentNode));
-      }
-      allCoordinates.push(shipCoordinates);
-    }
-    playerVsComputer(allCoordinates);
+    const dragAndCoordinates = getCoordinates();
+    playerVsComputer(dragAndCoordinates);
   });
 };
