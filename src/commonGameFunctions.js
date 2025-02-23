@@ -1,6 +1,7 @@
 import {
   getCornerShots,
   getSurroundingPositions,
+  getPosition
 } from './coordinates';
 
 function setBoard(one, two, playerOneBoard, playerTwoBoard) {
@@ -44,6 +45,21 @@ function realHit(oppositeBoard, clickedPosition, hitNotSunk) {
   }
 }
 
+function getCoordinates() {
+  const letters = 'ABCDEFGHIJ';
+  const coordinates = [];
+  for (let i = 0; i < letters.length; i += 1) {
+    const shipCoordinates = [];
+    const shipGroup = document.querySelectorAll(`.drag.${letters[i]}`);
+    for (let j = 0; j < shipGroup.length; j += 1) {
+      shipCoordinates.push(getPosition(shipGroup[j].parentNode));
+    }
+    coordinates.push(shipCoordinates);
+  }
+
+  return coordinates;
+}
 
 
-export {setBoard, sendAttacks, checkIfSunk, realHit};
+
+export {setBoard, sendAttacks, checkIfSunk, realHit, getCoordinates};

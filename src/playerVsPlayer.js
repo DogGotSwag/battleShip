@@ -8,26 +8,11 @@ import {
   enablePlay,
   gameOver,
 } from './domChanger';
-import { dragAndDropInterface, getPosition } from './dragAndDrop';
+import { dragAndDropInterface } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
 import { getCoordinatesFromNodeList } from './coordinates';
-import { setBoard, realHit } from './commonGameFunctions';
-
-function getCoordinates() {
-  const letters = 'ABCDEFGHIJ';
-  const coordinates = [];
-  for (let i = 0; i < letters.length; i += 1) {
-    const shipCoordinates = [];
-    const shipGroup = document.querySelectorAll(`.drag.${letters[i]}`);
-    for (let j = 0; j < shipGroup.length; j += 1) {
-      shipCoordinates.push(getPosition(shipGroup[j].parentNode));
-    }
-    coordinates.push(shipCoordinates);
-  }
-
-  return coordinates;
-}
+import { setBoard, realHit, getCoordinates } from './commonGameFunctions';
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
