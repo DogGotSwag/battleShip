@@ -100,7 +100,6 @@ function playerVsComputer(allCoordinates) {
               continueAttack = '';
             }
           } while (continueAttack === 'Hit');
-          adjacentShots = [];
         }
       }
     });
