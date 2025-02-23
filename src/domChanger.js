@@ -1,5 +1,5 @@
 import './domChangerStyles.css';
-import generateRandomCoordinates from './generateRandomCoordinates';
+import GenerateRandomCoordinates from './generateRandomCoordinates';
 
 function renderPlayersBoards(players = 'player') {
   const boards = document.querySelectorAll(`.${players}`);
@@ -133,7 +133,7 @@ function makeCoordinateForm(player) {
   randomizerButton.classList.add('randomize');
 
   randomizerButton.addEventListener('click', () => {
-    const obj = new generateRandomCoordinates();
+    const obj = new GenerateRandomCoordinates();
     const randomCoordinates = obj.generateAllCoordinates();
     const inputs = document.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i += 1) {
@@ -166,7 +166,7 @@ function makeCoordinateForm(player) {
 
 function clearMain(){
   const main = document.querySelector('.main');
-  main.innerHTML = "";
+  main.innerHTML = '';
 }
 
 function singlePlayerSetup(){
