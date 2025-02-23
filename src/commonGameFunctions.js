@@ -1,7 +1,8 @@
 import {
   getCornerShots,
   getSurroundingPositions,
-  getPosition
+  getPosition,
+  getCoordinatesFromNodeList
 } from './coordinates';
 
 function setBoard(one, two, playerOneBoard, playerTwoBoard) {
@@ -21,7 +22,13 @@ function checkIfSunk(board, position) {
   return board.getGrid()[position[0]][position[1]].isSunk();
 }
 
-function postHitEffects(oppositeBoard, clickedPosition, hitNotSunk) {
+function postHitEffects(oppositeBoard, clickedPosition, oppositeBoardClass) {
+  const hitNotSunkDivs = document.querySelectorAll(
+      `.${oppositeBoardClass} .hitShot:not(.sunk)`
+  );
+  const hitNotSunk =
+    getCoordinatesFromNodeList(hitNotSunkDivs);
+
   hitNotSunk.push(clickedPosition);
   const cornerCoordinates = getCornerShots(clickedPosition);
   sendAttacks(cornerCoordinates, oppositeBoard);

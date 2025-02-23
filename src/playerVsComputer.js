@@ -43,15 +43,10 @@ function playerVsComputer(allCoordinates) {
       const parent = clicked.parentNode.parentNode.classList[0];
       if (clickedType === 'coordinate' && parent === 'computerPlayer') {
         const clickedPosition = clicked.classList[1].slice(1, 3).split('');
-
-        const hitNotSunk = document.querySelectorAll(
-          '.computerPlayer .hitShot:not(.sunk)'
-        );
-        const hitNotSunkCoords = getCoordinatesFromNodeList(hitNotSunk);
         const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
-          postHitEffects(computerPlayerBoard, clickedPosition, hitNotSunkCoords);
+          postHitEffects(computerPlayerBoard, clickedPosition, 'computerPlayer');
         }
         renderBoard(
           'computerPlayer',
@@ -81,17 +76,11 @@ function playerVsComputer(allCoordinates) {
             }
 
             if (continueAttack === 'Hit') {
-              const hitNotSunkReal = document.querySelectorAll(
-                '.realPlayer .hitShot:not(.sunk)'
-              );
-              const hitNotSunkRealCoords =
-                getCoordinatesFromNodeList(hitNotSunkReal);
-
               adjacentShots = adjacentAttack(
                 attackPosition,
                 realPlayerBoard.availableCoordinates()
               );
-              postHitEffects(realPlayerBoard, attackPosition, hitNotSunkRealCoords);
+              postHitEffects(realPlayerBoard, attackPosition, 'realPlayer');
             }
 
             renderBoard(

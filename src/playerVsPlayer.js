@@ -49,11 +49,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
         const hitOrMiss = playerArray[index].receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
-          const hitNotSunk = document.querySelectorAll(
-            `.${playerBoardClasses[index]} .hitShot:not(.sunk)`
-          );
-          const hitNotSunkCoords = getCoordinatesFromNodeList(hitNotSunk);
-          postHitEffects(playerArray[index], clickedPosition, hitNotSunkCoords);
+          postHitEffects(playerArray[index], clickedPosition, 'player');
           
           if (playerArray[index].allSunk()) {
             gameOver(
