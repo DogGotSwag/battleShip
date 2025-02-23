@@ -100,31 +100,12 @@ function getNewOrientationCoordinates(orientation, shipGroup, length) {
 }
 
 function getSurroundingPositions(coordinateList) {
-  const surroundingCoordinates = [];
+  let surroundingCoordinates = [];
   for (let i = 0; i < coordinateList.length; i += 1) {
     const curr = coordinateList[i];
-
-    const indexOne = Number(curr[0]);
-    const indexTwo = Number(curr[1]);
-
-    const top = [indexOne - 1, indexTwo];
-    const topLeft = [indexOne - 1, indexTwo - 1];
-    const topRight = [indexOne - 1, indexTwo + 1];
-    const left = [indexOne, indexTwo - 1];
-    const right = [indexOne, indexTwo + 1];
-    const bottom = [indexOne + 1, indexTwo];
-    const bottomLeft = [indexOne + 1, indexTwo - 1];
-    const bottomRight = [indexOne + 1, indexTwo + 1];
-
-    if (inBounds(top)) surroundingCoordinates.push(top);
-    if (inBounds(topLeft)) surroundingCoordinates.push(topLeft);
-    if (inBounds(topRight)) surroundingCoordinates.push(topRight);
-    if (inBounds(left)) surroundingCoordinates.push(left);
-    if (inBounds(right)) surroundingCoordinates.push(right);
-    if (inBounds(bottom)) surroundingCoordinates.push(bottom);
-    if (inBounds(bottomLeft)) surroundingCoordinates.push(bottomLeft);
-    if (inBounds(bottomRight)) surroundingCoordinates.push(bottomRight);
-    if (inBounds(curr)) surroundingCoordinates.push(curr);
+    const corner = getCornerShots(curr);
+    const adjacent = getAdjacentShots(curr);
+    surroundingCoordinates = [...corner, ...adjacent];    
   }
   return surroundingCoordinates;
 }
