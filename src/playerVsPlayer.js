@@ -11,8 +11,11 @@ import {
 import { dragAndDropInterface } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
-import { getCoordinatesFromNodeList } from './coordinates';
-import { setBoard, postHitEffects, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
+import {
+  setBoard,
+  postHitEffects,
+  getCoordinatesFromDragAndDrop,
+} from './commonGameFunctions';
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
@@ -50,7 +53,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
 
         if (hitOrMiss === 'Hit') {
           postHitEffects(playerArray[index], clickedPosition, 'player');
-          
+
           if (playerArray[index].allSunk()) {
             gameOver(
               playerBoardClasses[index],

@@ -2,7 +2,7 @@ import {
   getCornerShots,
   getSurroundingPositions,
   getPosition,
-  getCoordinatesFromNodeList
+  getCoordinatesFromNodeList,
 } from './coordinates';
 
 function setBoard(one, two, playerOneBoard, playerTwoBoard) {
@@ -24,10 +24,9 @@ function checkIfSunk(board, position) {
 
 function postHitEffects(oppositeBoard, clickedPosition, oppositeBoardClass) {
   const hitNotSunkDivs = document.querySelectorAll(
-      `.${oppositeBoardClass} .hitShot:not(.sunk)`
+    `.${oppositeBoardClass} .hitShot:not(.sunk)`
   );
-  const hitNotSunk =
-    getCoordinatesFromNodeList(hitNotSunkDivs);
+  const hitNotSunk = getCoordinatesFromNodeList(hitNotSunkDivs);
 
   hitNotSunk.push(clickedPosition);
   const cornerCoordinates = getCornerShots(clickedPosition);
@@ -67,6 +66,10 @@ function getCoordinatesFromDragAndDrop() {
   return coordinates;
 }
 
-
-
-export {setBoard, sendAttacks, checkIfSunk, postHitEffects, getCoordinatesFromDragAndDrop};
+export {
+  setBoard,
+  sendAttacks,
+  checkIfSunk,
+  postHitEffects,
+  getCoordinatesFromDragAndDrop,
+};
