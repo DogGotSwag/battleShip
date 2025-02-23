@@ -12,7 +12,7 @@ import { dragAndDropInterface } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
 import { getCoordinatesFromNodeList } from './coordinates';
-import { setBoard, realHit, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
+import { setBoard, postHitEffects, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
@@ -53,7 +53,7 @@ function makeGame(playerOneCoordinates, playerTwoCoordinates) {
             `.${playerBoardClasses[index]} .hitShot:not(.sunk)`
           );
           const hitNotSunkCoords = getCoordinatesFromNodeList(hitNotSunk);
-          realHit(playerArray[index], clickedPosition, hitNotSunkCoords);
+          postHitEffects(playerArray[index], clickedPosition, hitNotSunkCoords);
           
           if (playerArray[index].allSunk()) {
             gameOver(

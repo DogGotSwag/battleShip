@@ -13,7 +13,7 @@ import {
 import { dragAndDropInterface } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-import { setBoard, realHit, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
+import { setBoard, postHitEffects, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
@@ -51,7 +51,7 @@ function playerVsComputer(allCoordinates) {
         const hitOrMiss = computerPlayerBoard.receiveAttack(clickedPosition);
 
         if (hitOrMiss === 'Hit') {
-          realHit(computerPlayerBoard, clickedPosition, hitNotSunkCoords);
+          postHitEffects(computerPlayerBoard, clickedPosition, hitNotSunkCoords);
         }
         renderBoard(
           'computerPlayer',
@@ -91,7 +91,7 @@ function playerVsComputer(allCoordinates) {
                 attackPosition,
                 realPlayerBoard.availableCoordinates()
               );
-              realHit(realPlayerBoard, attackPosition, hitNotSunkRealCoords);
+              postHitEffects(realPlayerBoard, attackPosition, hitNotSunkRealCoords);
             }
 
             renderBoard(

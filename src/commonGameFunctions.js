@@ -21,7 +21,7 @@ function checkIfSunk(board, position) {
   return board.getGrid()[position[0]][position[1]].isSunk();
 }
 
-function realHit(oppositeBoard, clickedPosition, hitNotSunk) {
+function postHitEffects(oppositeBoard, clickedPosition, hitNotSunk) {
   hitNotSunk.push(clickedPosition);
   const cornerCoordinates = getCornerShots(clickedPosition);
   sendAttacks(cornerCoordinates, oppositeBoard);
@@ -62,4 +62,4 @@ function getCoordinatesFromDragAndDrop() {
 
 
 
-export {setBoard, sendAttacks, checkIfSunk, realHit, getCoordinatesFromDragAndDrop};
+export {setBoard, sendAttacks, checkIfSunk, postHitEffects, getCoordinatesFromDragAndDrop};
