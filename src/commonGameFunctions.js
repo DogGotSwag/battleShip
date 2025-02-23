@@ -45,7 +45,7 @@ function realHit(oppositeBoard, clickedPosition, hitNotSunk) {
   }
 }
 
-function getCoordinates() {
+function getCoordinatesFromDragAndDrop() {
   const letters = 'ABCDEFGHIJ';
   const coordinates = [];
   for (let i = 0; i < letters.length; i += 1) {
@@ -62,4 +62,4 @@ function getCoordinates() {
 
 
 
-export {setBoard, sendAttacks, checkIfSunk, realHit, getCoordinates};
+export {setBoard, sendAttacks, checkIfSunk, realHit, getCoordinatesFromDragAndDrop};

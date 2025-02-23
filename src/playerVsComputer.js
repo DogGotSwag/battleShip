@@ -13,7 +13,7 @@ import {
 import { dragAndDropInterface } from './dragAndDrop';
 import computerAttack, { adjacentAttack } from './computerAttack';
 import GenerateRandomCoordinates from './generateRandomCoordinates';
-import { setBoard, realHit, getCoordinates } from './commonGameFunctions';
+import { setBoard, realHit, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
 
 function playerVsComputer(allCoordinates) {
   const indexPlayer = new Player();
@@ -122,7 +122,7 @@ export default () => {
     e.stopPropagation();
     const board = startButton.parentNode;
     board.removeChild(startButton);
-    const dragAndCoordinates = getCoordinates();
+    const dragAndCoordinates = getCoordinatesFromDragAndDrop();
     playerVsComputer(dragAndCoordinates);
   });
 };

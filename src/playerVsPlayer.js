@@ -12,7 +12,7 @@ import { dragAndDropInterface } from './dragAndDrop';
 import './playerVsPlayerStyles.css';
 import Player from './Player';
 import { getCoordinatesFromNodeList } from './coordinates';
-import { setBoard, realHit, getCoordinates } from './commonGameFunctions';
+import { setBoard, realHit, getCoordinatesFromDragAndDrop } from './commonGameFunctions';
 
 function makeGame(playerOneCoordinates, playerTwoCoordinates) {
   singlePlayerSetup();
@@ -86,13 +86,13 @@ export default () => {
   const startButton = document.querySelector('.startButton');
   startButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    playerOneCoordinates = getCoordinates();
+    playerOneCoordinates = getCoordinatesFromDragAndDrop();
 
     dragAndDropInterface('player');
     const startButtonTwo = document.querySelector('.startButton');
     startButtonTwo.addEventListener('click', (event) => {
       event.stopPropagation();
-      playerTwoCoordinates = getCoordinates();
+      playerTwoCoordinates = getCoordinatesFromDragAndDrop();
 
       makeGame(playerOneCoordinates, playerTwoCoordinates);
     });
